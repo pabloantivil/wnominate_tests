@@ -1,0 +1,4 @@
+pynominate/__pycache__/
+*.pyc
+.env
+.vscode/
