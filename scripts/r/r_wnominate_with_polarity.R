@@ -3,10 +3,10 @@
 
 library(wnominate)
 
-# Cargar los datos
-votes_matrix <- as.matrix(read.csv("votes_matrix.csv", row.names = 1))
-legislator_metadata <- read.csv("legislator_metadata.csv")
-vote_metadata <- read.csv("vote_metadata.csv")
+# Cargar los datos desde data/input
+votes_matrix <- as.matrix(read.csv("../../data/input/votes_matrix.csv", row.names = 1))
+legislator_metadata <- read.csv("../../data/input/legislator_metadata.csv")
+vote_metadata <- read.csv("../../data/input/vote_metadata.csv")
 
 # Relacionar los metadatos de la legisladora con la matriz de votos
 vote_matrix_ids <- as.numeric(rownames(votes_matrix))
@@ -73,11 +73,17 @@ coordinates_with_metadata <- merge(coordinates, legislator_metadata,
 )
 names(coordinates_with_metadata)[1] <- "legislator_id"
 
-write.csv(coordinates_with_metadata, "wnominate_coordinates_proper_polarity.csv", row.names = FALSE)
+# Crear directorio de salida si no existe
+output_dir <- "../../data/output"
+if (!dir.exists(output_dir)) {
+    dir.create(output_dir, recursive = TRUE)
+}
 
-cat("\nCoordenadas guardadas en: wnominate_coordinates_proper_polarity.csv\n")
+write.csv(coordinates_with_metadata, file.path(output_dir, "wnominate_coordinates_proper_polarity.csv"), row.names = FALSE)
+
+cat("\nCoordenadas guardadas en:", file.path(output_dir, "wnominate_coordinates_proper_polarity.csv"), "\n")
 
 # Guardar parámetros de votación
-write.csv(result$rollcalls, "wnominate_bill_parameters_proper_polarity.csv", row.names = TRUE)
+write.csv(result$rollcalls, file.path(output_dir, "wnominate_bill_parameters_proper_polarity.csv"), row.names = TRUE)
 
-cat("Bill parameters guardados en: wnominate_bill_parameters_proper_polarity.csv\n")
+cat("Bill parameters guardados en:", file.path(output_dir, "wnominate_bill_parameters_proper_polarity.csv"), "\n")

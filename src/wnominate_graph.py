@@ -23,6 +23,8 @@ Note: The --all-votes feature is TEMPORARY and will be removed after analysis.
       It processes ALL votes in your database and may take considerable time.
 """
 
+import pymongo
+from src.wnominate_api import calculate_wnominate, get_mongodb_connection
 import os
 import sys
 import json
@@ -31,9 +33,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from typing import List, Dict, Any
 
-# Import from the main module
-from wnominate_api import calculate_wnominate, get_mongodb_connection
-import pymongo
+# Agregar la raíz del proyecto al path para importar desde src
+sys.path.insert(0, os.path.abspath(
+    os.path.join(os.path.dirname(__file__), '..')))
+
+# Importar desde el módulo principal
 
 
 def get_all_votation_ids(db_name: str = "database_example") -> List[int]:
@@ -397,6 +401,13 @@ def plot_wnominate_map(results: Dict[str, Any], output_file: str = None, show_la
     # Guardar o mostrar gráfico
     if output_file:
         try:
+            # Si no se proporciona ruta absoluta, guardar en results/images
+            if not os.path.isabs(output_file):
+                results_dir = os.path.join(os.path.dirname(
+                    __file__), '..', 'results', 'images')
+                os.makedirs(results_dir, exist_ok=True)
+                output_file = os.path.join(results_dir, output_file)
+
             # Obtener ruta absoluta para mejor reporte
             abs_path = os.path.abspath(output_file)
             plt.savefig(abs_path, dpi=300, bbox_inches='tight')
@@ -561,7 +572,8 @@ def main():
             print("⚠️  ADVERTENCIA: Esto procesará TODOS los votos en su base de datos!")
             print(
                 "    Esto puede tardar mucho tiempo y utilizar recursos computacionales significativos.")
-            print("    Asegúrese de tener suficiente memoria y potencia de procesamiento.")
+            print(
+                "    Asegúrese de tener suficiente memoria y potencia de procesamiento.")
             print("=" * 60)
 
             # Pide confirmación
@@ -627,7 +639,12 @@ def main():
 
         # Guardar los resultados en un archivo si se procesan todos los votos
         if args.all_votes:
-            output_file = f"all_votes_dwnominate_{args.db_name}.json"
+            # Guardar en data/output por defecto
+            output_dir = os.path.join(os.path.dirname(
+                __file__), '..', 'data', 'output')
+            os.makedirs(output_dir, exist_ok=True)
+            output_file = os.path.join(
+                output_dir, f"all_votes_dwnominate_{args.db_name}.json")
             with open(output_file, 'w', encoding='utf-8') as f:
                 json.dump(results, f, indent=2,
                           ensure_ascii=False, default=str)

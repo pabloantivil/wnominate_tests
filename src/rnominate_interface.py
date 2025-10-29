@@ -10,7 +10,7 @@ def get_mongodb_connection():
     """Conexión a tu instancia de MongoDB"""
     return pymongo.MongoClient('mongodb://localhost:27017/')
 
-def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str = "r_wnominate_data"):
+def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str = None):
     """
     Exportar votos de MongoDB a un formato compatible con R para el análisis de W-NOMINATE
 
@@ -25,6 +25,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
     
     client = get_mongodb_connection()
     db = client[db_name]
+    
+    # Si no se especifica output_dir, usar data/input
+    if output_dir is None:
+        output_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'input')
     
     # Crear directorio de salida
     os.makedirs(output_dir, exist_ok=True)
@@ -246,10 +250,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
 
 library(wnominate)
 
-# Cargar los datos
-votes_matrix <- as.matrix(read.csv("votes_matrix.csv", row.names = 1))
-legislator_metadata <- read.csv("legislator_metadata.csv")
-vote_metadata <- read.csv("vote_metadata.csv")
+# Cargar los datos desde data/input
+votes_matrix <- as.matrix(read.csv("../../data/input/votes_matrix.csv", row.names = 1))
+legislator_metadata <- read.csv("../../data/input/legislator_metadata.csv")
+vote_metadata <- read.csv("../../data/input/vote_metadata.csv")
 
 # Relacionar los metadatos de la legisladora con la matriz de votos
 vote_matrix_ids <- as.numeric(rownames(votes_matrix))
@@ -309,28 +313,38 @@ cat("\nVerificación de Polaridad:\n")
 cat("Amaro Labra (PC, debería ser negativo):", amaro_coord1D, amaro_coord2D, "\n")
 cat("Enrique Van Rysselberghe (UDI, debería ser positivo):", enrique_coord1D, enrique_coord2D, "\n")
 
-# Guardar resultados con la orientación adecuada
+# Guardar resultados con la orientación adecuada en data/output
 coordinates_with_metadata <- merge(coordinates, legislator_metadata,
     by.x = "row.names", by.y = "legislator_id",
     all.x = TRUE
 )
 names(coordinates_with_metadata)[1] <- "legislator_id"
 
-write.csv(coordinates_with_metadata, "wnominate_coordinates_proper_polarity.csv", row.names = FALSE)
+# Crear directorio de salida si no existe
+output_dir <- "../../data/output"
+if (!dir.exists(output_dir)) {{
+    dir.create(output_dir, recursive = TRUE)
+}}
 
-cat("\nCoordenadas guardadas en: wnominate_coordinates_proper_polarity.csv\n")
+write.csv(coordinates_with_metadata, file.path(output_dir, "wnominate_coordinates.csv"), row.names = FALSE)
+
+cat("\nCoordenadas guardadas en:", file.path(output_dir, "wnominate_coordinates.csv"), "\n")
 
 # Guardar parámetros de votación
-write.csv(result$rollcalls, "wnominate_bill_parameters_proper_polarity.csv", row.names = TRUE)
+write.csv(result$rollcalls, file.path(output_dir, "wnominate_bill_parameters.csv"), row.names = TRUE)
 
-cat("Bill parameters guardados en: wnominate_bill_parameters_proper_polarity.csv\n")
+cat("Bill parameters guardados en:", file.path(output_dir, "wnominate_bill_parameters.csv"), "\n")
 '''
 
     # Escriba el script R solo si no existe o cree una copia de seguridad
-    r_script_path = f"{output_dir}/r_wnominate_script.R"
+    # Guardar scripts R en scripts/r
+    r_scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts', 'r')
+    os.makedirs(r_scripts_dir, exist_ok=True)
+    
+    r_script_path = os.path.join(r_scripts_dir, "r_wnominate_script.R")
     if os.path.exists(r_script_path):
         # Crear una copia de seguridad de un archivo existente
-        backup_path = f"{output_dir}/r_wnominate_script_backup.R"
+        backup_path = os.path.join(r_scripts_dir, "r_wnominate_script_backup.R")
         shutil.copy2(r_script_path, backup_path)
         print(f"📝 El script R ya existe. Copia de seguridad creada.: {backup_path}")
         print("📝 Manteniendo su script R existente con cualquier modificación manual.")
@@ -346,10 +360,10 @@ cat("Bill parameters guardados en: wnominate_bill_parameters_proper_polarity.csv
 # Comparar los resultados de R W-NOMINATE con los resultados de Python pynominate
 
 # Cargar resultados de R  
-r_coords <- read.csv("wnominate_coordinates.csv")
+r_coords <- read.csv("../../data/output/wnominate_coordinates.csv")
 
 # Cargar resultados de Python (ajustar la ruta según sea necesario)
-# python_file <- "../all_votes_dwnominate.json"
+# python_file <- "../../data/output/all_votes_dwnominate.json"
 # python_results <- jsonlite::fromJSON(python_file)
 
 # TODO: Agregar el análisis de Procrustes para alinear los dos sistemas de coordenadas
@@ -359,20 +373,24 @@ r_coords <- read.csv("wnominate_coordinates.csv")
 cat("Utilizar este script para comparar los resultados de R y Python después de ejecutar ambos análisis.\\n")
 '''
     
-    with open(f"{output_dir}/compare_results.R", "w") as f:
+    compare_script_path = os.path.join(r_scripts_dir, "compare_results.R")
+    with open(compare_script_path, "w") as f:
         f.write(comparison_script)
     
-    print(f"\n🎯 ¡Exportación completa! Archivos creados en {output_dir}/:")
-    print(f"   📄 votes_matrix.csv - {filtered_matrix.shape[0]}x{filtered_matrix.shape[1]} matriz de votos")
-    print(f"   📄 legislator_metadata.csv - {len(legislator_metadata)} legisladores")
-    print(f"   📄 vote_metadata.csv - {len(vote_metadata)} votos")
-    print(f"   📄 r_wnominate_script.R - Análisis R listo para ejecutar")
-    print(f"   📄 compare_results.R - Para comparar resultados de R vs Python")
+    print(f"\n🎯 ¡Exportación completa!")
+    print(f"   📁 Datos guardados en: {output_dir}/")
+    print(f"      📄 votes_matrix.csv - {filtered_matrix.shape[0]}x{filtered_matrix.shape[1]} matriz de votos")
+    print(f"      📄 legislator_metadata.csv - {len(legislator_metadata)} legisladores")
+    print(f"      📄 vote_metadata.csv - {len(vote_metadata)} votos")
+    print(f"   � Scripts R guardados en: {r_scripts_dir}/")
+    print(f"      �📄 r_wnominate_script.R - Análisis R listo para ejecutar")
+    print(f"      📄 compare_results.R - Para comparar resultados de R vs Python")
     
     print(f"\n🚀 Próximos pasos:")
-    print(f"   1. cd {output_dir}")
+    print(f"   1. cd {r_scripts_dir}")
     print(f"   2. Rscript r_wnominate_script.R")
-    print(f"   3. Comparar wnominate_coordinates.csv con sus resultados de pynominate")
+    print(f"   3. Los resultados se guardarán en data/output/")
+    print(f"   4. Comparar con resultados de pynominate")
     
     return {
         'matrix_shape': filtered_matrix.shape,
