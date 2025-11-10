@@ -3,10 +3,10 @@
 
 library(wnominate)
 
-# Cargar los datos desde data/input
-votes_matrix <- as.matrix(read.csv("../../data/input/votes_matrix.csv", row.names = 1))
-legislator_metadata <- read.csv("../../data/input/legislator_metadata.csv")
-vote_metadata <- read.csv("../../data/input/vote_metadata.csv")
+# Cargar los datos desde data/wnominate/input
+votes_matrix <- as.matrix(read.csv("../../data/wnominate/input/votes_matrix.csv", row.names = 1))
+legislator_metadata <- read.csv("../../data/wnominate/input/legislator_metadata.csv")
+vote_metadata <- read.csv("../../data/wnominate/input/vote_metadata.csv")
 
 # Relacionar los metadatos de la legisladora con la matriz de votos
 vote_matrix_ids <- as.numeric(rownames(votes_matrix))
@@ -74,7 +74,7 @@ coordinates_with_metadata <- merge(coordinates, legislator_metadata,
 names(coordinates_with_metadata)[1] <- "legislator_id"
 
 # Crear directorio de salida si no existe
-output_dir <- "../../data/output"
+output_dir <- "../../data/wnominate/output"
 if (!dir.exists(output_dir)) {
     dir.create(output_dir, recursive = TRUE)
 }

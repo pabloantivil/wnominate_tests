@@ -10,10 +10,10 @@ library(pscl)
 library(wnominate)
 library(dplyr)
 
-# Cargar los datos desde data/input
-votes_matrix <- read.csv("../../data/input/votes_matrix.csv", row.names = 1)
-legislator_meta <- read.csv("../../data/input/legislator_metadata.csv")
-vote_meta <- read.csv("../../data/input/vote_metadata.csv")
+# Cargar los datos desde data/wnominate/input
+votes_matrix <- read.csv("../../data/wnominate/input/votes_matrix.csv", row.names = 1)
+legislator_meta <- read.csv("../../data/wnominate/input/legislator_metadata.csv")
+vote_meta <- read.csv("../../data/wnominate/input/vote_metadata.csv")
 
 # Convertir a matriz
 votes_mat <- as.matrix(votes_matrix)
@@ -121,12 +121,12 @@ coordinates$legislator_name <- legislator_meta$nombre[match(coordinates$legislat
 coordinates$party <- legislator_meta$partido[match(coordinates$legislator_id, legislator_meta$legislator_id)]
 
 # Crear directorios de salida si no existen
-output_dir <- "../../data/output"
+output_dir <- "../../data/wnominate/output"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
 
-# Save results en data/output
+# Save results en data/wnominate/output
 write.csv(coordinates, file.path(output_dir, "wnominate_coordinates.csv"), row.names = FALSE)
 write.csv(wnom_result$rollcalls, file.path(output_dir, "wnominate_bill_parameters.csv"))
 
@@ -141,10 +141,10 @@ plot(wnom_result, main = "Mapa W-NOMINATE del Congreso de Chile")
 if ("partido" %in% colnames(legislator_meta)) {
   library(ggplot2)
 
-  # Crear directorio de imágenes si no existe
-  images_dir <- "../../results/images"
-  if (!dir.exists(images_dir)) {
-    dir.create(images_dir, recursive = TRUE)
+  # Crear directorio de resultados si no existe
+  results_dir <- "../../results"
+  if (!dir.exists(results_dir)) {
+    dir.create(results_dir, recursive = TRUE)
   }
 
   p <- ggplot(coordinates, aes(x = coord1D, y = coord2D, color = party, label = legislator_name)) +
@@ -164,8 +164,8 @@ if ("partido" %in% colnames(legislator_meta)) {
     annotate("text", x = -0.8, y = -0.8, label = "Izquierda\n(PC, PS)", size = 3, color = "gray30") +
     annotate("text", x = 0.8, y = -0.8, label = "Derecha\n(UDI, RN)", size = 3, color = "gray30")
 
-  ggsave(file.path(images_dir, "wnominate_map_with_parties.png"), p, width = 12, height = 8, dpi = 300)
-  cat("Gráfico mejorado guardado en:", file.path(images_dir, "wnominate_map_with_parties.png"), "\n")
+  ggsave(file.path(results_dir, "wnominate_map_with_parties.png"), p, width = 12, height = 8, dpi = 300)
+  cat("Gráfico mejorado guardado en:", file.path(results_dir, "wnominate_map_with_parties.png"), "\n")
 }
 
 cat("\n=== ANÁLISIS COMPLETO ===\n")

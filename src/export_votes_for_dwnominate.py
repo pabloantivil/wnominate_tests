@@ -6,7 +6,7 @@ Esta versión alternativa NO requiere MongoDB. En su lugar, lee los archivos CSV
 que ya fueron exportados previamente para W-NOMINATE y los divide por períodos.
 
 Usage:
-    python export_votes_for_dwnominate.py --input-dir data/input --output-dir data/dwnominate
+    python export_votes_for_dwnominate.py --input-dir data/input --output-dir data/dwnominate/input
 """
 
 import pandas as pd
@@ -71,7 +71,7 @@ def define_periods() -> List[Dict]:
 
 
 def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
-                                         output_dir: str = "data/dwnominate"):
+                                         output_dir: str = "data/dwnominate/input"):
     """
     Exporta datos para DW-NOMINATE desde archivos CSV existentes.
 
@@ -404,9 +404,9 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     print(f"   • r_dwnominate_script.R")
 
     print(f"\n🚀 Próximos pasos:")
-    print(f"   1. cd {output_dir}")
+    print(f"   1. cd scripts/r")
     print(f"   2. Rscript r_dwnominate_script.R")
-    print(f"   3. Los resultados se guardarán en archivos dwnominate_coordinates_*.csv")
+    print(f"   3. Los resultados se guardarán en data/dwnominate/output/")
     print(f"   4. Usar csv_dwnominate_graph.py para visualizar resultados")
 
     return {
@@ -693,8 +693,8 @@ def main():
     parser.add_argument(
         '--output-dir',
         type=str,
-        default='data/dwnominate',
-        help='Output directory for DW-NOMINATE files (default: data/dwnominate)'
+        default='data/dwnominate/input',
+        help='Output directory for DW-NOMINATE files (default: data/dwnominate/input)'
     )
 
     args = parser.parse_args()

@@ -7,13 +7,13 @@ CSV del análisis R W-NOMINATE, proporcionando una visualización liviana de los
 
 Uso:
     # Plot from CSV coordinates file:
-    python csv_wnominate_graph.py --csv-file r_wnominate_data/wnominate_coordinates.csv
+    python csv_wnominate_graph.py --csv-file data/wnominate/output/wnominate_coordinates.csv
     
     # Plot with custom output file:
-    python csv_wnominate_graph.py --csv-file r_wnominate_data/wnominate_coordinates.csv --output r_nominate_map.png
+    python csv_wnominate_graph.py --csv-file data/wnominate/output/wnominate_coordinates.csv --output results/wnominate_map.png
     
     # Compare R results with pynominate JSON results:
-    python csv_wnominate_graph.py --csv-file r_wnominate_data/wnominate_coordinates.csv --compare-json allvotes-dwnominate.json
+    python csv_wnominate_graph.py --csv-file data/wnominate/output/wnominate_coordinates.csv --compare-json data/wnominate/output/allvotes-dwnominate.json
 """
 
 import os
@@ -76,12 +76,12 @@ def load_legislator_metadata(csv_dir: str) -> Dict[str, Dict[str, str]]:
     Returns:
         Diccionario que mapea legislator_id a metadatos
     """
-    # Buscar primero en data/input (ubicación correcta según nueva estructura)
+    # Buscar primero en data/wnominate/input (ubicación correcta según nueva estructura)
     # Determinar la ruta base del proyecto
     script_dir = os.path.dirname(os.path.abspath(__file__))
     project_root = os.path.dirname(script_dir)
     metadata_file = os.path.join(
-        project_root, 'data', 'input', 'legislator_metadata.csv')
+        project_root, 'data', 'wnominate', 'input', 'legislator_metadata.csv')
 
     # Si no se encuentra, intentar en el directorio proporcionado (compatibilidad con estructura antigua)
     if not os.path.exists(metadata_file):

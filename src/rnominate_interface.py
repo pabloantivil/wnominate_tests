@@ -6,9 +6,11 @@ import os
 import shutil
 from typing import Dict, List, Tuple
 
+
 def get_mongodb_connection():
     """Conexión a tu instancia de MongoDB"""
     return pymongo.MongoClient('mongodb://localhost:27017/')
+
 
 def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str = None):
     """
@@ -20,16 +22,18 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
     3. vote_metadata.csv - Información de voto/llamada nominal
     4. r_wnominate_script.R - Script de R listo para ejecutar
     """
-    
-    print(f"🔍 Exportando votos desde {db_name} para el análisis R W-NOMINATE...")
-    
+
+    print(
+        f"🔍 Exportando votos desde {db_name} para el análisis R W-NOMINATE...")
+
     client = get_mongodb_connection()
     db = client[db_name]
-    
-    # Si no se especifica output_dir, usar data/input
+
+    # Si no se especifica output_dir, usar data/wnominate/input
     if output_dir is None:
-        output_dir = os.path.join(os.path.dirname(__file__), '..', 'data', 'input')
-    
+        output_dir = os.path.join(os.path.dirname(
+            __file__), '..', 'data', 'wnominate', 'input')
+
     # Crear directorio de salida
     os.makedirs(output_dir, exist_ok=True)
 
@@ -44,14 +48,14 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
         "distrito": 1,
         "_id": 0
     })
-    
+
     parlamentarios_data = list(parlamentarios_cursor)
     print(f"✅ Encontrados {len(parlamentarios_data)} parlamentarios")
-    
+
     if len(parlamentarios_data) == 0:
         print("❌ No se encontraron parlamentarios! Verifique el nombre de la colección y los datos.")
         return None
-    
+
     # 2. Obtener metadatos de votaciones
     print("📥 Obteniendo metadatos de votaciones...")
     votaciones_cursor = db["votaciones"].find({}, {
@@ -61,28 +65,28 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
         "boletin": 1,
         "_id": 0
     })
-    
+
     votaciones_data = list(votaciones_cursor)
     print(f"✅ Encontradas {len(votaciones_data)} votaciones")
-    
+
     if len(votaciones_data) == 0:
         print("❌ No se encontraron votaciones! Verifique el nombre de la colección y los datos.")
         return None
-    
+
     # 3. Obtener datos de votos de la colección VotosDiputados (según la estructura de su API)
     print("📥 Obteniendo votos individuales de VotosDiputados...")
-    
+
     votes_data = []
     processed_votations = 0
-    
+
     for votacion in votaciones_data:
         vot_id = votacion.get("id")
         if vot_id is None:
             continue
-            
+
         # Obtener detalles de las votaciones de la colección VotosDiputados
         voto_doc = db["VotosDiputados"].find_one({"id": vot_id})
-        
+
         if voto_doc and "detalle" in voto_doc:
             detalle = voto_doc["detalle"]
             # Detalle debería ser un diccionario que asigne las identificaciones parlamentarias a los valores de los votos
@@ -92,10 +96,11 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
                     'vote_id': str(vot_id),
                     'vote': vote_value
                 })
-        
+
         processed_votations += 1
         if processed_votations % 1000 == 0:
-            print(f"   Procesados {processed_votations}/{len(votaciones_data)} votaciones...")
+            print(
+                f"   Procesados {processed_votations}/{len(votaciones_data)} votaciones...")
 
     print(f"✅ Encontrados {len(votes_data)} registros de votos individuales")
 
@@ -103,21 +108,21 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
         print("❌ No se encontraron datos de votos! Verifique su esquema de almacenamiento de votos.")
         print("Se esperaba: campo 'detalle' en la colección VotosDiputados")
         return None
-    
+
     # Convertir a DataFrame
     df = pd.DataFrame(votes_data)
-    
+
     # Comprobar qué valores de voto tenemos realmente
     print("📊 Valores de voto encontrados:", df['vote'].value_counts().head(10))
-    
+
     # 4. Asignar códigos de votación a valores numéricos para W-NOMINATE
     print("📊 Conversión de códigos de votación al formato W-NOMINATE...")
-    
+
     # Basado en la función mapear_voto de su API:
     # if valor == 1: return 1   # Si
-    # elif valor == 0: return -1  # No  
+    # elif valor == 0: return -1  # No
     # else: return 0   # Abstencion, Ausente, Excusado, etc.
-    
+
     vote_mapping = {
         1: 1,     # Si -> Yea (1)
         0: 0,     # No -> Nay (0)
@@ -126,29 +131,31 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
         4: 9,     # Excusado -> No en la legislatura (9)
         # Añade cualquier otro valor que encuentres
     }
-    
+
     # Aplicar mapeo
     df['vote_numeric'] = df['vote'].map(vote_mapping)
-    
+
     # Manejar cualquier valor no asignado
     unmapped = df[df['vote_numeric'].isna()]
     if len(unmapped) > 0:
         print(f"⚠️  Encontrado {len(unmapped)} valores de voto no asignados:")
         print(unmapped['vote'].value_counts())
-        df['vote_numeric'] = df['vote_numeric'].fillna(9)  # por defecto a "no en la legislatura"
+        df['vote_numeric'] = df['vote_numeric'].fillna(
+            9)  # por defecto a "no en la legislatura"
 
     # 5. Crear matriz en formato ancho (legisladores x votos)
     print("📊 Creando matriz legislador x voto...")
-    
+
     # Pivotar a formato ancho
     vote_matrix = df.pivot_table(
         index='legislator_id',
-        columns='vote_id', 
+        columns='vote_id',
         values='vote_numeric',
         fill_value=9  # No en la legislatura para combinaciones faltantes
     )
 
-    print(f"📏 Dimensiones de la matriz: {vote_matrix.shape[0]} legisladores x {vote_matrix.shape[1]} votos")
+    print(
+        f"📏 Dimensiones de la matriz: {vote_matrix.shape[0]} legisladores x {vote_matrix.shape[1]} votos")
 
     # 6. Filtrar por legisladores y votos con datos suficientes
     # Eliminar a los legisladores con muy pocos votos
@@ -156,31 +163,36 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
     legislator_vote_counts = (vote_matrix != 9).sum(axis=1)
     active_legislators = legislator_vote_counts >= min_votes_per_legislator
 
-    print(f"🧹 Filtrando: {active_legislators.sum()} legisladores con >= {min_votes_per_legislator} votos")
+    print(
+        f"🧹 Filtrando: {active_legislators.sum()} legisladores con >= {min_votes_per_legislator} votos")
 
     # Eliminar votos con muy pocos participantes
     min_legislators_per_vote = 10
     vote_participation = (vote_matrix != 9).sum(axis=0)
     active_votes = vote_participation >= min_legislators_per_vote
 
-    print(f"🧹 Filtrando: {active_votes.sum()} votos con >= {min_legislators_per_vote} participantes")
+    print(
+        f"🧹 Filtrando: {active_votes.sum()} votos con >= {min_legislators_per_vote} participantes")
 
     # Aplicar filtros
     filtered_matrix = vote_matrix.loc[active_legislators, active_votes]
 
-    print(f"📐 Matriz final: {filtered_matrix.shape[0]} legisladores x {filtered_matrix.shape[1]} votos")
+    print(
+        f"📐 Matriz final: {filtered_matrix.shape[0]} legisladores x {filtered_matrix.shape[1]} votos")
 
     # 7. Ordenar los votos cronológicamente
     vote_ids_in_matrix = [int(vid) for vid in filtered_matrix.columns.tolist()]
-    votaciones_filtered = [v for v in votaciones_data if v.get('id') in vote_ids_in_matrix]
-    
+    votaciones_filtered = [
+        v for v in votaciones_data if v.get('id') in vote_ids_in_matrix]
+
     if votaciones_filtered and 'fecha' in votaciones_filtered[0]:
         # Ordenar por fecha
         votaciones_filtered.sort(key=lambda x: x.get('fecha', ''))
         chronological_order = [str(v['id']) for v in votaciones_filtered]
-        
+
         # Reordenar columnas de matriz por fecha
-        available_cols = [col for col in chronological_order if col in filtered_matrix.columns]
+        available_cols = [
+            col for col in chronological_order if col in filtered_matrix.columns]
         if available_cols:
             filtered_matrix = filtered_matrix[available_cols]
             print(f"📅 Votos ordenados cronológicamente")
@@ -192,9 +204,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
     filtered_matrix.to_csv(f"{output_dir}/votes_matrix.csv")
 
     # Metadatos de legisladores
-    active_legislator_ids = [int(lid) for lid in filtered_matrix.index.tolist()]
+    active_legislator_ids = [int(lid)
+                             for lid in filtered_matrix.index.tolist()]
     legislator_metadata = []
-    
+
     for parl in parlamentarios_data:
         if parl.get('id') in active_legislator_ids:
             # Extraer partido de la matriz de período (para el período 2018-2022)
@@ -204,9 +217,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
                     if 'partido' in periodo and periodo['partido']:
                         partido = str(periodo['partido']).strip()
                         break
-            
+
             # Construir nombre completo
-            nombre_completo = f"{parl.get('nombre', '')} {parl.get('apellidoP', '')} {parl.get('apellidoM', '')}".strip()
+            nombre_completo = f"{parl.get('nombre', '')} {parl.get('apellidoP', '')} {parl.get('apellidoM', '')}".strip(
+            )
 
             # Obtener información de región/distrito
             region = ''
@@ -215,7 +229,7 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
                 distrito_info = parl['distrito'][0]
                 region = distrito_info.get('region', '')
                 distrito = distrito_info.get('distrito', '')
-            
+
             legislator_metadata.append({
                 'legislator_id': str(parl.get('id')),
                 'id': parl.get('id'),
@@ -224,7 +238,7 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
                 'region': region,
                 'distrito': distrito
             })
-    
+
     legislator_df = pd.DataFrame(legislator_metadata)
     legislator_df.to_csv(f"{output_dir}/legislator_metadata.csv", index=False)
 
@@ -239,10 +253,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
                 'nombre': votacion.get('nombre', ''),
                 'boletin': votacion.get('boletin', '')
             })
-    
+
     vote_df = pd.DataFrame(vote_metadata)
     vote_df.to_csv(f"{output_dir}/vote_metadata.csv", index=False)
-    
+
     # 9. Crear un script R para el análisis W-NOMINATE
     r_script = f'''
 # Análisis W-NOMINATE con anclajes de polaridad adecuados
@@ -250,10 +264,10 @@ def export_votes_for_r_wnominate(db_name: str = "name_database", output_dir: str
 
 library(wnominate)
 
-# Cargar los datos desde data/input
-votes_matrix <- as.matrix(read.csv("../../data/input/votes_matrix.csv", row.names = 1))
-legislator_metadata <- read.csv("../../data/input/legislator_metadata.csv")
-vote_metadata <- read.csv("../../data/input/vote_metadata.csv")
+# Cargar los datos desde data/wnominate/input
+votes_matrix <- as.matrix(read.csv("../../data/wnominate/input/votes_matrix.csv", row.names = 1))
+legislator_metadata <- read.csv("../../data/wnominate/input/legislator_metadata.csv")
+vote_metadata <- read.csv("../../data/wnominate/input/vote_metadata.csv")
 
 # Relacionar los metadatos de la legisladora con la matriz de votos
 vote_matrix_ids <- as.numeric(rownames(votes_matrix))
@@ -313,7 +327,7 @@ cat("\nVerificación de Polaridad:\n")
 cat("Amaro Labra (PC, debería ser negativo):", amaro_coord1D, amaro_coord2D, "\n")
 cat("Enrique Van Rysselberghe (UDI, debería ser positivo):", enrique_coord1D, enrique_coord2D, "\n")
 
-# Guardar resultados con la orientación adecuada en data/output
+# Guardar resultados con la orientación adecuada en data/wnominate/output
 coordinates_with_metadata <- merge(coordinates, legislator_metadata,
     by.x = "row.names", by.y = "legislator_id",
     all.x = TRUE
@@ -321,7 +335,7 @@ coordinates_with_metadata <- merge(coordinates, legislator_metadata,
 names(coordinates_with_metadata)[1] <- "legislator_id"
 
 # Crear directorio de salida si no existe
-output_dir <- "../../data/output"
+output_dir <- "../../data/wnominate/output"
 if (!dir.exists(output_dir)) {{
     dir.create(output_dir, recursive = TRUE)
 }}
@@ -338,32 +352,34 @@ cat("Bill parameters guardados en:", file.path(output_dir, "wnominate_bill_param
 
     # Escriba el script R solo si no existe o cree una copia de seguridad
     # Guardar scripts R en scripts/r
-    r_scripts_dir = os.path.join(os.path.dirname(__file__), '..', 'scripts', 'r')
+    r_scripts_dir = os.path.join(
+        os.path.dirname(__file__), '..', 'scripts', 'r')
     os.makedirs(r_scripts_dir, exist_ok=True)
-    
+
     r_script_path = os.path.join(r_scripts_dir, "r_wnominate_script.R")
     if os.path.exists(r_script_path):
         # Crear una copia de seguridad de un archivo existente
-        backup_path = os.path.join(r_scripts_dir, "r_wnominate_script_backup.R")
+        backup_path = os.path.join(
+            r_scripts_dir, "r_wnominate_script_backup.R")
         shutil.copy2(r_script_path, backup_path)
-        print(f"📝 El script R ya existe. Copia de seguridad creada.: {backup_path}")
+        print(
+            f"📝 El script R ya existe. Copia de seguridad creada.: {backup_path}")
         print("📝 Manteniendo su script R existente con cualquier modificación manual.")
     else:
         # Escribir un nuevo script R
         with open(r_script_path, "w", encoding="utf-8") as f:
             f.write(r_script)
         print(f"📝 Se creó un nuevo script R: {r_script_path}")
-    
-    
+
     # 10. Crear script de comparación
     comparison_script = '''
 # Comparar los resultados de R W-NOMINATE con los resultados de Python pynominate
 
 # Cargar resultados de R  
-r_coords <- read.csv("../../data/output/wnominate_coordinates.csv")
+r_coords <- read.csv("../../data/wnominate/output/wnominate_coordinates.csv")
 
 # Cargar resultados de Python (ajustar la ruta según sea necesario)
-# python_file <- "../../data/output/all_votes_dwnominate.json"
+# python_file <- "../../data/wnominate/output/all_votes_dwnominate.json"
 # python_results <- jsonlite::fromJSON(python_file)
 
 # TODO: Agregar el análisis de Procrustes para alinear los dos sistemas de coordenadas
@@ -372,39 +388,45 @@ r_coords <- read.csv("../../data/output/wnominate_coordinates.csv")
 
 cat("Utilizar este script para comparar los resultados de R y Python después de ejecutar ambos análisis.\\n")
 '''
-    
+
     compare_script_path = os.path.join(r_scripts_dir, "compare_results.R")
     with open(compare_script_path, "w") as f:
         f.write(comparison_script)
-    
+
     print(f"\n🎯 ¡Exportación completa!")
     print(f"   📁 Datos guardados en: {output_dir}/")
-    print(f"      📄 votes_matrix.csv - {filtered_matrix.shape[0]}x{filtered_matrix.shape[1]} matriz de votos")
-    print(f"      📄 legislator_metadata.csv - {len(legislator_metadata)} legisladores")
+    print(
+        f"      📄 votes_matrix.csv - {filtered_matrix.shape[0]}x{filtered_matrix.shape[1]} matriz de votos")
+    print(
+        f"      📄 legislator_metadata.csv - {len(legislator_metadata)} legisladores")
     print(f"      📄 vote_metadata.csv - {len(vote_metadata)} votos")
     print(f"   � Scripts R guardados en: {r_scripts_dir}/")
     print(f"      �📄 r_wnominate_script.R - Análisis R listo para ejecutar")
     print(f"      📄 compare_results.R - Para comparar resultados de R vs Python")
-    
+
     print(f"\n🚀 Próximos pasos:")
     print(f"   1. cd {r_scripts_dir}")
     print(f"   2. Rscript r_wnominate_script.R")
     print(f"   3. Los resultados se guardarán en data/output/")
     print(f"   4. Comparar con resultados de pynominate")
-    
+
     return {
         'matrix_shape': filtered_matrix.shape,
         'export_dir': output_dir,
         'vote_mapping': vote_mapping
     }
 
+
 if __name__ == "__main__":
     import argparse
-    parser = argparse.ArgumentParser(description="Exportar votos de MongoDB para análisis R W-NOMINATE")
-    parser.add_argument("--db-name", default="database_example", help="Nombre de la base de datos MongoDB")
-    parser.add_argument("--output-dir", default="r_wnominate_data", help="Directorio de salida")
+    parser = argparse.ArgumentParser(
+        description="Exportar votos de MongoDB para análisis R W-NOMINATE")
+    parser.add_argument("--db-name", default="database_example",
+                        help="Nombre de la base de datos MongoDB")
+    parser.add_argument(
+        "--output-dir", default="r_wnominate_data", help="Directorio de salida")
 
     args = parser.parse_args()
-    
+
     result = export_votes_for_r_wnominate(args.db_name, args.output_dir)
     print(f"\n✅ Exportación exitosa: {result}")

@@ -401,10 +401,10 @@ def plot_wnominate_map(results: Dict[str, Any], output_file: str = None, show_la
     # Guardar o mostrar gráfico
     if output_file:
         try:
-            # Si no se proporciona ruta absoluta, guardar en results/images
+            # Si no se proporciona ruta absoluta, guardar en results/
             if not os.path.isabs(output_file):
                 results_dir = os.path.join(os.path.dirname(
-                    __file__), '..', 'results', 'images')
+                    __file__), '..', 'results')
                 os.makedirs(results_dir, exist_ok=True)
                 output_file = os.path.join(results_dir, output_file)
 
@@ -639,9 +639,9 @@ def main():
 
         # Guardar los resultados en un archivo si se procesan todos los votos
         if args.all_votes:
-            # Guardar en data/output por defecto
+            # Guardar en data/wnominate/output por defecto
             output_dir = os.path.join(os.path.dirname(
-                __file__), '..', 'data', 'output')
+                __file__), '..', 'data', 'wnominate', 'output')
             os.makedirs(output_dir, exist_ok=True)
             output_file = os.path.join(
                 output_dir, f"all_votes_dwnominate_{args.db_name}.json")

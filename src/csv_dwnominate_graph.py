@@ -7,13 +7,13 @@ It can plot individual periods or show the dynamic evolution of ideal points ove
 
 Usage:
     # Plot a single period:
-    python csv_dwnominate_graph.py --period P1 --csv-file data/dwnominate/dwnominate_coordinates_p1.csv
+    python csv_dwnominate_graph.py --period P1 --csv-file data/dwnominate/output/dwnominate_coordinates_p1.csv
     
     # Plot evolution across all periods:
-    python csv_dwnominate_graph.py --evolution --csv-dir data/dwnominate
+    python csv_dwnominate_graph.py --evolution --csv-dir data/dwnominate/output
     
     # Compare specific periods:
-    python csv_dwnominate_graph.py --compare P1 P5 --csv-dir data/dwnominate
+    python csv_dwnominate_graph.py --compare P1 P5 --csv-dir data/dwnominate/output
 """
 
 import os

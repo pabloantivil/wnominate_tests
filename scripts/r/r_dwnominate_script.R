@@ -1,556 +1,369 @@
-# DW-NOMINATE Analysis Script for Chilean Congressional Data (5 PERIODS)
-# Analyzes ideological changes across FIVE political periods (P1-P5)
-# This allows using MODEL 1 (linear change) which requires 5+ periods
+# DW-NOMINATE Analysis Script for Chilean Congressional Data
+# 55th Legislative Period (2018-2022) divided into 5 periods
+# Generated automatically from CSV files
 
-# =============================================================================
-# INSTALLATION & SETUP
-# =============================================================================
+cat("\n")
+cat("===============================================\n")
+cat("  DW-NOMINATE Analysis - Chilean Congress     \n")
+cat("  55th Legislative Period (2018-2022)         \n")
+cat("===============================================\n")
+cat("\n")
 
 # Install required packages if not already installed
-if (!require(pscl)) install.packages("pscl")
-if (!require(dplyr)) install.packages("dplyr")
-if (!require(ggplot2)) install.packages("ggplot2")
-if (!require(tidyr)) install.packages("tidyr")
-
-# Install dwnominate from GitHub (requires Rtools on Windows, gfortran on Mac/Linux)
+if (!require(pscl)) {
+  cat("📦 Installing pscl package...\n")
+  install.packages("pscl")
+}
+if (!require(dplyr)) {
+  cat("📦 Installing dplyr package...\n")
+  install.packages("dplyr")
+}
 if (!require(dwnominate)) {
-    if (!require(remotes)) install.packages("remotes")
-    remotes::install_github("wmay/dwnominate")
+  cat("📦 Installing dwnominate package...\n")
+  install.packages("remotes")
+  remotes::install_github("wmay/dwnominate")
 }
 
 library(pscl)
-library(dwnominate)
 library(dplyr)
-library(ggplot2)
-library(tidyr)
+library(dwnominate)
 
-# =============================================================================
-# LOAD DATA FOR FIVE PERIODS
-# =============================================================================
+cat("\n✅ All packages loaded successfully\n\n")
 
-cat("\n=== LOADING DATA FOR DW-NOMINATE (5 PERIODS) ===\n")
+# Load metadata from data/dwnominate/input
+legislator_meta <- read.csv("../../data/dwnominate/input/legislator_metadata.csv")
+vote_meta <- read.csv("../../data/dwnominate/input/vote_metadata.csv")
 
-# Load legislator metadata (shared across all periods)
-legislator_meta <- read.csv("legislator_metadata.csv")
-cat("✅ Loaded metadata for", nrow(legislator_meta), "legislators\n")
+cat("📊 Metadata loaded:\n")
+cat("   Legislators: ", nrow(legislator_meta), "\n")
+cat("   Votes: ", nrow(vote_meta), "\n\n")
 
-# Load period-specific data
-periods <- c("p1", "p2", "p3", "p4", "p5")
-period_names <- c(
-    "Período 1",
-    "Período 2",
-    "Período 3 (Estallido)",
-    "Período 4 (Pandemia)",
-    "Período 5 (Post-Plebiscito)"
-)
-period_dates <- c(
-    "2018-03-11 to 2018-11-01",
-    "2018-11-01 to 2019-06-20",
-    "2019-06-20 to 2020-02-10",
-    "2020-02-10 to 2020-10-01",
-    "2020-10-01 to 2022-03-10"
-)
+cat("📅 Loading vote matrices for each period...\n\n")
 
 # Storage for rollcall objects
 rc_list <- list()
 
-for (i in 1:length(periods)) {
-    period <- periods[i]
-    period_name <- period_names[i]
+# PERIOD 1: Año 2018
+votes_p1 <- read.csv("../../data/dwnominate/input/votes_matrix_p1.csv", row.names = 1)
+votes_mat_p1 <- as.matrix(votes_p1)
 
-    cat(sprintf("\n📂 Loading Period %d (%s)...\n", i, period_name))
+period_legislators_p1 <- rownames(votes_mat_p1)
+legis_data_p1 <- data.frame(
+  legislator_id = as.integer(period_legislators_p1),
+  row.names = period_legislators_p1,
+  stringsAsFactors = FALSE
+)
+legis_data_p1 <- legis_data_p1 %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p1$party <- ifelse(is.na(legis_data_p1$partido), "IND", legis_data_p1$partido)
+rownames(legis_data_p1) <- period_legislators_p1
 
-    # Load votes matrix for this period
-    votes_matrix_file <- sprintf("votes_matrix_%s.csv", period)
+rc_p1 <- rollcall(
+  data = votes_mat_p1,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p1),
+  vote.names = colnames(votes_mat_p1),
+  desc = "Año 2018",
+  legis.data = legis_data_p1
+)
+cat(
+  "✅ Año 2018: ", nrow(rc_p1$votes), " legislators x ",
+  ncol(rc_p1$votes), " votes\n"
+)
+rc_list[[1]] <- rc_p1
 
-    if (!file.exists(votes_matrix_file)) {
-        cat(sprintf("❌ ERROR: File not found: %s\n", votes_matrix_file))
-        cat("   Please run prepare_dwnominate_5periods.py first!\n")
-        stop("Missing data files")
-    }
+# PERIOD 2: Año 2019
+votes_p2 <- read.csv("../../data/dwnominate/input/votes_matrix_p2.csv", row.names = 1)
+votes_mat_p2 <- as.matrix(votes_p2)
 
-    votes_matrix <- read.csv(votes_matrix_file, row.names = 1)
-    votes_mat <- as.matrix(votes_matrix)
+period_legislators_p2 <- rownames(votes_mat_p2)
+legis_data_p2 <- data.frame(
+  legislator_id = as.integer(period_legislators_p2),
+  row.names = period_legislators_p2,
+  stringsAsFactors = FALSE
+)
+legis_data_p2 <- legis_data_p2 %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p2$party <- ifelse(is.na(legis_data_p2$partido), "IND", legis_data_p2$partido)
+rownames(legis_data_p2) <- period_legislators_p2
 
-    cat(sprintf("   Dimensions: %d legislators x %d votes\n", nrow(votes_mat), ncol(votes_mat)))
+rc_p2 <- rollcall(
+  data = votes_mat_p2,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p2),
+  vote.names = colnames(votes_mat_p2),
+  desc = "Año 2019",
+  legis.data = legis_data_p2
+)
+cat(
+  "✅ Año 2019: ", nrow(rc_p2$votes), " legislators x ",
+  ncol(rc_p2$votes), " votes\n"
+)
+rc_list[[2]] <- rc_p2
 
-    # Load vote metadata for this period
-    vote_meta_file <- sprintf("vote_metadata_%s.csv", period)
-    vote_meta <- read.csv(vote_meta_file)
+# PERIOD 3: 2020 Semestre 1
+votes_p3 <- read.csv("../../data/dwnominate/input/votes_matrix_p3.csv", row.names = 1)
+votes_mat_p3 <- as.matrix(votes_p3)
 
-    # Create legislator data frame with metadata
-    period_legislators <- rownames(votes_mat)
-    legis_data <- data.frame(
-        legislator_id = as.integer(period_legislators),
-        row.names = period_legislators,
-        stringsAsFactors = FALSE
-    )
+period_legislators_p3 <- rownames(votes_mat_p3)
+legis_data_p3 <- data.frame(
+  legislator_id = as.integer(period_legislators_p3),
+  row.names = period_legislators_p3,
+  stringsAsFactors = FALSE
+)
+legis_data_p3 <- legis_data_p3 %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p3$party <- ifelse(is.na(legis_data_p3$partido), "IND", legis_data_p3$partido)
+rownames(legis_data_p3) <- period_legislators_p3
 
-    # Add party information from metadata
-    legis_data <- legis_data %>%
-        left_join(
-            legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-            by = "legislator_id"
-        )
+rc_p3 <- rollcall(
+  data = votes_mat_p3,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p3),
+  vote.names = colnames(votes_mat_p3),
+  desc = "2020 Semestre 1",
+  legis.data = legis_data_p3
+)
+cat(
+  "✅ 2020 Semestre 1: ", nrow(rc_p3$votes), " legislators x ",
+  ncol(rc_p3$votes), " votes\n"
+)
+rc_list[[3]] <- rc_p3
 
-    # Create 'party' column for rollcall() function
-    # Use partido (Spanish) but create party (English) column as well
-    # Fill missing values with "IND" to avoid errors
-    legis_data$party <- ifelse(is.na(legis_data$partido), "IND", legis_data$partido)
+# PERIOD 4: 2020 Semestre 2
+votes_p4 <- read.csv("../../data/dwnominate/input/votes_matrix_p4.csv", row.names = 1)
+votes_mat_p4 <- as.matrix(votes_p4)
 
-    # Ensure row names are preserved
-    rownames(legis_data) <- period_legislators
+period_legislators_p4 <- rownames(votes_mat_p4)
+legis_data_p4 <- data.frame(
+  legislator_id = as.integer(period_legislators_p4),
+  row.names = period_legislators_p4,
+  stringsAsFactors = FALSE
+)
+legis_data_p4 <- legis_data_p4 %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p4$party <- ifelse(is.na(legis_data_p4$partido), "IND", legis_data_p4$partido)
+rownames(legis_data_p4) <- period_legislators_p4
 
-    # Create rollcall object for this period
-    rc <- rollcall(
-        data = votes_mat,
-        yea = 1, # "Sí" votes
-        nay = 0, # "No" votes
-        missing = NA, # True missing
-        notInLegis = 9, # Abstentions, absences, etc.
-        legis.names = rownames(votes_mat),
-        vote.names = colnames(votes_mat),
-        desc = sprintf("Chilean Congressional Votes - Period %d (%s)", i, period_name),
-        legis.data = legis_data,
-        vote.data = vote_meta
-    )
+rc_p4 <- rollcall(
+  data = votes_mat_p4,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p4),
+  vote.names = colnames(votes_mat_p4),
+  desc = "2020 Semestre 2",
+  legis.data = legis_data_p4
+)
+cat(
+  "✅ 2020 Semestre 2: ", nrow(rc_p4$votes), " legislators x ",
+  ncol(rc_p4$votes), " votes\n"
+)
+rc_list[[4]] <- rc_p4
 
-    # Add to list
-    rc_list[[i]] <- rc
+# PERIOD 5: Año 2021
+votes_p5 <- read.csv("../../data/dwnominate/input/votes_matrix_p5.csv", row.names = 1)
+votes_mat_p5 <- as.matrix(votes_p5)
 
-    cat(sprintf("   ✅ Created rollcall object for Period %d\n", i))
-}
+period_legislators_p5 <- rownames(votes_mat_p5)
+legis_data_p5 <- data.frame(
+  legislator_id = as.integer(period_legislators_p5),
+  row.names = period_legislators_p5,
+  stringsAsFactors = FALSE
+)
+legis_data_p5 <- legis_data_p5 %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p5$party <- ifelse(is.na(legis_data_p5$partido), "IND", legis_data_p5$partido)
+rownames(legis_data_p5) <- period_legislators_p5
 
-cat("\n=== ROLLCALL OBJECTS CREATED ===\n")
-cat(sprintf("Total periods: %d\n", length(rc_list)))
+rc_p5 <- rollcall(
+  data = votes_mat_p5,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p5),
+  vote.names = colnames(votes_mat_p5),
+  desc = "Año 2021",
+  legis.data = legis_data_p5
+)
+cat(
+  "✅ Año 2021: ", nrow(rc_p5$votes), " legislators x ",
+  ncol(rc_p5$votes), " votes\n"
+)
+rc_list[[5]] <- rc_p5
 
-# Print summaries
-for (i in 1:length(rc_list)) {
-    cat(sprintf("\nPeriod %d (%s, %s):\n", i, period_names[i], period_dates[i]))
-    print(summary(rc_list[[i]]))
-}
 
-# =============================================================================
-# POLARITY ANCHOR SELECTION
-# =============================================================================
+cat("\n✅ All periods loaded successfully\n\n")
+cat("📋 Rollcall list contains ", length(rc_list), " periods\n\n")
 
-cat("\n=== POLARITY ANCHOR SELECTION ===\n")
+# Set polarity anchors based on Chilean political spectrum
+cat("🎯 Setting polarity anchors...\n")
 
 # Find legislators present in ALL periods for consistent polarity
-# Extract legislator IDs from each period
 all_period_legislators <- list()
 for (i in 1:5) {
-    all_period_legislators[[i]] <- rownames(rc_list[[i]]$votes)
+  all_period_legislators[[i]] <- rownames(rc_list[[i]]$votes)
 }
 
-# Find legislators in all periods
 common_legislators <- Reduce(intersect, all_period_legislators)
-cat(sprintf("Legislators present in ALL 5 periods: %d\n", length(common_legislators)))
+cat("   Legislators present in ALL 5 periods: ", length(common_legislators), "\n")
 
-# Find polarity anchor from common legislators
-# We want a left-wing anchor (PC or PS) who appears in all periods
-if ("partido" %in% colnames(legislator_meta)) {
-    cat("\nSearching for polarity anchor (left-wing party member in all periods)...\n")
+# For Chilean politics:
+# Left-wing parties (should be negative): PC, PS
+# Right-wing parties (should be positive): UDI, RN
 
-    # Left-wing parties (should have POSITIVE coordinates in Chilean spectrum)
-    left_parties <- c("PC", "PS", "PPD")
+right_parties <- c("UDI", "RN")
+left_parties <- c("PC", "PS")
 
-    # Find left-wing legislators in common set
-    left_legislators <- legislator_meta$legislator_id[
-        legislator_meta$legislator_id %in% common_legislators &
-            legislator_meta$partido %in% left_parties
-    ]
+left_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% left_parties]
+right_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% right_parties]
 
-    if (length(left_legislators) > 0) {
-        # Use first left-wing legislator as anchor
-        polarity_anchor <- as.character(left_legislators[1])
-        anchor_info <- legislator_meta[legislator_meta$legislator_id == polarity_anchor, ]
+# Find left-wing legislator in common set
+left_in_common <- left_legislators[as.character(left_legislators) %in% common_legislators]
 
-        cat(sprintf(
-            "✅ Polarity anchor: %s (%s, %s)\n",
-            polarity_anchor,
-            anchor_info$nombres,
-            anchor_info$partido
-        ))
-        cat("   This legislator will have a POSITIVE coordinate on Dimension 1\n")
-        cat("   (Economic dimension: Left=Positive, Right=Negative in Chilean context)\n")
-    } else {
-        # Fallback: use first common legislator
-        polarity_anchor <- common_legislators[1]
-        cat(sprintf("⚠️  Using fallback polarity anchor: %s\n", polarity_anchor))
-    }
+if (length(left_in_common) > 0) {
+  polarity_anchor <- as.character(left_in_common[1])
+  anchor_info <- legislator_meta[legislator_meta$legislator_id == as.integer(polarity_anchor), ]
+  cat(
+    "   Polarity anchor: ", polarity_anchor, " (",
+    anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\n\n"
+  )
 } else {
-    # No party data, use first common legislator
-    polarity_anchor <- common_legislators[1]
-    cat(sprintf("⚠️  No party data available. Using legislator: %s\n", polarity_anchor))
+  # Fallback
+  polarity_anchor <- common_legislators[1]
+  cat("   Using fallback polarity anchor: ", polarity_anchor, "\n\n")
 }
 
-# =============================================================================
-# RUN DW-NOMINATE WITH MODEL 1 (LINEAR)
-# =============================================================================
+cat("🚀 Running DW-NOMINATE...\n")
+cat("   This may take several minutes depending on data size.\n\n")
 
-cat("\n=== RUNNING DW-NOMINATE ===\n")
-cat("This may take several minutes...\n\n")
-
-# With 5 periods, we can use model=1 (linear change over time)!
-# This is the recommended model for DW-NOMINATE
-
-cat("Running DW-NOMINATE with MODEL 1 (Linear change)...\n")
-cat("✅ With 5 periods, we can use the linear model to detect trends!\n\n")
-
+# Run DW-NOMINATE with id parameter
 dw_result <- dwnominate(
-    rc_list = rc_list,
-    id = "legislator_id", # Column in legis.data with unique IDs
-    dims = 2, # 2 dimensions
-    model = 1, # Linear change over time ⭐ NOW ENABLED
-    niter = 4, # Number of iterations (4 is usually sufficient)
-    polarity = polarity_anchor, # Polarity anchor
-    verbose = TRUE # Show progress
+  rc_list,
+  id = "legislator_id", # CRÍTICO: identificador único de legisladores
+  dims = 2, # 2 dimensions
+  model = 1, # Linear change over time
+  polarity = polarity_anchor,
+  minvotes = 1, # Minimum votes for a legislator to be included (reducido de 10)
+  lop = 0.001, # Lopsided vote threshold (reducido de 0.025)
+  niter = 4, # 4 iterations (usually sufficient)
+  beta = 5.9539, # Spatial error parameter (default)
+  w = 0.3463, # Second dimension weight (default)
+  verbose = TRUE
 )
 
-cat("\n=== DW-NOMINATE RESULTS ===\n")
+cat("\n✅ DW-NOMINATE estimation complete!\n\n")
+
+# Print summary
+cat("\n=== DW-NOMINATE RESULTS SUMMARY ===\n")
 print(summary(dw_result))
 
-# =============================================================================
-# EXTRACT AND SAVE RESULTS
-# =============================================================================
-
-cat("\n=== EXTRACTING RESULTS ===\n")
-
-# Extract legislator coordinates (includes all periods)
+# Extract legislator coordinates
 legislators <- dw_result$legislators
 
-cat(sprintf("DW-NOMINATE results: %d rows (legislator-period combinations)\n", nrow(legislators)))
-cat(sprintf("Legislator metadata: %d unique legislators\n", nrow(legislator_meta)))
-
-# First, let's check the actual column names in the legislators dataframe
-cat("\nColumn names in legislators dataframe:\n")
-print(names(legislators))
-
 # Rename columns to match our expected names
-# DW-NOMINATE returns: ID, session, party, name, coord1D, coord2D, etc.
 legislators <- legislators %>%
-    rename(
-        legislator = ID, # Legislator ID
-        period = session # Time period (1-5)
-    ) %>%
-    mutate(
-        legislator = as.integer(legislator) # Convert to integer for join
-    )
+  rename(
+    legislator = ID,
+    period = session
+  ) %>%
+  mutate(
+    legislator = as.integer(legislator)
+  )
 
-cat("✅ Renamed 'ID' → 'legislator' and 'session' → 'period'\n")
-cat("✅ Converted 'legislator' to integer for joining\n")
-
-# Add metadata - use left_join to preserve all DW-NOMINATE results
-# Note: DW-NOMINATE already includes a 'party' column, but we want full metadata
+# Add metadata
 legislators <- legislators %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = c("legislator" = "legislator_id")
-    )
-
-# Check for missing metadata
-missing_meta <- sum(is.na(legislators$partido))
-if (missing_meta > 0) {
-    cat(sprintf("⚠️  Warning: %d legislator-period entries missing metadata\n", missing_meta))
-}
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = c("legislator" = "legislator_id")
+  )
 
 # Save full results
-write.csv(legislators, "dwnominate_5p_coordinates_all_periods.csv", row.names = FALSE)
-cat("💾 Saved: dwnominate_5p_coordinates_all_periods.csv\n")
+cat("\n💾 Saving coordinates for all periods combined...\n")
 
-# Save rollcall results
-rollcalls <- dw_result$rollcalls
-write.csv(rollcalls, "dwnominate_5p_bill_parameters.csv", row.names = FALSE)
-cat("💾 Saved: dwnominate_5p_bill_parameters.csv\n")
-
-# Create period-specific coordinate files for easier analysis
-for (i in 1:5) {
-    period_coords <- legislators %>%
-        filter(period == i) %>%
-        select(legislator, period, coord1D, coord2D, se1D, se2D, nombres, partido, region, distrito)
-
-    filename <- sprintf("dwnominate_5p_coordinates_p%d.csv", i)
-    write.csv(period_coords, filename, row.names = FALSE)
-    cat(sprintf("💾 Saved: %s (%d legislators)\n", filename, nrow(period_coords)))
+# Crear directorio de salida si no existe
+output_dir <- "../../data/dwnominate/output"
+if (!dir.exists(output_dir)) {
+  dir.create(output_dir, recursive = TRUE)
 }
 
-# =============================================================================
-# ANALYZE IDEOLOGICAL CHANGES
-# =============================================================================
+write.csv(legislators, file.path(output_dir, "dwnominate_coordinates_all_periods.csv"), row.names = FALSE)
+cat("   ✅ dwnominate_coordinates_all_periods.csv (", nrow(legislators), " rows)\n")
 
-cat("\n=== ANALYZING IDEOLOGICAL CHANGES ===\n")
+# Save period-specific files
+cat("\n💾 Saving coordinates for each period...\n")
+for (i in 1:5) {
+  period_coords <- legislators %>%
+    filter(period == i) %>%
+    select(legislator, period, coord1D, coord2D, se1D, se2D, nombres, partido, region, distrito)
 
-# For legislators present in all 5 periods, calculate shifts
-legislators_wide <- legislators %>%
-    filter(legislator %in% common_legislators) %>%
-    select(legislator, period, coord1D, coord2D, partido, nombres) %>%
-    tidyr::pivot_wider(
-        id_cols = c(legislator, partido, nombres),
-        names_from = period,
-        values_from = c(coord1D, coord2D),
-        names_prefix = "P"
-    )
+  output_file <- file.path(output_dir, paste0("dwnominate_coordinates_p", i, ".csv"))
+  write.csv(period_coords, output_file, row.names = FALSE)
+  cat("   ✅ ", basename(output_file), " (", nrow(period_coords), " legislators)\n")
+}
 
-# Calculate changes across different time spans
-legislators_wide <- legislators_wide %>%
-    mutate(
-        # Sequential changes
-        shift_P1_P2 = coord1D_P2 - coord1D_P1,
-        shift_P2_P3 = coord1D_P3 - coord1D_P2, # Into Estallido Social
-        shift_P3_P4 = coord1D_P4 - coord1D_P3, # Estallido to Pandemia
-        shift_P4_P5 = coord1D_P5 - coord1D_P4, # Pandemia to Post-Plebiscito
+# Also save bill/vote parameters
+cat("\n💾 Saving bill parameters...\n")
+write.csv(dw_result$rollcalls, file.path(output_dir, "dwnominate_bill_parameters.csv"), row.names = FALSE)
+cat("   ✅ dwnominate_bill_parameters.csv\n")
 
-        # Major period changes
-        shift_P1_P3 = coord1D_P3 - coord1D_P1, # Pre-Estallido to Estallido
-        shift_P3_P5 = coord1D_P5 - coord1D_P3, # Estallido to Post-Plebiscito
-        shift_P1_P5 = coord1D_P5 - coord1D_P1, # Total change
+# Plot results
+cat("\n📊 Creating visualization...\n")
 
-        abs_shift_total = abs(shift_P1_P5)
-    )
+# Crear directorio de resultados si no existe
+results_dir <- "../../results"
+if (!dir.exists(results_dir)) {
+  dir.create(results_dir, recursive = TRUE)
+}
 
-# Save shifts analysis
-write.csv(legislators_wide, "dwnominate_5p_ideological_shifts.csv", row.names = FALSE)
-cat("💾 Saved: dwnominate_5p_ideological_shifts.csv\n")
-
-# Find legislators with largest shifts
-cat("\nLegislators with LARGEST ideological shifts (Dimension 1, P1→P5):\n")
-top_shifters <- legislators_wide %>%
-    arrange(desc(abs_shift_total)) %>%
-    head(10) %>%
-    select(nombres, partido, coord1D_P1, coord1D_P5, shift_P1_P5)
-
-print(top_shifters)
-
-# Average shift by party
-cat("\nAverage ideological shift by party (P1→P5):\n")
-party_shifts <- legislators_wide %>%
-    group_by(partido) %>%
-    summarize(
-        n = n(),
-        avg_shift = mean(shift_P1_P5, na.rm = TRUE),
-        sd_shift = sd(shift_P1_P5, na.rm = TRUE)
-    ) %>%
-    arrange(desc(abs(avg_shift)))
-
-print(party_shifts)
-
-# Analyze trend: Are movements linear?
-cat("\nChecking for LINEAR trends in ideological movement:\n")
-cat("If movements are linear, shifts should be consistent across periods.\n\n")
-
-avg_sequential_shifts <- legislators_wide %>%
-    summarize(
-        avg_P1_P2 = mean(shift_P1_P2, na.rm = TRUE),
-        avg_P2_P3 = mean(shift_P2_P3, na.rm = TRUE),
-        avg_P3_P4 = mean(shift_P3_P4, na.rm = TRUE),
-        avg_P4_P5 = mean(shift_P4_P5, na.rm = TRUE)
-    )
-
-print(avg_sequential_shifts)
-
-# =============================================================================
-# VISUALIZATIONS
-# =============================================================================
-
-cat("\n=== CREATING VISUALIZATIONS ===\n")
-
-# 1. Standard DW-NOMINATE plot
-cat("Creating standard DW-NOMINATE plot...\n")
-png("dwnominate_5p_map_standard.png", width = 14, height = 10, units = "in", res = 300)
-plot(dw_result, main = "Chilean Congressional DW-NOMINATE Map (5 Periods)")
+png(file.path(results_dir, "dwnominate_map.png"), width = 1200, height = 800, res = 150)
+plot(dw_result)
 dev.off()
-cat("💾 Saved: dwnominate_5p_map_standard.png\n")
 
-# 2. Separate plots for each period
-for (i in 1:5) {
-    period_data <- legislators %>% filter(period == i)
+cat("   ✅ dwnominate_map.png\n")
 
-    p <- ggplot(period_data, aes(x = coord1D, y = coord2D, color = partido)) +
-        geom_point(alpha = 0.7, size = 3) +
-        geom_hline(yintercept = 0, color = "gray50", linetype = "dashed", alpha = 0.7) +
-        geom_vline(xintercept = 0, color = "gray50", linetype = "dashed", alpha = 0.7) +
-        labs(
-            title = sprintf("Period %d: %s (%s)", i, period_names[i], period_dates[i]),
-            x = "First Dimension (Economic: Left ← → Right)",
-            y = "Second Dimension",
-            color = "Party"
-        ) +
-        theme_minimal() +
-        theme(
-            legend.position = "bottom",
-            plot.title = element_text(hjust = 0.5, size = 14, face = "bold")
-        ) +
-        xlim(-1, 1) +
-        ylim(-1, 1) # Keep scale consistent
+# Summary statistics
+cat("\n=== ANALYSIS SUMMARY ===\n")
+cat("Total legislators: ", nrow(dw_result$legislators), "\n")
+cat("Total periods: ", length(rc_list), "\n")
+cat("Model type: Linear (model=1)\n")
+cat("Dimensions: 2\n")
+cat("Iterations: 4\n")
 
-    filename <- sprintf("dwnominate_5p_map_period_%d.png", i)
-    ggsave(filename, p, width = 10, height = 8, dpi = 300)
-    cat(sprintf("💾 Saved: %s\n", filename))
-}
+cat("\n✅ DW-NOMINATE analysis complete!\n\n")
+cat("📂 Output files:\n")
+cat("   • dwnominate_coordinates_p1.csv through p5.csv (period-specific)\n")
+cat("   • dwnominate_coordinates_all_periods.csv (combined)\n")
+cat("   • dwnominate_bill_parameters.csv\n")
+cat("   • dwnominate_map.png\n\n")
 
-# 3. Trajectory plot (show how legislators move over time)
-cat("\nCreating ideological trajectory plot (5 periods)...\n")
-
-# Get legislators with large total shifts
-sample_legislators <- legislators_wide %>%
-    arrange(desc(abs_shift_total)) %>%
-    head(15) %>% # Top 15 shifters
-    pull(legislator)
-
-trajectory_data <- legislators %>%
-    filter(legislator %in% sample_legislators) %>%
-    arrange(legislator, period)
-
-p_trajectory <- ggplot(trajectory_data, aes(x = coord1D, y = coord2D, group = legislator, color = partido)) +
-    geom_path(arrow = arrow(length = unit(0.2, "cm")), alpha = 0.6, size = 0.8) +
-    geom_point(aes(shape = as.factor(period)), size = 3, alpha = 0.8) +
-    geom_hline(yintercept = 0, color = "gray50", linetype = "dashed", alpha = 0.5) +
-    geom_vline(xintercept = 0, color = "gray50", linetype = "dashed", alpha = 0.5) +
-    labs(
-        title = "Ideological Trajectories: Top 15 Legislators with Largest Shifts",
-        subtitle = "Arrows show movement from P1 → P2 → P3 → P4 → P5",
-        x = "First Dimension (Economic: Left ← → Right)",
-        y = "Second Dimension",
-        color = "Party",
-        shape = "Period"
-    ) +
-    scale_shape_manual(values = c(16, 17, 18, 15, 8), labels = c("P1", "P2", "P3", "P4", "P5")) +
-    theme_minimal() +
-    theme(
-        legend.position = "right",
-        plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
-        plot.subtitle = element_text(hjust = 0.5, size = 10)
-    ) +
-    xlim(-1, 1) +
-    ylim(-1, 1)
-
-ggsave("dwnominate_5p_trajectories.png", p_trajectory, width = 14, height = 9, dpi = 300)
-cat("💾 Saved: dwnominate_5p_trajectories.png\n")
-
-# 4. Time series plot: Average coordinate by period
-cat("\nCreating time series plot...\n")
-
-time_series_data <- legislators %>%
-    filter(legislator %in% common_legislators) %>%
-    group_by(period, partido) %>% # Use 'partido' which is now in legislators after join
-    summarize(
-        mean_coord1D = mean(coord1D, na.rm = TRUE),
-        se_coord1D = sd(coord1D, na.rm = TRUE) / sqrt(n()),
-        .groups = "drop"
-    )
-
-p_timeseries <- ggplot(time_series_data, aes(x = period, y = mean_coord1D, color = partido, group = partido)) +
-    geom_line(size = 1.2, alpha = 0.8) +
-    geom_point(size = 3) +
-    geom_errorbar(aes(ymin = mean_coord1D - se_coord1D, ymax = mean_coord1D + se_coord1D), width = 0.1) +
-    labs(
-        title = "Ideological Movement by Party (5 Periods)",
-        subtitle = "Average Dimension 1 coordinate ± SE",
-        x = "Period",
-        y = "Average Coordinate (Left ← → Right)",
-        color = "Party"
-    ) +
-    scale_x_continuous(breaks = 1:5, labels = c("P1", "P2", "P3\n(Estallido)", "P4\n(Pandemia)", "P5\n(Post-Pleb)")) +
-    theme_minimal() +
-    theme(
-        legend.position = "right",
-        plot.title = element_text(hjust = 0.5, size = 14, face = "bold")
-    )
-
-ggsave("dwnominate_5p_timeseries_by_party.png", p_timeseries, width = 12, height = 7, dpi = 300)
-cat("💾 Saved: dwnominate_5p_timeseries_by_party.png\n")
-
-# 5. Shift distribution histogram
-p_shifts <- ggplot(legislators_wide, aes(x = shift_P1_P5)) +
-    geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
-    geom_vline(xintercept = 0, color = "red", linetype = "dashed", size = 1) +
-    labs(
-        title = "Distribution of Ideological Shifts (P1 to P5)",
-        subtitle = sprintf("n = %d legislators present in all periods", nrow(legislators_wide)),
-        x = "Change in Dimension 1 Coordinate (Positive = Shift Right)",
-        y = "Count"
-    ) +
-    theme_minimal() +
-    theme(plot.title = element_text(hjust = 0.5, size = 14, face = "bold"))
-
-ggsave("dwnominate_5p_shift_distribution.png", p_shifts, width = 10, height = 6, dpi = 300)
-cat("💾 Saved: dwnominate_5p_shift_distribution.png\n")
-
-# =============================================================================
-# SUMMARY STATISTICS
-# =============================================================================
-
-cat("\n=== SUMMARY STATISTICS ===\n")
-
-# Overall polarization by period
-polarization <- legislators %>%
-    group_by(period) %>%
-    summarize(
-        n = n(),
-        mean_coord1D = mean(coord1D, na.rm = TRUE),
-        sd_coord1D = sd(coord1D, na.rm = TRUE),
-        mean_coord2D = mean(coord2D, na.rm = TRUE),
-        sd_coord2D = sd(coord2D, na.rm = TRUE),
-        polarization = sd(coord1D, na.rm = TRUE) # SD as measure of polarization
-    )
-
-cat("\nPolarization by period (SD of Dimension 1):\n")
-print(polarization)
-
-# Check polarization trends
-cat("\n📊 Polarization Trends:\n")
-for (i in 2:5) {
-    if (polarization$polarization[i] > polarization$polarization[i - 1]) {
-        cat(sprintf(
-            "  P%d → P%d: INCREASED (%.4f → %.4f)\n",
-            i - 1, i, polarization$polarization[i - 1], polarization$polarization[i]
-        ))
-    } else {
-        cat(sprintf(
-            "  P%d → P%d: DECREASED (%.4f → %.4f)\n",
-            i - 1, i, polarization$polarization[i - 1], polarization$polarization[i]
-        ))
-    }
-}
-
-# =============================================================================
-# FINAL SUMMARY
-# =============================================================================
-
-cat("\n", rep("=", 70), "\n", sep = "")
-cat("DW-NOMINATE ANALYSIS COMPLETE (5 PERIODS, LINEAR MODEL)\n")
-cat(rep("=", 70), "\n", sep = "")
-
-cat("\n📊 Results Summary:\n")
-cat(sprintf("  - Total legislators analyzed: %d\n", length(unique(legislators$legislator))))
-cat(sprintf("  - Legislators in all 5 periods: %d\n", length(common_legislators)))
-cat(sprintf("  - Average ideological shift (P1→P5): %.4f\n", mean(legislators_wide$shift_P1_P5, na.rm = TRUE)))
-cat(sprintf("  - Max absolute shift: %.4f\n", max(legislators_wide$abs_shift_total, na.rm = TRUE)))
-
-cat("\n💾 Files created:\n")
-cat("  Coordinates:\n")
-cat("    - dwnominate_5p_coordinates_all_periods.csv\n")
-for (i in 1:5) {
-    cat(sprintf("    - dwnominate_5p_coordinates_p%d.csv\n", i))
-}
-cat("  Analysis:\n")
-cat("    - dwnominate_5p_ideological_shifts.csv\n")
-cat("    - dwnominate_5p_bill_parameters.csv\n")
-cat("  Visualizations:\n")
-cat("    - dwnominate_5p_map_standard.png\n")
-for (i in 1:5) {
-    cat(sprintf("    - dwnominate_5p_map_period_%d.png\n", i))
-}
-cat("    - dwnominate_5p_trajectories.png\n")
-cat("    - dwnominate_5p_timeseries_by_party.png\n")
-cat("    - dwnominate_5p_shift_distribution.png\n")
-
-cat("\n📖 Key Findings to Explore:\n")
-cat("  1. Review ideological shifts during Estallido Social (P2→P3)\n")
-cat("  2. Analyze impact of COVID-19 pandemic (P3→P4)\n")
-cat("  3. Examine post-Plebiscito changes (P4→P5)\n")
-cat("  4. Identify legislators with consistent linear trends\n")
-cat("  5. Compare party-level movements across periods\n")
-
-cat("\n✅ Analysis complete with LINEAR MODEL (model=1)!\n\n")
+cat("💡 Next steps:\n")
+cat("   1. Review the coordinate files\n")
+cat("   2. Use csv_dwnominate_graph.py to create custom visualizations\n")
+cat("   3. Compare results across periods to see ideology evolution\n\n")
