@@ -1,71 +1,4 @@
 legislator_id,id,nombres,partido,region,distrito
-74,74,Jaime Naranjo Ortiz,PS,Región del Maule,18
-172,172,Carlos Kuschel Silva,RN,Región de Los Lagos,26
-660,660,Manuel Matta Aragay,DC,Región del Maule,18
-803,803,René Alinco Bustos,IND,Región de Aysén del General Carlos Ibáñez del Campo,27
-810,810,Gabriel Ascencio Mansilla,DC,Región de Los Lagos,26
-811,811,Ramón Barros Montero,UDI,Región del Libertador General Bernardo O' Higgins,16
-815,815,Sergio Bobadilla Muñoz,UDI,Región del Bío Bío,20
-827,827,Marcelo Díaz Díaz,PS,Región de Valparaíso,7
-837,837,Fidel Espinoza Sandoval,PS,Región de Los Lagos,25
-843,843,René Manuel García García,RN,Región de La Araucanía,23
-848,848,Rodrigo González Torres,PPD,Región de Valparaíso,7
-850,850,Javier Hernández Hernández,UDI,Región de Los Lagos,25
-855,855,Carlos Abel Jarpa Wevar,PRad,Región del Bío Bío,19
-856,856,Tucapel Jiménez Fuentes,PPD,Región Metropolitana de Santiago,13
-862,862,Pablo Lorenzini Basso,DC,Región del Maule,17
-865,865,Legislador 865,IND,Sin información,Sin información
-866,866,Fernando Meza Moncada,PRad,Región de La Araucanía,23
-869,869,Manuel Monsalve Benavides,PS,Región del Bío Bío,21
-872,872,Jaime Mulet Martínez,FRVS,Región de Atacama,4
-875,875,Iván Norambuena Farías,UDI,Región del Bío Bío,21
-879,879,José Miguel Ortiz Novoa,DC,Región del Bío Bío,20
-885,885,José Pérez Arriagada,PRad,Región del Bío Bío,21
-893,893,Jorge Sabag Villalobos,DC,Región del Bío Bío,19
-897,897,Alejandra Sepúlveda Orbenes,FRVS,Región del Libertador General Bernardo O' Higgins,16
-898,898,Gabriel Silber Romo,DC,Región Metropolitana de Santiago,8
-908,908,Ignacio Urrutia Bonilla,UDI,Región del Maule,18
-913,913,Mario Venegas Cárdenas,DC,Región de La Araucanía,22
-917,917,Gastón Von Mühlenbrock Zamora,UDI,Región de Los Ríos,24
-920,920,Marcelo Schilling Rodríguez,PS,Región de Valparaíso,6
-923,923,Pedro Pablo Álvarez-Salamanca Ramírez,UDI,Región del Maule,17
-925,925,Pepe Auth Stewart,IND,Región Metropolitana de Santiago,8
-926,926,Nino Baltolu Rasera,UDI,Región de Arica y Parinacota,1
-931,931,Juan Luis Castro González,PS,Región del Libertador General Bernardo O' Higgins,15
-936,936,Cristina Girardi Lavín,PPD,Región Metropolitana de Santiago,9
-937,937,Legislador 937,IND,Sin información,Sin información
-940,940,María José Hoffmann Opazo,UDI,Región de Valparaíso,7
-942,942,Javier Macaya Danús,UDI,Región del Libertador General Bernardo O' Higgins,15
-945,945,Celso Morales Muñoz,UDI,Región del Maule,17
-946,946,Leopoldo Pérez Lahsen,RN,Región Metropolitana de Santiago,12
-950,950,René Saffirio Espinoza,IND,Región de La Araucanía,23
-952,952,Alejandro Santana Tirachini,RN,Región de Los Lagos,26
-953,953,Frank Sauerbaum Muñoz,RN,Región del Bío Bío,19
-956,956,Guillermo Teillier Del Valle,PC,Región Metropolitana de Santiago,13
-957,957,Víctor Torres Jeldes,DC,Región de Valparaíso,7
-959,959,Enrique Van Rysselberghe Herrera,UDI,Región del Bío Bío,20
-961,961,Pedro Velásquez Seguel,IND,Región de Coquimbo,5
-963,963,Matías Walker Prieto,DC,Región de Coquimbo,5
-967,967,Legislador 967,IND,Sin información,Sin información
-968,968,Jenny Álvarez Vera,PS,Región de Los Lagos,26
-971,971,Bernardo Berger Fett,RN,Región de Los Ríos,24
-972,972,Gabriel Boric Font,IND,Región de Magallanes y de la Antártica Chilena,28
-973,973,Karol Cariola Oliva,PC,Región Metropolitana de Santiago,9
-974,974,Legislador 974,IND,Sin información,Sin información
-975,975,Daniella Cicardini Milla,PS,Región de Atacama,4
-976,976,Juan Antonio Coloma Álamos,UDI,Región Metropolitana de Santiago,14
-981,981,Maya Fernández Allende,PS,Región Metropolitana de Santiago,10
-982,982,Iván Flores García,DC,Región de Los Ríos,24
-984,984,Gonzalo Fuenzalida Figueroa,RN,Región Metropolitana de Santiago,11
-985,985,Sergio Gahona Salazar,UDI,Región de Coquimbo,5
-986,986,Marcela Hernando Pérez,PRad,Región de Antofagasta,3
-987,987,Giorgio Jackson Drago,RD,Región Metropolitana de Santiago,10
-989,989,Joaquín Lavín León,UDI,Región Metropolitana de Santiago,8
-991,991,Vlado Mirosevic Verdugo,PL,Región de Arica y Parinacota,1
-993,993,Daniel Núñez Arancibia,PC,Región de Coquimbo,5
-994,994,Paulina Núñez Urrutia,RN,Región de Antofagasta,3
-995,995,Diego Paulsen Kehr,RN,Región de La Araucanía,22
-999,999,Jorge Rathgeb Schifferli,RN,Región de La Araucanía,22
 1000,1000,Luis Rocafull López,PS,Región de Arica y Parinacota,1
 1001,1001,Raúl Saldívar Auger,PS,Región de Coquimbo,5
 1002,1002,Leonardo Soto Ferrada,PS,Región Metropolitana de Santiago,14
@@ -96,7 +29,6 @@ legislator_id,id,nombres,partido,region,distrito
 1030,1030,Camila Flores Oporto,RN,Región de Valparaíso,6
 1031,1031,Juan Fuenzalida Cobo,UDI,Región de Coquimbo,5
 1032,1032,Ramón Galleguillos Castillo,RN,Región de Tarapacá,2
-1033,1033,Legislador 1033,IND,Sin información,Sin información
 1034,1034,Félix González Gatica,PEV,Región del Bío Bío,20
 1035,1035,Carmen Hertz Cádiz,PC,Región Metropolitana de Santiago,8
 1036,1036,Tomás Hirsch Goldschmidt,PH,Región Metropolitana de Santiago,11
@@ -151,3 +83,66 @@ legislator_id,id,nombres,partido,region,distrito
 1085,1085,Pablo Vidal Rojas,RD,Región Metropolitana de Santiago,8
 1086,1086,Gonzalo Winter Etcheberry,IND,Región Metropolitana de Santiago,10
 1087,1087,Gael Yeomans Araya,RD,Región Metropolitana de Santiago,13
+172,172,Carlos Kuschel Silva,RN,Región de Los Lagos,26
+660,660,Manuel Matta Aragay,DC,Región del Maule,18
+74,74,Jaime Naranjo Ortiz,PS,Región del Maule,18
+803,803,René Alinco Bustos,IND,Región de Aysén del General Carlos Ibáñez del Campo,27
+810,810,Gabriel Ascencio Mansilla,DC,Región de Los Lagos,26
+811,811,Ramón Barros Montero,UDI,Región del Libertador General Bernardo O' Higgins,16
+815,815,Sergio Bobadilla Muñoz,UDI,Región del Bío Bío,20
+827,827,Marcelo Díaz Díaz,PS,Región de Valparaíso,7
+837,837,Fidel Espinoza Sandoval,PS,Región de Los Lagos,25
+843,843,René Manuel García García,RN,Región de La Araucanía,23
+848,848,Rodrigo González Torres,PPD,Región de Valparaíso,7
+850,850,Javier Hernández Hernández,UDI,Región de Los Lagos,25
+855,855,Carlos Abel Jarpa Wevar,PRad,Región del Bío Bío,19
+856,856,Tucapel Jiménez Fuentes,PPD,Región Metropolitana de Santiago,13
+862,862,Pablo Lorenzini Basso,DC,Región del Maule,17
+866,866,Fernando Meza Moncada,PRad,Región de La Araucanía,23
+869,869,Manuel Monsalve Benavides,PS,Región del Bío Bío,21
+872,872,Jaime Mulet Martínez,FRVS,Región de Atacama,4
+875,875,Iván Norambuena Farías,UDI,Región del Bío Bío,21
+879,879,José Miguel Ortiz Novoa,DC,Región del Bío Bío,20
+885,885,José Pérez Arriagada,PRad,Región del Bío Bío,21
+893,893,Jorge Sabag Villalobos,DC,Región del Bío Bío,19
+897,897,Alejandra Sepúlveda Orbenes,FRVS,Región del Libertador General Bernardo O' Higgins,16
+898,898,Gabriel Silber Romo,DC,Región Metropolitana de Santiago,8
+908,908,Ignacio Urrutia Bonilla,UDI,Región del Maule,18
+913,913,Mario Venegas Cárdenas,DC,Región de La Araucanía,22
+917,917,Gastón Von Mühlenbrock Zamora,UDI,Región de Los Ríos,24
+920,920,Marcelo Schilling Rodríguez,PS,Región de Valparaíso,6
+923,923,Pedro Pablo Álvarez-Salamanca Ramírez,UDI,Región del Maule,17
+925,925,Pepe Auth Stewart,IND,Región Metropolitana de Santiago,8
+926,926,Nino Baltolu Rasera,UDI,Región de Arica y Parinacota,1
+931,931,Juan Luis Castro González,PS,Región del Libertador General Bernardo O' Higgins,15
+936,936,Cristina Girardi Lavín,PPD,Región Metropolitana de Santiago,9
+940,940,María José Hoffmann Opazo,UDI,Región de Valparaíso,7
+942,942,Javier Macaya Danús,UDI,Región del Libertador General Bernardo O' Higgins,15
+945,945,Celso Morales Muñoz,UDI,Región del Maule,17
+946,946,Leopoldo Pérez Lahsen,RN,Región Metropolitana de Santiago,12
+950,950,René Saffirio Espinoza,IND,Región de La Araucanía,23
+952,952,Alejandro Santana Tirachini,RN,Región de Los Lagos,26
+953,953,Frank Sauerbaum Muñoz,RN,Región del Bío Bío,19
+956,956,Guillermo Teillier Del Valle,PC,Región Metropolitana de Santiago,13
+957,957,Víctor Torres Jeldes,DC,Región de Valparaíso,7
+959,959,Enrique Van Rysselberghe Herrera,UDI,Región del Bío Bío,20
+961,961,Pedro Velásquez Seguel,IND,Región de Coquimbo,5
+963,963,Matías Walker Prieto,DC,Región de Coquimbo,5
+968,968,Jenny Álvarez Vera,PS,Región de Los Lagos,26
+971,971,Bernardo Berger Fett,RN,Región de Los Ríos,24
+972,972,Gabriel Boric Font,IND,Región de Magallanes y de la Antártica Chilena,28
+973,973,Karol Cariola Oliva,PC,Región Metropolitana de Santiago,9
+975,975,Daniella Cicardini Milla,PS,Región de Atacama,4
+976,976,Juan Antonio Coloma Álamos,UDI,Región Metropolitana de Santiago,14
+981,981,Maya Fernández Allende,PS,Región Metropolitana de Santiago,10
+982,982,Iván Flores García,DC,Región de Los Ríos,24
+984,984,Gonzalo Fuenzalida Figueroa,RN,Región Metropolitana de Santiago,11
+985,985,Sergio Gahona Salazar,UDI,Región de Coquimbo,5
+986,986,Marcela Hernando Pérez,PRad,Región de Antofagasta,3
+987,987,Giorgio Jackson Drago,RD,Región Metropolitana de Santiago,10
+989,989,Joaquín Lavín León,UDI,Región Metropolitana de Santiago,8
+991,991,Vlado Mirosevic Verdugo,PL,Región de Arica y Parinacota,1
+993,993,Daniel Núñez Arancibia,PC,Región de Coquimbo,5
+994,994,Paulina Núñez Urrutia,RN,Región de Antofagasta,3
+995,995,Diego Paulsen Kehr,RN,Región de La Araucanía,22
+999,999,Jorge Rathgeb Schifferli,RN,Región de La Araucanía,22

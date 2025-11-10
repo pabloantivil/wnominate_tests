@@ -1,153 +1,153 @@
 "legislator","period","coord1D","coord2D","se1D","se2D","nombres","partido","region","distrito"
-74,1,0.570233821868896,0.68047571182251,0,0,"Jaime Naranjo Ortiz","PS","Región del Maule",18
-172,1,-0.696494519710541,-0.341305643320084,0,0,"Carlos Kuschel Silva","RN","Región de Los Lagos",26
-660,1,0.0874927416443825,0.547116577625275,0,0,"Manuel Matta Aragay","DC","Región del Maule",18
-803,1,0.338216602802277,-0.425412446260452,0,0,"René Alinco Bustos","IND","Región de Aysén del General Carlos Ibáñez del Campo",27
-810,1,0.147016316652298,0.627320468425751,0,0,"Gabriel Ascencio Mansilla","DC","Región de Los Lagos",26
-811,1,-0.64714127779007,-0.244698479771614,0,0,"Ramón Barros Montero","UDI","Región del Libertador General Bernardo O' Higgins",16
-815,1,-0.420479357242584,-0.265857338905334,0,0,"Sergio Bobadilla Muñoz","UDI","Región del Bío Bío",20
-827,1,0.601828694343567,0.102273270487785,0,0,"Marcelo Díaz Díaz","PS","Región de Valparaíso",7
-837,1,0.50580507516861,0.764508485794067,0,0,"Fidel Espinoza Sandoval","PS","Región de Los Lagos",25
-843,1,-0.544451892375946,-0.767857432365417,0,0,"René Manuel García García","RN","Región de La Araucanía",23
-848,1,0.593513190746307,-0.0226642526686192,0,0,"Rodrigo González Torres","PPD","Región de Valparaíso",7
-850,1,-0.467041701078415,-0.596107661724091,0,0,"Javier Hernández Hernández","UDI","Región de Los Lagos",25
-855,1,0.250835239887238,0.734405517578125,0,0,"Carlos Abel Jarpa Wevar","PRad","Región del Bío Bío",19
-856,1,0.478512138128281,0.45942223072052,0,0,"Tucapel Jiménez Fuentes","PPD","Región Metropolitana de Santiago",13
-862,1,0.0896400660276413,0.254526019096375,0,0,"Pablo Lorenzini Basso","DC","Región del Maule",17
-865,1,-0.620113015174866,-0.0769880264997482,0,0,NA,NA,NA,NA
-866,1,0.116793721914291,-0.251435518264771,0,0,"Fernando Meza Moncada","PRad","Región de La Araucanía",23
-869,1,0.532831490039825,0.559263229370117,0,0,"Manuel Monsalve Benavides","PS","Región del Bío Bío",21
-872,1,0.415921717882156,-0.0854672268033028,0,0,"Jaime Mulet Martínez","FRVS","Región de Atacama",4
-875,1,-0.354591399431229,-0.84015554189682,0,0,"Iván Norambuena Farías","UDI","Región del Bío Bío",21
-879,1,0.00740230828523636,0.351884663105011,0,0,"José Miguel Ortiz Novoa","DC","Región del Bío Bío",20
-885,1,0.201201274991035,-0.122638866305351,0,0,"José Pérez Arriagada","PRad","Región del Bío Bío",21
-893,1,0.0113785937428474,0.0994558185338974,0,0,"Jorge Sabag Villalobos","DC","Región del Bío Bío",19
-897,1,0.63220226764679,-0.241973489522934,0,0,"Alejandra Sepúlveda Orbenes","FRVS","Región del Libertador General Bernardo O' Higgins",16
-898,1,0.198600187897682,0.52379298210144,0,0,"Gabriel Silber Romo","DC","Región Metropolitana de Santiago",8
-908,1,-0.755560994148254,-0.522752702236176,0,0,"Ignacio Urrutia Bonilla","UDI","Región del Maule",18
-913,1,0.234155610203743,1.00563156604767,0,0,"Mario Venegas Cárdenas","DC","Región de La Araucanía",22
-917,1,-0.512929141521454,-0.375800341367722,0,0,"Gastón Von Mühlenbrock Zamora","UDI","Región de Los Ríos",24
-920,1,0.493657290935516,0.679635763168335,0,0,"Marcelo Schilling Rodríguez","PS","Región de Valparaíso",6
-923,1,-0.414185106754303,-0.539806723594666,0,0,"Pedro Pablo Álvarez-Salamanca Ramírez","UDI","Región del Maule",17
-925,1,0.264735460281372,-0.0796676278114319,0,0,"Pepe Auth Stewart","IND","Región Metropolitana de Santiago",8
-926,1,-0.587442636489868,-0.734419822692871,0,0,"Nino Baltolu Rasera","UDI","Región de Arica y Parinacota",1
-931,1,0.61536055803299,0.473311483860016,0,0,"Juan Luis Castro González","PS","Región del Libertador General Bernardo O' Higgins",15
-936,1,0.742319166660309,0.215257897973061,0,0,"Cristina Girardi Lavín","PPD","Región Metropolitana de Santiago",9
-937,1,0.767968475818634,0.922435283660889,0,0,NA,NA,NA,NA
-940,1,-0.620083630084991,-0.138581484556198,0,0,"María José Hoffmann Opazo","UDI","Región de Valparaíso",7
-942,1,-0.623833417892456,-0.153472036123276,0,0,"Javier Macaya Danús","UDI","Región del Libertador General Bernardo O' Higgins",15
-945,1,-0.455987960100174,-0.553862929344177,0,0,"Celso Morales Muñoz","UDI","Región del Maule",17
-946,1,-0.666748464107513,-0.28131365776062,0,0,"Leopoldo Pérez Lahsen","RN","Región Metropolitana de Santiago",12
-950,1,0.568937122821808,-0.503196954727173,0,0,"René Saffirio Espinoza","IND","Región de La Araucanía",23
-952,1,-0.528655588626862,-0.771576583385468,0,0,"Alejandro Santana Tirachini","RN","Región de Los Lagos",26
-953,1,-0.567566335201263,-0.581641554832458,0,0,"Frank Sauerbaum Muñoz","RN","Región del Bío Bío",19
-956,1,0.698320269584656,0.77390843629837,0,0,"Guillermo Teillier Del Valle","PC","Región Metropolitana de Santiago",13
-957,1,0.402742177248001,0.934237122535706,0,0,"Víctor Torres Jeldes","DC","Región de Valparaíso",7
-959,1,-0.475429654121399,-0.279547452926636,0,0,"Enrique Van Rysselberghe Herrera","UDI","Región del Bío Bío",20
-961,1,0.305527120828629,0.0303333550691605,0,0,"Pedro Velásquez Seguel","IND","Región de Coquimbo",5
-963,1,0.0768239200115204,0.766035556793213,0,0,"Matías Walker Prieto","DC","Región de Coquimbo",5
-967,1,-0.601012468338013,-0.137976959347725,0,0,NA,NA,NA,NA
-968,1,0.571694195270538,0.50990229845047,0,0,"Jenny Álvarez Vera","PS","Región de Los Lagos",26
-971,1,-0.595563590526581,-0.58487606048584,0,0,"Bernardo Berger Fett","RN","Región de Los Ríos",24
-972,1,0.767999708652496,-0.407096087932587,0,0,"Gabriel Boric Font","IND","Región de Magallanes y de la Antártica Chilena",28
-973,1,0.680757939815521,0.799420118331909,0,0,"Karol Cariola Oliva","PC","Región Metropolitana de Santiago",9
-974,1,0.559892296791077,0.532918155193329,0,0,NA,NA,NA,NA
-975,1,0.566708326339722,0.647350072860718,0,0,"Daniella Cicardini Milla","PS","Región de Atacama",4
-976,1,-0.511960208415985,-0.188710242509842,0,0,"Juan Antonio Coloma Álamos","UDI","Región Metropolitana de Santiago",14
-981,1,0.564037680625916,0.466604888439178,0,0,"Maya Fernández Allende","PS","Región Metropolitana de Santiago",10
-982,1,0.119742348790169,0.393617540597916,0,0,"Iván Flores García","DC","Región de Los Ríos",24
-984,1,-0.542520999908447,-0.687772214412689,0,0,"Gonzalo Fuenzalida Figueroa","RN","Región Metropolitana de Santiago",11
-985,1,-0.498515367507935,-0.403298199176788,0,0,"Sergio Gahona Salazar","UDI","Región de Coquimbo",5
-986,1,0.331559419631958,0.941944003105164,0,0,"Marcela Hernando Pérez","PRad","Región de Antofagasta",3
-987,1,0.633947253227234,-0.428375840187073,0,0,"Giorgio Jackson Drago","RD","Región Metropolitana de Santiago",10
-989,1,-0.512355029582977,-0.430940479040146,0,0,"Joaquín Lavín León","UDI","Región Metropolitana de Santiago",8
-991,1,0.583793997764587,-0.262870639562607,0,0,"Vlado Mirosevic Verdugo","PL","Región de Arica y Parinacota",1
-993,1,0.680139243602753,0.717976152896881,0,0,"Daniel Núñez Arancibia","PC","Región de Coquimbo",5
-994,1,-0.521326780319214,-0.603960931301117,0,0,"Paulina Núñez Urrutia","RN","Región de Antofagasta",3
-995,1,-0.611014902591705,-0.402200549840927,0,0,"Diego Paulsen Kehr","RN","Región de La Araucanía",22
-999,1,-0.567875623703003,-0.580068588256836,0,0,"Jorge Rathgeb Schifferli","RN","Región de La Araucanía",22
-1000,1,0.687111556529999,0.185043647885323,0,0,"Luis Rocafull López","PS","Región de Arica y Parinacota",1
-1001,1,0.646452188491821,0.433227509260178,0,0,"Raúl Saldívar Auger","PS","Región de Coquimbo",5
-1002,1,0.45178884267807,0.544897556304932,0,0,"Leonardo Soto Ferrada","PS","Región Metropolitana de Santiago",14
-1003,1,-0.501711010932922,-0.577345788478851,0,0,"Renzo Trisotti Martínez","UDI","Región de Tarapacá",2
-1005,1,-0.548713624477386,-0.288470506668091,0,0,"Osvaldo Urrutia Soto","UDI","Región de Valparaíso",7
-1006,1,0.712613880634308,0.776099801063538,0,0,"Camila Vallejo Dowling","PC","Región Metropolitana de Santiago",12
-1008,1,0.843446254730225,-0.101324558258057,0,0,"Florcita Alarcón Rojas","PH","Región del Maule",17
-1009,1,-0.636295795440674,-0.13693268597126,0,0,"Jorge Alessandri Vergara","UDI","Región Metropolitana de Santiago",10
-1010,1,-0.593118071556091,-0.751160860061646,0,0,"Sebastián Álvarez Ramírez","EVOP","Región de La Araucanía",23
-1011,1,-0.422619313001633,-0.467966139316559,0,0,"Sandra Amar Mancilla","UDI","Región de Magallanes y de la Antártica Chilena",28
-1012,1,0.668293416500092,0.77413022518158,0,0,"Boris Barrera Moreno","PC","Región Metropolitana de Santiago",9
-1013,1,0.604649543762207,-0.256703227758408,0,0,"Alejandro Bernales Maldonado","PL","Región de Los Lagos",26
-1014,1,0.26611590385437,0.418814361095428,0,0,"Karim Bianchi Retamales","IND","Región de Magallanes y de la Antártica Chilena",28
-1015,1,0.625680029392242,-0.450798451900482,0,0,"Jorge Brito Hasbún","RD","Región de Valparaíso",7
-1016,1,0.0951488986611366,0.301286697387695,0,0,"Miguel Ángel Calisto Águila","DC","Región de Aysén del General Carlos Ibáñez del Campo",27
-1017,1,-0.507933437824249,-0.535948693752289,0,0,"Álvaro Carter Fernández","UDI","Región Metropolitana de Santiago",12
-1018,1,0.652364313602448,-0.368759602308273,0,0,"Natalia Castillo Muñoz","RD","Región Metropolitana de Santiago",10
-1019,1,-0.607961535453796,-0.613944351673126,0,0,"José Miguel Castro Bascuñán","RN","Región de Antofagasta",3
-1020,1,0.450113862752914,0.530544757843018,0,0,"Ricardo Celis Araya","PPD","Región de La Araucanía",23
-1021,1,-0.489231318235397,-0.72275573015213,0,0,"Andrés Celis Montt","RN","Región de Valparaíso",7
-1022,1,-0.564449965953827,-0.754461169242859,0,0,"Sofía Cid Versalovic","RN","Región de Atacama",4
-1023,1,0.651906609535217,-0.391834259033203,0,0,"Miguel Crispi Serrano","RD","Región Metropolitana de Santiago",12
-1024,1,-0.709938287734985,-0.596704542636871,0,0,"Luciano Cruz-Coke Carvallo","EVOP","Región Metropolitana de Santiago",10
-1025,1,-0.53736400604248,-0.729353368282318,0,0,"Catalina Del Real Mihovilovic","RN","Región Metropolitana de Santiago",11
-1027,1,-0.409016579389572,-0.438360750675201,0,0,"Jorge Durán Espinoza","RN","Región Metropolitana de Santiago",9
-1028,1,-0.544385552406311,-0.671416759490967,0,0,"Eduardo Durán Salinas","RN","Región Metropolitana de Santiago",13
-1029,1,-0.542255878448486,-0.802408039569855,0,0,"Francisco Eguiguren Correa","RN","Región de Coquimbo",5
-1030,1,-0.546345353126526,-0.678517878055573,0,0,"Camila Flores Oporto","RN","Región de Valparaíso",6
-1031,1,-0.628733396530151,-0.214821875095367,0,0,"Juan Fuenzalida Cobo","UDI","Región de Coquimbo",5
-1032,1,-0.543324828147888,-0.546721577644348,0,0,"Ramón Galleguillos Castillo","RN","Región de Tarapacá",2
-1033,1,0.745720446109772,-0.153240606188774,0,0,NA,NA,NA,NA
-1034,1,0.892059326171875,-0.0243410561233759,0,0,"Félix González Gatica","PEV","Región del Bío Bío",20
-1035,1,0.688643455505371,0.809663653373718,0,0,"Carmen Hertz Cádiz","PC","Región Metropolitana de Santiago",8
-1036,1,0.870767056941986,-0.117988526821136,0,0,"Tomás Hirsch Goldschmidt","PH","Región Metropolitana de Santiago",11
-1037,1,0.7950519323349,-0.160353809595108,0,0,"Diego Ibáñez Cotroneo","IND","Región de Valparaíso",6
-1038,1,0.551194667816162,0.414079576730728,0,0,"Marcos Ilabaca Cerda","PS","Región de Los Ríos",24
-1039,1,0.935269773006439,-0.356509238481522,0,0,"Pamela Jiles Moreno","PH","Región Metropolitana de Santiago",12
-1040,1,-0.631300806999207,-0.585967540740967,0,0,"Harry Jürgensen Rundshagen","RN","Región de Los Lagos",25
-1041,1,-0.643113017082214,-0.818755149841309,0,0,"Pablo Kast Sommerhoff","EVOP","Región de Valparaíso",6
-1042,1,-0.53500634431839,-0.792160987854004,0,0,"Sebastián Keitel Bianchi","EVOP","Región Metropolitana de Santiago",9
-1043,1,0.77956086397171,0.657983422279358,0,0,"Amaro Labra Sepúlveda","PC","Región Metropolitana de Santiago",12
-1044,1,0.547831892967224,0.497488617897034,0,0,"Raúl Leiva Carvajal","PS","Región Metropolitana de Santiago",14
-1045,1,-0.486780077219009,-0.756639540195465,0,0,"Aracely Leuquén Uribe","RN","Región de Aysén del General Carlos Ibáñez del Campo",27
-1046,1,-0.568979263305664,-0.868330001831055,0,0,"Andrés Longton Herrera","RN","Región de Valparaíso",6
-1047,1,-0.600184857845306,-0.429384976625443,0,0,"Karin Luck Urban","RN","Región Metropolitana de Santiago",11
-1048,1,0.499062836170197,0.529613077640533,0,0,"Carolina Marzán Pinto","PPD","Región de Valparaíso",6
-1049,1,0.360029369592667,0.982658803462982,0,0,"Cosme Mellado Pino","PRad","Región del Libertador General Bernardo O' Higgins",16
-1050,1,-0.547609686851501,-0.767354547977448,0,0,"Miguel Mellado Suazo","RN","Región de La Araucanía",23
-1051,1,0.893646597862244,-0.143599927425385,0,0,"Claudia Mix Jiménez","COM","Región Metropolitana de Santiago",8
-1052,1,-0.722282588481903,-0.750685811042786,0,0,"Andrés Molina Magofke","EVOP","Región de La Araucanía",23
-1053,1,-0.499010145664215,-0.415859878063202,0,0,"Cristhian Moreira Barros","UDI","Región Metropolitana de Santiago",13
-1054,1,-0.456271290779114,-0.803379416465759,0,0,"Francesca Muñoz González","RN","Región del Bío Bío",20
-1055,1,-0.504630029201508,-0.554680466651917,0,0,"Nicolás Noman Garrido","UDI","Región de Atacama",4
-1056,1,0.68756365776062,0.361626267433167,0,0,"Emilia Nuyado Ancapichún","PS","Región de Los Lagos",25
-1057,1,-0.353373348712921,-0.945062756538391,0,0,"Erika Olivera De La Fuente","IND","Región Metropolitana de Santiago",9
-1058,1,0.625456511974335,-0.49783194065094,0,0,"Maite Orsini Pascal","RD","Región Metropolitana de Santiago",9
-1059,1,-0.473043173551559,-1.05966866016388,0,0,"Ximena Ossandón Irarrázabal","RN","Región Metropolitana de Santiago",12
-1060,1,-0.6268510222435,-0.39729431271553,0,0,"Luis Pardo Sáinz","RN","Región de Valparaíso",6
-1061,1,0.486095696687698,0.492555201053619,0,0,"Andrea Parra Sauterel","PPD","Región de La Araucanía",22
-1062,1,0.107043646275997,0.191675648093224,0,0,"Joanna Pérez Olea","DC","Región del Bío Bío",21
-1063,1,0.651084244251251,-0.438693046569824,0,0,"Catalina Pérez Salinas","RD","Región de Antofagasta",3
-1064,1,-0.43657848238945,-0.642417371273041,0,0,"Pablo Prieto Lorca","IND","Región del Maule",17
-1065,1,-0.675365209579468,-0.152198612689972,0,0,"Guillermo Ramírez Diez","UDI","Región Metropolitana de Santiago",11
-1066,1,-0.471662580966949,-0.452723622322083,0,0,"Rolando Rentería Moller","UDI","Región del Maule",18
-1067,1,-0.509546637535095,-0.828556001186371,0,0,"Hugo Rey Martínez","RN","Región del Maule",17
-1068,1,0.834543466567993,-0.191548898816109,0,0,"Camila Rojas Valderrama","COM","Región de Valparaíso",7
-1069,1,-0.303727269172668,-0.60480672121048,0,0,"Leonidas Romero Sáez","RN","Región del Bío Bío",20
-1070,1,0.562110543251038,0.0658213123679161,0,0,"Patricio Rosas Barrientos","IND","Región de Los Ríos",24
-1071,1,0.597867369651794,0.475843250751495,0,0,"Gastón Saavedra Chandía","PS","Región del Bío Bío",20
-1072,1,-0.57951694726944,-0.300638526678085,0,0,"Gustavo Sanhueza Dueñas","UDI","Región del Bío Bío",19
-1073,1,0.644665479660034,0.549944519996643,0,0,"Juan Santana Castillo","PS","Región de Atacama",4
-1074,1,0.662450790405273,0.695712983608246,0,0,"Marisela Santibáñez Novoa","PRO","Región Metropolitana de Santiago",14
-1075,1,-0.551508963108063,-0.497141450643539,0,0,"Diego Schalper Sepúlveda","RN","Región del Libertador General Bernardo O' Higgins",15
-1076,1,0.360179871320724,0.912638783454895,0,0,"Alexis Sepúlveda Soto","PRad","Región del Maule",17
-1077,1,0.401867687702179,0.459380954504013,0,0,"Raúl Soto Mardones","DC","Región del Libertador General Bernardo O' Higgins",15
-1078,1,0.492744088172913,0.16615729033947,0,0,"Jaime Tohá González","PS","Región del Bío Bío",20
-1079,1,-0.642910182476044,-0.383290231227875,0,0,"Sebastián Torrealba Alvarado","RN","Región Metropolitana de Santiago",10
-1080,1,-0.400013267993927,-0.463563293218613,0,0,"Virginia Troncoso Hellman","UDI","Región del Libertador General Bernardo O' Higgins",16
-1081,1,-0.746549487113953,-0.561000645160675,0,0,"Francisco Undurraga Gazitúa","EVOP","Región Metropolitana de Santiago",11
-1082,1,-0.616635799407959,-0.664059400558472,0,0,"Cristóbal Urruticoechea Ríos","RN","Región del Bío Bío",21
-1083,1,0.703292787075043,-0.105020545423031,0,0,"Esteban Velásquez Núñez","FRVS","Región de Antofagasta",3
-1084,1,0.11160921305418,0.267643123865128,0,0,"Daniel Verdessi Belemmi","DC","Región de Valparaíso",6
-1085,1,0.650175273418427,-0.327570080757141,0,0,"Pablo Vidal Rojas","RD","Región Metropolitana de Santiago",8
-1086,1,0.777960538864136,-0.224678784608841,0,0,"Gonzalo Winter Etcheberry","IND","Región Metropolitana de Santiago",10
-1087,1,0.752700328826904,-0.3108811378479,0,0,"Gael Yeomans Araya","RD","Región Metropolitana de Santiago",13
+74,1,0.570233821868896,0.68047571182251,0,0,"Jaime Naranjo Ortiz","PS","Región del Maule","18"
+172,1,-0.696494519710541,-0.341305643320084,0,0,"Carlos Kuschel Silva","RN","Región de Los Lagos","26"
+660,1,0.0874927416443825,0.547116577625275,0,0,"Manuel Matta Aragay","DC","Región del Maule","18"
+803,1,0.338216602802277,-0.425412446260452,0,0,"René Alinco Bustos","IND","Región de Aysén del General Carlos Ibáñez del Campo","27"
+810,1,0.147016316652298,0.627320468425751,0,0,"Gabriel Ascencio Mansilla","DC","Región de Los Lagos","26"
+811,1,-0.64714127779007,-0.244698479771614,0,0,"Ramón Barros Montero","UDI","Región del Libertador General Bernardo O' Higgins","16"
+815,1,-0.420479357242584,-0.265857338905334,0,0,"Sergio Bobadilla Muñoz","UDI","Región del Bío Bío","20"
+827,1,0.601828694343567,0.102273270487785,0,0,"Marcelo Díaz Díaz","PS","Región de Valparaíso","7"
+837,1,0.50580507516861,0.764508485794067,0,0,"Fidel Espinoza Sandoval","PS","Región de Los Lagos","25"
+843,1,-0.544451892375946,-0.767857432365417,0,0,"René Manuel García García","RN","Región de La Araucanía","23"
+848,1,0.593513190746307,-0.0226642526686192,0,0,"Rodrigo González Torres","PPD","Región de Valparaíso","7"
+850,1,-0.467041701078415,-0.596107661724091,0,0,"Javier Hernández Hernández","UDI","Región de Los Lagos","25"
+855,1,0.250835239887238,0.734405517578125,0,0,"Carlos Abel Jarpa Wevar","PRad","Región del Bío Bío","19"
+856,1,0.478512138128281,0.45942223072052,0,0,"Tucapel Jiménez Fuentes","PPD","Región Metropolitana de Santiago","13"
+862,1,0.0896400660276413,0.254526019096375,0,0,"Pablo Lorenzini Basso","DC","Región del Maule","17"
+865,1,-0.620113015174866,-0.0769880264997482,0,0,"Legislador 865","IND","Sin información","Sin información"
+866,1,0.116793721914291,-0.251435518264771,0,0,"Fernando Meza Moncada","PRad","Región de La Araucanía","23"
+869,1,0.532831490039825,0.559263229370117,0,0,"Manuel Monsalve Benavides","PS","Región del Bío Bío","21"
+872,1,0.415921717882156,-0.0854672268033028,0,0,"Jaime Mulet Martínez","FRVS","Región de Atacama","4"
+875,1,-0.354591399431229,-0.84015554189682,0,0,"Iván Norambuena Farías","UDI","Región del Bío Bío","21"
+879,1,0.00740230828523636,0.351884663105011,0,0,"José Miguel Ortiz Novoa","DC","Región del Bío Bío","20"
+885,1,0.201201274991035,-0.122638866305351,0,0,"José Pérez Arriagada","PRad","Región del Bío Bío","21"
+893,1,0.0113785937428474,0.0994558185338974,0,0,"Jorge Sabag Villalobos","DC","Región del Bío Bío","19"
+897,1,0.63220226764679,-0.241973489522934,0,0,"Alejandra Sepúlveda Orbenes","FRVS","Región del Libertador General Bernardo O' Higgins","16"
+898,1,0.198600187897682,0.52379298210144,0,0,"Gabriel Silber Romo","DC","Región Metropolitana de Santiago","8"
+908,1,-0.755560994148254,-0.522752702236176,0,0,"Ignacio Urrutia Bonilla","UDI","Región del Maule","18"
+913,1,0.234155610203743,1.00563156604767,0,0,"Mario Venegas Cárdenas","DC","Región de La Araucanía","22"
+917,1,-0.512929141521454,-0.375800341367722,0,0,"Gastón Von Mühlenbrock Zamora","UDI","Región de Los Ríos","24"
+920,1,0.493657290935516,0.679635763168335,0,0,"Marcelo Schilling Rodríguez","PS","Región de Valparaíso","6"
+923,1,-0.414185106754303,-0.539806723594666,0,0,"Pedro Pablo Álvarez-Salamanca Ramírez","UDI","Región del Maule","17"
+925,1,0.264735460281372,-0.0796676278114319,0,0,"Pepe Auth Stewart","IND","Región Metropolitana de Santiago","8"
+926,1,-0.587442636489868,-0.734419822692871,0,0,"Nino Baltolu Rasera","UDI","Región de Arica y Parinacota","1"
+931,1,0.61536055803299,0.473311483860016,0,0,"Juan Luis Castro González","PS","Región del Libertador General Bernardo O' Higgins","15"
+936,1,0.742319166660309,0.215257897973061,0,0,"Cristina Girardi Lavín","PPD","Región Metropolitana de Santiago","9"
+937,1,0.767968475818634,0.922435283660889,0,0,"Legislador 937","IND","Sin información","Sin información"
+940,1,-0.620083630084991,-0.138581484556198,0,0,"María José Hoffmann Opazo","UDI","Región de Valparaíso","7"
+942,1,-0.623833417892456,-0.153472036123276,0,0,"Javier Macaya Danús","UDI","Región del Libertador General Bernardo O' Higgins","15"
+945,1,-0.455987960100174,-0.553862929344177,0,0,"Celso Morales Muñoz","UDI","Región del Maule","17"
+946,1,-0.666748464107513,-0.28131365776062,0,0,"Leopoldo Pérez Lahsen","RN","Región Metropolitana de Santiago","12"
+950,1,0.568937122821808,-0.503196954727173,0,0,"René Saffirio Espinoza","IND","Región de La Araucanía","23"
+952,1,-0.528655588626862,-0.771576583385468,0,0,"Alejandro Santana Tirachini","RN","Región de Los Lagos","26"
+953,1,-0.567566335201263,-0.581641554832458,0,0,"Frank Sauerbaum Muñoz","RN","Región del Bío Bío","19"
+956,1,0.698320269584656,0.77390843629837,0,0,"Guillermo Teillier Del Valle","PC","Región Metropolitana de Santiago","13"
+957,1,0.402742177248001,0.934237122535706,0,0,"Víctor Torres Jeldes","DC","Región de Valparaíso","7"
+959,1,-0.475429654121399,-0.279547452926636,0,0,"Enrique Van Rysselberghe Herrera","UDI","Región del Bío Bío","20"
+961,1,0.305527120828629,0.0303333550691605,0,0,"Pedro Velásquez Seguel","IND","Región de Coquimbo","5"
+963,1,0.0768239200115204,0.766035556793213,0,0,"Matías Walker Prieto","DC","Región de Coquimbo","5"
+967,1,-0.601012468338013,-0.137976959347725,0,0,"Legislador 967","IND","Sin información","Sin información"
+968,1,0.571694195270538,0.50990229845047,0,0,"Jenny Álvarez Vera","PS","Región de Los Lagos","26"
+971,1,-0.595563590526581,-0.58487606048584,0,0,"Bernardo Berger Fett","RN","Región de Los Ríos","24"
+972,1,0.767999708652496,-0.407096087932587,0,0,"Gabriel Boric Font","IND","Región de Magallanes y de la Antártica Chilena","28"
+973,1,0.680757939815521,0.799420118331909,0,0,"Karol Cariola Oliva","PC","Región Metropolitana de Santiago","9"
+974,1,0.559892296791077,0.532918155193329,0,0,"Legislador 974","IND","Sin información","Sin información"
+975,1,0.566708326339722,0.647350072860718,0,0,"Daniella Cicardini Milla","PS","Región de Atacama","4"
+976,1,-0.511960208415985,-0.188710242509842,0,0,"Juan Antonio Coloma Álamos","UDI","Región Metropolitana de Santiago","14"
+981,1,0.564037680625916,0.466604888439178,0,0,"Maya Fernández Allende","PS","Región Metropolitana de Santiago","10"
+982,1,0.119742348790169,0.393617540597916,0,0,"Iván Flores García","DC","Región de Los Ríos","24"
+984,1,-0.542520999908447,-0.687772214412689,0,0,"Gonzalo Fuenzalida Figueroa","RN","Región Metropolitana de Santiago","11"
+985,1,-0.498515367507935,-0.403298199176788,0,0,"Sergio Gahona Salazar","UDI","Región de Coquimbo","5"
+986,1,0.331559419631958,0.941944003105164,0,0,"Marcela Hernando Pérez","PRad","Región de Antofagasta","3"
+987,1,0.633947253227234,-0.428375840187073,0,0,"Giorgio Jackson Drago","RD","Región Metropolitana de Santiago","10"
+989,1,-0.512355029582977,-0.430940479040146,0,0,"Joaquín Lavín León","UDI","Región Metropolitana de Santiago","8"
+991,1,0.583793997764587,-0.262870639562607,0,0,"Vlado Mirosevic Verdugo","PL","Región de Arica y Parinacota","1"
+993,1,0.680139243602753,0.717976152896881,0,0,"Daniel Núñez Arancibia","PC","Región de Coquimbo","5"
+994,1,-0.521326780319214,-0.603960931301117,0,0,"Paulina Núñez Urrutia","RN","Región de Antofagasta","3"
+995,1,-0.611014902591705,-0.402200549840927,0,0,"Diego Paulsen Kehr","RN","Región de La Araucanía","22"
+999,1,-0.567875623703003,-0.580068588256836,0,0,"Jorge Rathgeb Schifferli","RN","Región de La Araucanía","22"
+1000,1,0.687111556529999,0.185043647885323,0,0,"Luis Rocafull López","PS","Región de Arica y Parinacota","1"
+1001,1,0.646452188491821,0.433227509260178,0,0,"Raúl Saldívar Auger","PS","Región de Coquimbo","5"
+1002,1,0.45178884267807,0.544897556304932,0,0,"Leonardo Soto Ferrada","PS","Región Metropolitana de Santiago","14"
+1003,1,-0.501711010932922,-0.577345788478851,0,0,"Renzo Trisotti Martínez","UDI","Región de Tarapacá","2"
+1005,1,-0.548713624477386,-0.288470506668091,0,0,"Osvaldo Urrutia Soto","UDI","Región de Valparaíso","7"
+1006,1,0.712613880634308,0.776099801063538,0,0,"Camila Vallejo Dowling","PC","Región Metropolitana de Santiago","12"
+1008,1,0.843446254730225,-0.101324558258057,0,0,"Florcita Alarcón Rojas","PH","Región del Maule","17"
+1009,1,-0.636295795440674,-0.13693268597126,0,0,"Jorge Alessandri Vergara","UDI","Región Metropolitana de Santiago","10"
+1010,1,-0.593118071556091,-0.751160860061646,0,0,"Sebastián Álvarez Ramírez","EVOP","Región de La Araucanía","23"
+1011,1,-0.422619313001633,-0.467966139316559,0,0,"Sandra Amar Mancilla","UDI","Región de Magallanes y de la Antártica Chilena","28"
+1012,1,0.668293416500092,0.77413022518158,0,0,"Boris Barrera Moreno","PC","Región Metropolitana de Santiago","9"
+1013,1,0.604649543762207,-0.256703227758408,0,0,"Alejandro Bernales Maldonado","PL","Región de Los Lagos","26"
+1014,1,0.26611590385437,0.418814361095428,0,0,"Karim Bianchi Retamales","IND","Región de Magallanes y de la Antártica Chilena","28"
+1015,1,0.625680029392242,-0.450798451900482,0,0,"Jorge Brito Hasbún","RD","Región de Valparaíso","7"
+1016,1,0.0951488986611366,0.301286697387695,0,0,"Miguel Ángel Calisto Águila","DC","Región de Aysén del General Carlos Ibáñez del Campo","27"
+1017,1,-0.507933437824249,-0.535948693752289,0,0,"Álvaro Carter Fernández","UDI","Región Metropolitana de Santiago","12"
+1018,1,0.652364313602448,-0.368759602308273,0,0,"Natalia Castillo Muñoz","RD","Región Metropolitana de Santiago","10"
+1019,1,-0.607961535453796,-0.613944351673126,0,0,"José Miguel Castro Bascuñán","RN","Región de Antofagasta","3"
+1020,1,0.450113862752914,0.530544757843018,0,0,"Ricardo Celis Araya","PPD","Región de La Araucanía","23"
+1021,1,-0.489231318235397,-0.72275573015213,0,0,"Andrés Celis Montt","RN","Región de Valparaíso","7"
+1022,1,-0.564449965953827,-0.754461169242859,0,0,"Sofía Cid Versalovic","RN","Región de Atacama","4"
+1023,1,0.651906609535217,-0.391834259033203,0,0,"Miguel Crispi Serrano","RD","Región Metropolitana de Santiago","12"
+1024,1,-0.709938287734985,-0.596704542636871,0,0,"Luciano Cruz-Coke Carvallo","EVOP","Región Metropolitana de Santiago","10"
+1025,1,-0.53736400604248,-0.729353368282318,0,0,"Catalina Del Real Mihovilovic","RN","Región Metropolitana de Santiago","11"
+1027,1,-0.409016579389572,-0.438360750675201,0,0,"Jorge Durán Espinoza","RN","Región Metropolitana de Santiago","9"
+1028,1,-0.544385552406311,-0.671416759490967,0,0,"Eduardo Durán Salinas","RN","Región Metropolitana de Santiago","13"
+1029,1,-0.542255878448486,-0.802408039569855,0,0,"Francisco Eguiguren Correa","RN","Región de Coquimbo","5"
+1030,1,-0.546345353126526,-0.678517878055573,0,0,"Camila Flores Oporto","RN","Región de Valparaíso","6"
+1031,1,-0.628733396530151,-0.214821875095367,0,0,"Juan Fuenzalida Cobo","UDI","Región de Coquimbo","5"
+1032,1,-0.543324828147888,-0.546721577644348,0,0,"Ramón Galleguillos Castillo","RN","Región de Tarapacá","2"
+1033,1,0.745720446109772,-0.153240606188774,0,0,"Legislador 1033","IND","Sin información","Sin información"
+1034,1,0.892059326171875,-0.0243410561233759,0,0,"Félix González Gatica","PEV","Región del Bío Bío","20"
+1035,1,0.688643455505371,0.809663653373718,0,0,"Carmen Hertz Cádiz","PC","Región Metropolitana de Santiago","8"
+1036,1,0.870767056941986,-0.117988526821136,0,0,"Tomás Hirsch Goldschmidt","PH","Región Metropolitana de Santiago","11"
+1037,1,0.7950519323349,-0.160353809595108,0,0,"Diego Ibáñez Cotroneo","IND","Región de Valparaíso","6"
+1038,1,0.551194667816162,0.414079576730728,0,0,"Marcos Ilabaca Cerda","PS","Región de Los Ríos","24"
+1039,1,0.935269773006439,-0.356509238481522,0,0,"Pamela Jiles Moreno","PH","Región Metropolitana de Santiago","12"
+1040,1,-0.631300806999207,-0.585967540740967,0,0,"Harry Jürgensen Rundshagen","RN","Región de Los Lagos","25"
+1041,1,-0.643113017082214,-0.818755149841309,0,0,"Pablo Kast Sommerhoff","EVOP","Región de Valparaíso","6"
+1042,1,-0.53500634431839,-0.792160987854004,0,0,"Sebastián Keitel Bianchi","EVOP","Región Metropolitana de Santiago","9"
+1043,1,0.77956086397171,0.657983422279358,0,0,"Amaro Labra Sepúlveda","PC","Región Metropolitana de Santiago","12"
+1044,1,0.547831892967224,0.497488617897034,0,0,"Raúl Leiva Carvajal","PS","Región Metropolitana de Santiago","14"
+1045,1,-0.486780077219009,-0.756639540195465,0,0,"Aracely Leuquén Uribe","RN","Región de Aysén del General Carlos Ibáñez del Campo","27"
+1046,1,-0.568979263305664,-0.868330001831055,0,0,"Andrés Longton Herrera","RN","Región de Valparaíso","6"
+1047,1,-0.600184857845306,-0.429384976625443,0,0,"Karin Luck Urban","RN","Región Metropolitana de Santiago","11"
+1048,1,0.499062836170197,0.529613077640533,0,0,"Carolina Marzán Pinto","PPD","Región de Valparaíso","6"
+1049,1,0.360029369592667,0.982658803462982,0,0,"Cosme Mellado Pino","PRad","Región del Libertador General Bernardo O' Higgins","16"
+1050,1,-0.547609686851501,-0.767354547977448,0,0,"Miguel Mellado Suazo","RN","Región de La Araucanía","23"
+1051,1,0.893646597862244,-0.143599927425385,0,0,"Claudia Mix Jiménez","COM","Región Metropolitana de Santiago","8"
+1052,1,-0.722282588481903,-0.750685811042786,0,0,"Andrés Molina Magofke","EVOP","Región de La Araucanía","23"
+1053,1,-0.499010145664215,-0.415859878063202,0,0,"Cristhian Moreira Barros","UDI","Región Metropolitana de Santiago","13"
+1054,1,-0.456271290779114,-0.803379416465759,0,0,"Francesca Muñoz González","RN","Región del Bío Bío","20"
+1055,1,-0.504630029201508,-0.554680466651917,0,0,"Nicolás Noman Garrido","UDI","Región de Atacama","4"
+1056,1,0.68756365776062,0.361626267433167,0,0,"Emilia Nuyado Ancapichún","PS","Región de Los Lagos","25"
+1057,1,-0.353373348712921,-0.945062756538391,0,0,"Erika Olivera De La Fuente","IND","Región Metropolitana de Santiago","9"
+1058,1,0.625456511974335,-0.49783194065094,0,0,"Maite Orsini Pascal","RD","Región Metropolitana de Santiago","9"
+1059,1,-0.473043173551559,-1.05966866016388,0,0,"Ximena Ossandón Irarrázabal","RN","Región Metropolitana de Santiago","12"
+1060,1,-0.6268510222435,-0.39729431271553,0,0,"Luis Pardo Sáinz","RN","Región de Valparaíso","6"
+1061,1,0.486095696687698,0.492555201053619,0,0,"Andrea Parra Sauterel","PPD","Región de La Araucanía","22"
+1062,1,0.107043646275997,0.191675648093224,0,0,"Joanna Pérez Olea","DC","Región del Bío Bío","21"
+1063,1,0.651084244251251,-0.438693046569824,0,0,"Catalina Pérez Salinas","RD","Región de Antofagasta","3"
+1064,1,-0.43657848238945,-0.642417371273041,0,0,"Pablo Prieto Lorca","IND","Región del Maule","17"
+1065,1,-0.675365209579468,-0.152198612689972,0,0,"Guillermo Ramírez Diez","UDI","Región Metropolitana de Santiago","11"
+1066,1,-0.471662580966949,-0.452723622322083,0,0,"Rolando Rentería Moller","UDI","Región del Maule","18"
+1067,1,-0.509546637535095,-0.828556001186371,0,0,"Hugo Rey Martínez","RN","Región del Maule","17"
+1068,1,0.834543466567993,-0.191548898816109,0,0,"Camila Rojas Valderrama","COM","Región de Valparaíso","7"
+1069,1,-0.303727269172668,-0.60480672121048,0,0,"Leonidas Romero Sáez","RN","Región del Bío Bío","20"
+1070,1,0.562110543251038,0.0658213123679161,0,0,"Patricio Rosas Barrientos","IND","Región de Los Ríos","24"
+1071,1,0.597867369651794,0.475843250751495,0,0,"Gastón Saavedra Chandía","PS","Región del Bío Bío","20"
+1072,1,-0.57951694726944,-0.300638526678085,0,0,"Gustavo Sanhueza Dueñas","UDI","Región del Bío Bío","19"
+1073,1,0.644665479660034,0.549944519996643,0,0,"Juan Santana Castillo","PS","Región de Atacama","4"
+1074,1,0.662450790405273,0.695712983608246,0,0,"Marisela Santibáñez Novoa","PRO","Región Metropolitana de Santiago","14"
+1075,1,-0.551508963108063,-0.497141450643539,0,0,"Diego Schalper Sepúlveda","RN","Región del Libertador General Bernardo O' Higgins","15"
+1076,1,0.360179871320724,0.912638783454895,0,0,"Alexis Sepúlveda Soto","PRad","Región del Maule","17"
+1077,1,0.401867687702179,0.459380954504013,0,0,"Raúl Soto Mardones","DC","Región del Libertador General Bernardo O' Higgins","15"
+1078,1,0.492744088172913,0.16615729033947,0,0,"Jaime Tohá González","PS","Región del Bío Bío","20"
+1079,1,-0.642910182476044,-0.383290231227875,0,0,"Sebastián Torrealba Alvarado","RN","Región Metropolitana de Santiago","10"
+1080,1,-0.400013267993927,-0.463563293218613,0,0,"Virginia Troncoso Hellman","UDI","Región del Libertador General Bernardo O' Higgins","16"
+1081,1,-0.746549487113953,-0.561000645160675,0,0,"Francisco Undurraga Gazitúa","EVOP","Región Metropolitana de Santiago","11"
+1082,1,-0.616635799407959,-0.664059400558472,0,0,"Cristóbal Urruticoechea Ríos","RN","Región del Bío Bío","21"
+1083,1,0.703292787075043,-0.105020545423031,0,0,"Esteban Velásquez Núñez","FRVS","Región de Antofagasta","3"
+1084,1,0.11160921305418,0.267643123865128,0,0,"Daniel Verdessi Belemmi","DC","Región de Valparaíso","6"
+1085,1,0.650175273418427,-0.327570080757141,0,0,"Pablo Vidal Rojas","RD","Región Metropolitana de Santiago","8"
+1086,1,0.777960538864136,-0.224678784608841,0,0,"Gonzalo Winter Etcheberry","IND","Región Metropolitana de Santiago","10"
+1087,1,0.752700328826904,-0.3108811378479,0,0,"Gael Yeomans Araya","RD","Región Metropolitana de Santiago","13"

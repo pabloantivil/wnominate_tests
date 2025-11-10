@@ -7,13 +7,13 @@ It can plot individual periods or show the dynamic evolution of ideal points ove
 
 Usage:
     # Plot a single period:
-    python csv_dwnominate_graph.py --period P1 --csv-file data/dwnominate/output/dwnominate_coordinates_p1.csv
+    python csv_dwnominate_graph.py --period --labels P1 --csv-file data/dwnominate/output/dwnominate_coordinates_p1.csv  --output results/dwnominate_p1_coordinates.png
     
     # Plot evolution across all periods:
-    python csv_dwnominate_graph.py --evolution --csv-dir data/dwnominate/output
+    python src/csv_dwnominate_graph.py --evolution --csv-dir data/dwnominate/output --output results/dwnominate_evolution.png
     
     # Compare specific periods:
-    python csv_dwnominate_graph.py --compare P1 P5 --csv-dir data/dwnominate/output
+    python src/csv_dwnominate_graph.py --compare --labels P1 P5 --csv-dir data/dwnominate/output --output results/dwnominate_p1_vs_p5.png
 """
 
 import os
@@ -178,12 +178,20 @@ def plot_single_period(csv_file: str, output_file: Optional[str] = None,
     plt.axhline(y=0, color='k', linestyle='-', alpha=0.3)
     plt.axvline(x=0, color='k', linestyle='-', alpha=0.3)
 
-    # Add unit circle boundary
+    # Add adaptive circle boundary based on data range
+    # Calculate the maximum absolute coordinate value
+    x_vals = df['coord1D'].values
+    y_vals = df['coord2D'].values
+    max_coord = max(abs(x_vals).max(), abs(y_vals).max())
+
+    # Use at least 1.0, but expand if data goes beyond
+    circle_radius = max(1.0, max_coord * 1.1)  # 10% margin
+
     theta = np.linspace(0, 2*np.pi, 100)
-    circle_x = 1.0 * np.cos(theta)
-    circle_y = 1.0 * np.sin(theta)
+    circle_x = circle_radius * np.cos(theta)
+    circle_y = circle_radius * np.sin(theta)
     plt.plot(circle_x, circle_y, color='red', linestyle='--', alpha=0.5, linewidth=2,
-             label='Unit Circle Boundary')
+             label=f'Boundary Circle (r={circle_radius:.2f})')
 
     # Formatting
     plt.title(title, fontsize=16, fontweight='bold')
@@ -206,14 +214,14 @@ def plot_single_period(csv_file: str, output_file: Optional[str] = None,
         plt.legend(handles=legend_elements, loc='center left', bbox_to_anchor=(1, 0.5),
                    fontsize=10, framealpha=0.8)
 
-    # Set axis limits with margin
-    x_vals = df['coord1D'].values
-    y_vals = df['coord2D'].values
-    x_range = x_vals.max() - x_vals.min()
-    y_range = y_vals.max() - y_vals.min()
-    margin = 0.1
-    plt.xlim(x_vals.min() - x_range * margin, x_vals.max() + x_range * margin)
-    plt.ylim(y_vals.min() - y_range * margin, y_vals.max() + y_range * margin)
+    # Set axis limits symmetrically around origin with margin
+    max_abs_coord = max(abs(x_vals).max(), abs(y_vals).max())
+    axis_limit = max_abs_coord * 1.15  # 15% margin
+    plt.xlim(-axis_limit, axis_limit)
+    plt.ylim(-axis_limit, axis_limit)
+
+    # Ensure square aspect ratio for circular plot
+    plt.gca().set_aspect('equal', adjustable='box')
 
     plt.tight_layout()
 
@@ -288,10 +296,15 @@ def plot_evolution(csv_dir: str, output_file: Optional[str] = None,
         ax.axhline(y=0, color='k', linestyle='-', alpha=0.3)
         ax.axvline(x=0, color='k', linestyle='-', alpha=0.3)
 
-        # Unit circle
+        # Adaptive circle boundary for this period
+        period_x = df['coord1D'].values
+        period_y = df['coord2D'].values
+        period_max = max(abs(period_x).max(), abs(period_y).max())
+        period_radius = max(1.0, period_max * 1.1)
+
         theta = np.linspace(0, 2*np.pi, 100)
-        circle_x = 1.0 * np.cos(theta)
-        circle_y = 1.0 * np.sin(theta)
+        circle_x = period_radius * np.cos(theta)
+        circle_y = period_radius * np.sin(theta)
         ax.plot(circle_x, circle_y, color='red',
                 linestyle='--', alpha=0.3, linewidth=1)
 
@@ -300,8 +313,12 @@ def plot_evolution(csv_dir: str, output_file: Optional[str] = None,
         if i == 0:
             ax.set_ylabel('Second Dimension', fontsize=10)
         ax.grid(True, linestyle='--', alpha=0.3)
-        ax.set_xlim(-1.2, 1.2)
-        ax.set_ylim(-1.2, 1.2)
+
+        # Set symmetric limits
+        axis_lim = period_radius * 1.15
+        ax.set_xlim(-axis_lim, axis_lim)
+        ax.set_ylim(-axis_lim, axis_lim)
+        ax.set_aspect('equal', adjustable='box')
 
     # Add overall title
     fig.suptitle('DW-NOMINATE Evolution Across Periods\nChilean Congress 55th Legislative Period (2018-2022)',
@@ -358,6 +375,14 @@ def compare_periods(csv_dir: str, period1: str, period2: str,
     # Create figure with more space for legend
     fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(20, 10))
 
+    # Calculate adaptive radius for both periods
+    all_coords = pd.concat(
+        [df1[['coord1D', 'coord2D']], df2[['coord1D', 'coord2D']]])
+    max_coord = max(abs(all_coords['coord1D']).max(),
+                    abs(all_coords['coord2D']).max())
+    circle_radius = max(1.0, max_coord * 1.1)
+    axis_limit = circle_radius * 1.15
+
     # Plot period 1
     for _, row in df1.iterrows():
         x = row['coord1D']
@@ -386,12 +411,20 @@ def compare_periods(csv_dir: str, period1: str, period2: str,
     ax1.axhline(y=0, color='k', linestyle='-', alpha=0.3)
     ax1.axvline(x=0, color='k', linestyle='-', alpha=0.3)
 
+    # Add adaptive circle to ax1
+    theta = np.linspace(0, 2*np.pi, 100)
+    circle_x = circle_radius * np.cos(theta)
+    circle_y = circle_radius * np.sin(theta)
+    ax1.plot(circle_x, circle_y, color='red',
+             linestyle='--', alpha=0.4, linewidth=1.5)
+
     ax1.set_title(f'Period {period1} (2018)', fontsize=16, fontweight='bold')
     ax1.set_xlabel('Primera Dimensión (Izquierda ← → Derecha)', fontsize=12)
     ax1.set_ylabel('Segunda Dimensión', fontsize=12)
     ax1.grid(True, alpha=0.3, linestyle='--')
-    ax1.set_xlim(-1.1, 1.1)
-    ax1.set_ylim(-1.1, 1.1)
+    ax1.set_xlim(-axis_limit, axis_limit)
+    ax1.set_ylim(-axis_limit, axis_limit)
+    ax1.set_aspect('equal', adjustable='box')
 
     # Plot period 2
     for _, row in df2.iterrows():
@@ -420,12 +453,17 @@ def compare_periods(csv_dir: str, period1: str, period2: str,
     ax2.axhline(y=0, color='k', linestyle='-', alpha=0.3)
     ax2.axvline(x=0, color='k', linestyle='-', alpha=0.3)
 
+    # Add adaptive circle to ax2
+    ax2.plot(circle_x, circle_y, color='red',
+             linestyle='--', alpha=0.4, linewidth=1.5)
+
     ax2.set_title(f'Period {period2} (2021)', fontsize=16, fontweight='bold')
     ax2.set_xlabel('Primera Dimensión (Izquierda ← → Derecha)', fontsize=12)
     ax2.set_ylabel('Segunda Dimensión', fontsize=12)
     ax2.grid(True, alpha=0.3, linestyle='--')
-    ax2.set_xlim(-1.1, 1.1)
-    ax2.set_ylim(-1.1, 1.1)
+    ax2.set_xlim(-axis_limit, axis_limit)
+    ax2.set_ylim(-axis_limit, axis_limit)
+    ax2.set_aspect('equal', adjustable='box')
 
     # Create comprehensive party legend
     # Get all unique parties from both periods

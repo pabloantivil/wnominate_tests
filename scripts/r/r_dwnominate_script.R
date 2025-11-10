@@ -342,12 +342,11 @@ if (!dir.exists(results_dir)) {
   dir.create(results_dir, recursive = TRUE)
 }
 
-png(file.path(results_dir, "dwnominate_map.png"), width = 1200, height = 800, res = 150)
+png(file.path(results_dir, "dwnominate_results.png"), width = 1200, height = 800, res = 150)
 plot(dw_result)
 dev.off()
 
-cat("   ✅ dwnominate_map.png\n")
-
+cat("   ✅ dwnominate_results.png\n")
 # Summary statistics
 cat("\n=== ANALYSIS SUMMARY ===\n")
 cat("Total legislators: ", nrow(dw_result$legislators), "\n")
@@ -361,9 +360,5 @@ cat("📂 Output files:\n")
 cat("   • dwnominate_coordinates_p1.csv through p5.csv (period-specific)\n")
 cat("   • dwnominate_coordinates_all_periods.csv (combined)\n")
 cat("   • dwnominate_bill_parameters.csv\n")
-cat("   • dwnominate_map.png\n\n")
+cat("   • dwnominate_results.png\n\n")
 
-cat("💡 Next steps:\n")
-cat("   1. Review the coordinate files\n")
-cat("   2. Use csv_dwnominate_graph.py to create custom visualizations\n")
-cat("   3. Compare results across periods to see ideology evolution\n\n")
