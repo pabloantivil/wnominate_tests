@@ -102,11 +102,31 @@ def load_all_periods(csv_dir: str) -> Dict[str, pd.DataFrame]:
     Returns:
         Dictionary mapping period IDs to DataFrames
     """
-    # First try to find corrected files
+    # First try to find corrected files (pattern for 6 periods)
     period_files = glob.glob(os.path.join(
-        csv_dir, "dwnominate_coordinates_p*_corrected.csv"))
+        csv_dir, "coordinates_P*_6periods_corrected.csv"))
 
-    # If no corrected files, use original files
+    # If no 6-period corrected files, try original 6-period files
+    if not period_files:
+        period_files = glob.glob(os.path.join(
+            csv_dir, "coordinates_P*_6periods.csv"))
+
+    # If still no files, try bootstrap pattern (corrected)
+    if not period_files:
+        period_files = glob.glob(os.path.join(
+            csv_dir, "coordinates_P*_bootstrap_corrected.csv"))
+
+    # If still no files, try bootstrap pattern (original)
+    if not period_files:
+        period_files = glob.glob(os.path.join(
+            csv_dir, "coordinates_P*_bootstrap.csv"))
+
+    # If still no files, try corrected 5-period pattern
+    if not period_files:
+        period_files = glob.glob(os.path.join(
+            csv_dir, "dwnominate_coordinates_p*_corrected.csv"))
+
+    # If still no corrected files, use original 5-period files
     if not period_files:
         period_files = glob.glob(os.path.join(
             csv_dir, "dwnominate_coordinates_p*.csv"))
@@ -117,10 +137,17 @@ def load_all_periods(csv_dir: str) -> Dict[str, pd.DataFrame]:
 
     periods = {}
     for filepath in sorted(period_files):
-        # Extract period ID from filename (e.g., "dwnominate_coordinates_p1.csv" -> "P1")
+        # Extract period ID from filename
         basename = os.path.basename(filepath)
-        period_id = basename.replace(
-            "dwnominate_coordinates_", "").replace("_corrected.csv", "").replace(".csv", "").upper()
+
+        # Handle different filename patterns
+        if "coordinates_P" in basename:
+            # Pattern: coordinates_P1_6periods_corrected.csv -> P1
+            period_id = basename.split("_")[1]  # Gets "P1"
+        else:
+            # Pattern: dwnominate_coordinates_p1.csv -> P1
+            period_id = basename.replace(
+                "dwnominate_coordinates_", "").replace("_corrected.csv", "").replace(".csv", "").upper()
 
         df = load_dwnominate_period(filepath)
         periods[period_id] = df

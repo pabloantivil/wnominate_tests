@@ -231,34 +231,6 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
         filtered_matrix = period_matrix.loc[active_legislators, active_votes]
 
         print(
-            f"   After filtering: {filtered_matrix.shape[0]} legislators x {filtered_matrix.shape[1]} votes")
-
-        # NUEVO: Filtrar votaciones unánimes (todas Sí o todas No)
-        # DW-NOMINATE requiere variación en las votaciones
-        non_unanimous_votes = []
-        unanimous_count = 0
-
-        for col in filtered_matrix.columns:
-            vote_data = filtered_matrix[col]
-            # Contar solo votos válidos (no 9 = ausente)
-            valid_votes = vote_data[vote_data != 9]
-
-            if len(valid_votes) > 0:
-                yeas = (valid_votes == 1).sum()
-                nays = (valid_votes == 0).sum()
-
-                # Incluir solo si hay al menos 1 Sí Y al menos 1 No
-                if yeas > 0 and nays > 0:
-                    non_unanimous_votes.append(col)
-                else:
-                    unanimous_count += 1
-
-        if unanimous_count > 0:
-            print(
-                f"   Removed {unanimous_count} unanimous votes (no variation)")
-
-        filtered_matrix = filtered_matrix[non_unanimous_votes]
-        print(
             f"   Final matrix: {filtered_matrix.shape[0]} legislators x {filtered_matrix.shape[1]} votes")
 
         # Ordenar cronológicamente

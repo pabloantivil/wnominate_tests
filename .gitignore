@@ -2,3 +2,4 @@ pynominate/__pycache__/
 *.pyc
 .env
 .vscode/
+/data/dwnominate_bootstrap

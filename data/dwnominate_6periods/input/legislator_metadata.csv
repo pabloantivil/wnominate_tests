@@ -1,0 +1,147 @@
+legislator_id,id,nombres,partido,region,distrito
+1000,1000,Luis Rocafull López,PS,Región de Arica y Parinacota,1
+1001,1001,Raúl Saldívar Auger,PS,Región de Coquimbo,5
+1002,1002,Leonardo Soto Ferrada,PS,Región Metropolitana de Santiago,14
+1003,1003,Renzo Trisotti Martínez,UDI,Región de Tarapacá,2
+1005,1005,Osvaldo Urrutia Soto,UDI,Región de Valparaíso,7
+1006,1006,Camila Vallejo Dowling,PC,Región Metropolitana de Santiago,12
+1008,1008,Florcita Alarcón Rojas,PH,Región del Maule,17
+1009,1009,Jorge Alessandri Vergara,UDI,Región Metropolitana de Santiago,10
+1010,1010,Sebastián Álvarez Ramírez,EVOP,Región de La Araucanía,23
+1011,1011,Sandra Amar Mancilla,UDI,Región de Magallanes y de la Antártica Chilena,28
+1012,1012,Boris Barrera Moreno,PC,Región Metropolitana de Santiago,9
+1013,1013,Alejandro Bernales Maldonado,PL,Región de Los Lagos,26
+1014,1014,Karim Bianchi Retamales,IND,Región de Magallanes y de la Antártica Chilena,28
+1015,1015,Jorge Brito Hasbún,RD,Región de Valparaíso,7
+1016,1016,Miguel Ángel Calisto Águila,DC,Región de Aysén del General Carlos Ibáñez del Campo,27
+1017,1017,Álvaro Carter Fernández,UDI,Región Metropolitana de Santiago,12
+1018,1018,Natalia Castillo Muñoz,RD,Región Metropolitana de Santiago,10
+1019,1019,José Miguel Castro Bascuñán,RN,Región de Antofagasta,3
+1020,1020,Ricardo Celis Araya,PPD,Región de La Araucanía,23
+1021,1021,Andrés Celis Montt,RN,Región de Valparaíso,7
+1022,1022,Sofía Cid Versalovic,RN,Región de Atacama,4
+1023,1023,Miguel Crispi Serrano,RD,Región Metropolitana de Santiago,12
+1024,1024,Luciano Cruz-Coke Carvallo,EVOP,Región Metropolitana de Santiago,10
+1025,1025,Catalina Del Real Mihovilovic,RN,Región Metropolitana de Santiago,11
+1027,1027,Jorge Durán Espinoza,RN,Región Metropolitana de Santiago,9
+1028,1028,Eduardo Durán Salinas,RN,Región Metropolitana de Santiago,13
+1029,1029,Francisco Eguiguren Correa,RN,Región de Coquimbo,5
+1030,1030,Camila Flores Oporto,RN,Región de Valparaíso,6
+1031,1031,Juan Fuenzalida Cobo,UDI,Región de Coquimbo,5
+1032,1032,Ramón Galleguillos Castillo,RN,Región de Tarapacá,2
+1034,1034,Félix González Gatica,PEV,Región del Bío Bío,20
+1035,1035,Carmen Hertz Cádiz,PC,Región Metropolitana de Santiago,8
+1036,1036,Tomás Hirsch Goldschmidt,PH,Región Metropolitana de Santiago,11
+1037,1037,Diego Ibáñez Cotroneo,IND,Región de Valparaíso,6
+1038,1038,Marcos Ilabaca Cerda,PS,Región de Los Ríos,24
+1039,1039,Pamela Jiles Moreno,PH,Región Metropolitana de Santiago,12
+1040,1040,Harry Jürgensen Rundshagen,RN,Región de Los Lagos,25
+1041,1041,Pablo Kast Sommerhoff,EVOP,Región de Valparaíso,6
+1042,1042,Sebastián Keitel Bianchi,EVOP,Región Metropolitana de Santiago,9
+1043,1043,Amaro Labra Sepúlveda,PC,Región Metropolitana de Santiago,12
+1044,1044,Raúl Leiva Carvajal,PS,Región Metropolitana de Santiago,14
+1046,1046,Andrés Longton Herrera,RN,Región de Valparaíso,6
+1047,1047,Karin Luck Urban,RN,Región Metropolitana de Santiago,11
+1048,1048,Carolina Marzán Pinto,PPD,Región de Valparaíso,6
+1049,1049,Cosme Mellado Pino,PRad,Región del Libertador General Bernardo O' Higgins,16
+1050,1050,Miguel Mellado Suazo,RN,Región de La Araucanía,23
+1051,1051,Claudia Mix Jiménez,COM,Región Metropolitana de Santiago,8
+1052,1052,Andrés Molina Magofke,EVOP,Región de La Araucanía,23
+1053,1053,Cristhian Moreira Barros,UDI,Región Metropolitana de Santiago,13
+1054,1054,Francesca Muñoz González,RN,Región del Bío Bío,20
+1055,1055,Nicolás Noman Garrido,UDI,Región de Atacama,4
+1056,1056,Emilia Nuyado Ancapichún,PS,Región de Los Lagos,25
+1057,1057,Erika Olivera De La Fuente,IND,Región Metropolitana de Santiago,9
+1058,1058,Maite Orsini Pascal,RD,Región Metropolitana de Santiago,9
+1059,1059,Ximena Ossandón Irarrázabal,RN,Región Metropolitana de Santiago,12
+1060,1060,Luis Pardo Sáinz,RN,Región de Valparaíso,6
+1061,1061,Andrea Parra Sauterel,PPD,Región de La Araucanía,22
+1062,1062,Joanna Pérez Olea,DC,Región del Bío Bío,21
+1063,1063,Catalina Pérez Salinas,RD,Región de Antofagasta,3
+1064,1064,Pablo Prieto Lorca,IND,Región del Maule,17
+1065,1065,Guillermo Ramírez Diez,UDI,Región Metropolitana de Santiago,11
+1066,1066,Rolando Rentería Moller,UDI,Región del Maule,18
+1067,1067,Hugo Rey Martínez,RN,Región del Maule,17
+1068,1068,Camila Rojas Valderrama,COM,Región de Valparaíso,7
+1069,1069,Leonidas Romero Sáez,RN,Región del Bío Bío,20
+1070,1070,Patricio Rosas Barrientos,IND,Región de Los Ríos,24
+1071,1071,Gastón Saavedra Chandía,PS,Región del Bío Bío,20
+1072,1072,Gustavo Sanhueza Dueñas,UDI,Región del Bío Bío,19
+1073,1073,Juan Santana Castillo,PS,Región de Atacama,4
+1074,1074,Marisela Santibáñez Novoa,PRO,Región Metropolitana de Santiago,14
+1075,1075,Diego Schalper Sepúlveda,RN,Región del Libertador General Bernardo O' Higgins,15
+1076,1076,Alexis Sepúlveda Soto,PRad,Región del Maule,17
+1077,1077,Raúl Soto Mardones,DC,Región del Libertador General Bernardo O' Higgins,15
+1078,1078,Jaime Tohá González,PS,Región del Bío Bío,20
+1079,1079,Sebastián Torrealba Alvarado,RN,Región Metropolitana de Santiago,10
+1080,1080,Virginia Troncoso Hellman,UDI,Región del Libertador General Bernardo O' Higgins,16
+1081,1081,Francisco Undurraga Gazitúa,EVOP,Región Metropolitana de Santiago,11
+1082,1082,Cristóbal Urruticoechea Ríos,RN,Región del Bío Bío,21
+1083,1083,Esteban Velásquez Núñez,FRVS,Región de Antofagasta,3
+1084,1084,Daniel Verdessi Belemmi,DC,Región de Valparaíso,6
+1085,1085,Pablo Vidal Rojas,RD,Región Metropolitana de Santiago,8
+1086,1086,Gonzalo Winter Etcheberry,IND,Región Metropolitana de Santiago,10
+1087,1087,Gael Yeomans Araya,RD,Región Metropolitana de Santiago,13
+172,172,Carlos Kuschel Silva,RN,Región de Los Lagos,26
+660,660,Manuel Matta Aragay,DC,Región del Maule,18
+74,74,Jaime Naranjo Ortiz,PS,Región del Maule,18
+803,803,René Alinco Bustos,IND,Región de Aysén del General Carlos Ibáñez del Campo,27
+810,810,Gabriel Ascencio Mansilla,DC,Región de Los Lagos,26
+811,811,Ramón Barros Montero,UDI,Región del Libertador General Bernardo O' Higgins,16
+815,815,Sergio Bobadilla Muñoz,UDI,Región del Bío Bío,20
+827,827,Marcelo Díaz Díaz,PS,Región de Valparaíso,7
+837,837,Fidel Espinoza Sandoval,PS,Región de Los Lagos,25
+843,843,René Manuel García García,RN,Región de La Araucanía,23
+848,848,Rodrigo González Torres,PPD,Región de Valparaíso,7
+850,850,Javier Hernández Hernández,UDI,Región de Los Lagos,25
+855,855,Carlos Abel Jarpa Wevar,PRad,Región del Bío Bío,19
+856,856,Tucapel Jiménez Fuentes,PPD,Región Metropolitana de Santiago,13
+862,862,Pablo Lorenzini Basso,DC,Región del Maule,17
+866,866,Fernando Meza Moncada,PRad,Región de La Araucanía,23
+869,869,Manuel Monsalve Benavides,PS,Región del Bío Bío,21
+872,872,Jaime Mulet Martínez,FRVS,Región de Atacama,4
+875,875,Iván Norambuena Farías,UDI,Región del Bío Bío,21
+879,879,José Miguel Ortiz Novoa,DC,Región del Bío Bío,20
+885,885,José Pérez Arriagada,PRad,Región del Bío Bío,21
+893,893,Jorge Sabag Villalobos,DC,Región del Bío Bío,19
+897,897,Alejandra Sepúlveda Orbenes,FRVS,Región del Libertador General Bernardo O' Higgins,16
+898,898,Gabriel Silber Romo,DC,Región Metropolitana de Santiago,8
+908,908,Ignacio Urrutia Bonilla,UDI,Región del Maule,18
+913,913,Mario Venegas Cárdenas,DC,Región de La Araucanía,22
+917,917,Gastón Von Mühlenbrock Zamora,UDI,Región de Los Ríos,24
+920,920,Marcelo Schilling Rodríguez,PS,Región de Valparaíso,6
+923,923,Pedro Pablo Álvarez-Salamanca Ramírez,UDI,Región del Maule,17
+925,925,Pepe Auth Stewart,IND,Región Metropolitana de Santiago,8
+926,926,Nino Baltolu Rasera,UDI,Región de Arica y Parinacota,1
+931,931,Juan Luis Castro González,PS,Región del Libertador General Bernardo O' Higgins,15
+936,936,Cristina Girardi Lavín,PPD,Región Metropolitana de Santiago,9
+940,940,María José Hoffmann Opazo,UDI,Región de Valparaíso,7
+942,942,Javier Macaya Danús,UDI,Región del Libertador General Bernardo O' Higgins,15
+945,945,Celso Morales Muñoz,UDI,Región del Maule,17
+946,946,Leopoldo Pérez Lahsen,RN,Región Metropolitana de Santiago,12
+950,950,René Saffirio Espinoza,IND,Región de La Araucanía,23
+952,952,Alejandro Santana Tirachini,RN,Región de Los Lagos,26
+953,953,Frank Sauerbaum Muñoz,RN,Región del Bío Bío,19
+956,956,Guillermo Teillier Del Valle,PC,Región Metropolitana de Santiago,13
+957,957,Víctor Torres Jeldes,DC,Región de Valparaíso,7
+959,959,Enrique Van Rysselberghe Herrera,UDI,Región del Bío Bío,20
+961,961,Pedro Velásquez Seguel,IND,Región de Coquimbo,5
+963,963,Matías Walker Prieto,DC,Región de Coquimbo,5
+968,968,Jenny Álvarez Vera,PS,Región de Los Lagos,26
+971,971,Bernardo Berger Fett,RN,Región de Los Ríos,24
+972,972,Gabriel Boric Font,IND,Región de Magallanes y de la Antártica Chilena,28
+973,973,Karol Cariola Oliva,PC,Región Metropolitana de Santiago,9
+975,975,Daniella Cicardini Milla,PS,Región de Atacama,4
+976,976,Juan Antonio Coloma Álamos,UDI,Región Metropolitana de Santiago,14
+981,981,Maya Fernández Allende,PS,Región Metropolitana de Santiago,10
+982,982,Iván Flores García,DC,Región de Los Ríos,24
+984,984,Gonzalo Fuenzalida Figueroa,RN,Región Metropolitana de Santiago,11
+985,985,Sergio Gahona Salazar,UDI,Región de Coquimbo,5
+986,986,Marcela Hernando Pérez,PRad,Región de Antofagasta,3
+987,987,Giorgio Jackson Drago,RD,Región Metropolitana de Santiago,10
+989,989,Joaquín Lavín León,UDI,Región Metropolitana de Santiago,8
+991,991,Vlado Mirosevic Verdugo,PL,Región de Arica y Parinacota,1
+993,993,Daniel Núñez Arancibia,PC,Región de Coquimbo,5
+994,994,Paulina Núñez Urrutia,RN,Región de Antofagasta,3
+995,995,Diego Paulsen Kehr,RN,Región de La Araucanía,22
+999,999,Jorge Rathgeb Schifferli,RN,Región de La Araucanía,22
