@@ -30,34 +30,73 @@ def create_party_colors_for_chile() -> Dict[str, str]:
     """
     Define color mapping for Chilean political parties.
 
+    Colors based on political spectrum from left (red) to right (blue),
+    using RGB values converted to hex format.
+
+    Political spectrum:
+    - Far Left: PC, IC, CS, PH (dark red to red)
+    - Center-Left: PS, COM, PRad, PRO (red-orange to light orange)
+    - Left-Alternative: RD (very light orange)
+    - Independent/Green: IND, FRVS (green/yellow-green)
+    - Center: DC (yellow)
+    - Center-Liberal: PPD, PL, PEV (light green to cyan)
+    - Center-Right: EVOP (medium blue)
+    - Right: RN (dark blue)
+    - Far Right: UDI, PRep (very dark blue)
+
     Returns:
-        Dictionary mapping party codes to colors
+        Dictionary mapping party codes to hex colors
     """
     return {
-        # Left-wing parties
-        "PC": "#FF0000",           # Communist Party (Red)
-        "PS": "#E60026",           # Socialist Party (Deep Red)
-        "PPD": "#FF6600",          # Party for Democracy (Orange)
-        "FRVS": "#FF3366",         # Broad Front (Pink-Red)
-        "RD": "#00CC66",           # Democratic Revolution (Green)
-        "CS": "#66CC00",           # Social Convergence (Light Green)
-        "PH": "#FF00CC",           # Humanist Party (Magenta)
+        # Far Left / Izquierda (rojo oscuro a rojo)
+        "PC": "#800026",           # Partido Comunista - rgb(128,0,38)
+        "IC": "#BD0026",           # Izquierda Ciudadana - rgb(189,0,38)
+        "CS": "#E31A1C",           # Convergencia Social - rgb(227,26,28)
+        "PH": "#FC4E2A",           # Partido Humanista - rgb(252,78,42)
 
-        # Center parties
-        "DC": "#0066FF",           # Christian Democrat (Blue)
-        "PR": "#3399FF",           # Radical Party (Light Blue)
-        "PL": "#0099CC",           # Liberal Party (Cyan)
+        # Center-Left / Centro-Izquierda (rojo-naranja a naranja claro)
+        "PS": "#FD793C",           # Partido Socialista - rgb(253,121,60)
+        "COM": "#FE9E4C",          # Partido Comunes - rgb(254,158,76)
+        "PRad": "#FEB476",         # Partido Radical - rgb(254,180,118)
+        "Prad": "#FEB476",         # Partido Radical (alternativa)
+        "PR": "#FEB476",           # Partido Radical (alternativa)
+        "PRO": "#FFC8A0",          # Partido Progresista - rgb(255,200,160)
 
-        # Right-wing parties
-        "RN": "#000080",           # National Renewal (Navy Blue)
-        "UDI": "#800000",          # Independent Democratic Union (Maroon)
-        "EVOP": "#CC6600",         # Evolve (Brown)
-        "PRI": "#996633",          # Regional Independent Party (Brown)
+        # Left-Alternative / Izquierda Alternativa (naranja muy claro)
+        "RD": "#FFE6CC",           # Revolución Democrática - rgb(255,230,204)
 
-        # Independents and others
-        "IND": "#808080",          # Independent (Gray)
-        "IND-UDI": "#A00000",      # Independent leaning UDI (Dark Red)
-        "IND-RN": "#000060",       # Independent leaning RN (Dark Blue)
+        # Independent/Green / Independientes y Verdes (verde/amarillo-verde)
+        # Independientes - rgb(0,255,0) - verde brillante
+        "IND": "#00FF00",
+        # Federación Regionalista Verde Social - rgb(251,255,134)
+        "FRVS": "#FBFF86",
+
+        # Center / Centro (amarillo)
+        "DC": "#FFFF00",           # Democracia Cristiana - rgb(255,255,0)
+
+        # Center-Liberal / Centro-Liberal (verde claro a celeste)
+        # Partido por la Democracia - rgb(215,255,157)
+        "PPD": "#D7FF9D",
+        "PL": "#5DC0BE",           # Partido Liberal - rgb(93,192,190)
+        "PEV": "#54ABC0",          # Partido Ecologista Verde - rgb(84,171,192)
+
+        # Center-Right / Centro-Derecha (azul medio)
+        "EVOP": "#1D91C0",         # Evolución Política - rgb(29,145,192)
+
+        # Right / Derecha (azul oscuro)
+        "RN": "#225EA8",           # Renovación Nacional - rgb(34,94,168)
+
+        # Far Right / Derecha (azul muy oscuro)
+        # Unión Demócrata Independiente - rgb(37,52,148)
+        "UDI": "#253494",
+        "PRep": "#081D58",         # Partido Republicano - rgb(8,29,88)
+        "Prep": "#081D58",         # Partido Republicano (alternativa)
+
+        # Other / Otros
+        # Partido Regionalista Independiente (marrón)
+        "PRI": "#996633",
+        "S/I": "#7D7D7D",          # Sin Información - rgb(125,125,125)
+        "NOINFO": "#7D7D7D",       # Sin Información (alternativa)
 
         # Default
         "Default": "#CCCCCC"       # Unknown parties (Light Gray)
@@ -504,21 +543,30 @@ def compare_periods(csv_dir: str, period1: str, period2: str,
     legend_elements = []
     party_descriptions = {
         'PC': 'PC - Partido Comunista',
+        'IC': 'IC - Izquierda Ciudadana',
+        'CS': 'CS - Convergencia Social',
+        'PH': 'PH - Partido Humanista',
         'PS': 'PS - Partido Socialista',
-        'PPD': 'PPD - Partido por la Democracia',
-        'RD': 'RD - Revolución Democrática',
-        'FRVS': 'FRVS - Frente Amplio',
-        'DC': 'DC - Democracia Cristiana',
+        'COM': 'COM - Partido Comunes',
         'PRad': 'PRad - Partido Radical',
+        'Prad': 'Prad - Partido Radical',
+        'PR': 'PR - Partido Radical',
+        'PRO': 'PRO - Partido Progresista',
+        'RD': 'RD - Revolución Democrática',
+        'IND': 'IND - Independiente',
+        'FRVS': 'FRVS - Federación Regionalista Verde Social',
+        'DC': 'DC - Democracia Cristiana',
+        'PPD': 'PPD - Partido por la Democracia',
         'PL': 'PL - Partido Liberal',
+        'PEV': 'PEV - Partido Ecologista Verde',
+        'EVOP': 'EVOP - Evolución Política',
         'RN': 'RN - Renovación Nacional',
         'UDI': 'UDI - Unión Demócrata Independiente',
-        'EVOP': 'EVOP - Evolución Política',
-        'IND': 'IND - Independiente',
-        'PH': 'PH - Partido Humanista',
-        'PEV': 'PEV - Partido Ecologista Verde',
-        'COM': 'COM - Comunes',
-        'PRO': 'PRO - Partido Progresista'
+        'PRep': 'PRep - Partido Republicano',
+        'Prep': 'Prep - Partido Republicano',
+        'PRI': 'PRI - Partido Regionalista Independiente',
+        'S/I': 'S/I - Sin Información',
+        'NOINFO': 'Sin Información'
     }
 
     for party in sorted(all_parties):
@@ -620,7 +668,7 @@ def main():
         if args.evolution:
             # Plot evolution across all periods
             if not args.csv_dir:
-                print("❌ Error: --csv-dir required for --evolution")
+                print("Error: --csv-dir required for --evolution")
                 return 1
 
             plot_evolution(args.csv_dir, args.output)
@@ -628,12 +676,13 @@ def main():
         elif args.compare:
             # Compare two periods
             if not args.csv_dir:
-                print("❌ Error: --csv-dir required for --compare")
+                print("Error: --csv-dir required for --compare")
                 return 1
 
             period1, period2 = args.compare
-            compare_periods(args.csv_dir, period1.upper(),
-                            period2.upper(), args.output, args.labels)
+            # Don't force uppercase - preserve case for P1a, P2b, etc.
+            compare_periods(args.csv_dir, period1, period2,
+                            args.output, args.labels)
 
         elif args.csv_file:
             # Plot single period from file
@@ -648,7 +697,7 @@ def main():
                                args.labels, args.title)
 
         else:
-            print("❌ Error: Must specify either:")
+            print("Error: Must specify either:")
             print("   1. --csv-file for single period plot")
             print("   2. --csv-dir and --period for single period plot")
             print("   3. --csv-dir and --evolution for evolution plot")
@@ -657,7 +706,7 @@ def main():
             return 1
 
     except Exception as e:
-        print(f"❌ Error: {str(e)}")
+        print(f"Error: {str(e)}")
         import traceback
         traceback.print_exc()
         return 1

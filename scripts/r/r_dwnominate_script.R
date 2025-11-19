@@ -270,8 +270,8 @@ dw_result <- dwnominate(
   dims = 2, # 2 dimensions
   model = 1, # Linear change over time
   polarity = polarity_anchor,
-  minvotes = 1, # Minimum votes for a legislator to be included (reducido de 10)
-  lop = 0.001, # Lopsided vote threshold (reducido de 0.025)
+  minvotes = 20, # Minimum votes for a legislator to be included (reducido de 10)
+  lop = 0.025, # Lopsided vote threshold (reducido de 0.025)
   niter = 4, # 4 iterations (usually sufficient)
   beta = 5.9539, # Spatial error parameter (default)
   w = 0.3463, # Second dimension weight (default)

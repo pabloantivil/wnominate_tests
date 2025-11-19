@@ -1,453 +1,384 @@
-# DW-NOMINATE Analysis Script - 6 Períodos Semestrales (2019-2021)
-# Análisis con 6 períodos divididos por semestre
+# DW-NOMINATE Analysis - 6 Political Periods
+# 55º Período Legislativo (2018-2022)
+# Divided based on major Chilean political events
+# Generated automatically
 
 cat("\n")
 cat("===============================================\n")
-cat("  DW-NOMINATE Analysis - Chilean Congress     \n")
-cat("  6 Períodos Semestrales (2019-2021)          \n")
+cat("  DW-NOMINATE - 6 Political Periods          \n")
+cat("  55º PL (2018-2022) - Chile                 \n")
 cat("===============================================\n")
 cat("\n")
 
-# Instalar paquetes requeridos si no están instalados
+# Install required packages
 if (!require(pscl)) {
-    cat("📦 Instalando paquete pscl...\n")
-    install.packages("pscl")
+  cat("📦 Installing pscl...\n")
+  install.packages("pscl")
 }
 if (!require(dplyr)) {
-    cat("📦 Instalando paquete dplyr...\n")
-    install.packages("dplyr")
+  cat("📦 Installing dplyr...\n")
+  install.packages("dplyr")
 }
 if (!require(dwnominate)) {
-    cat("📦 Instalando paquete dwnominate...\n")
-    install.packages("remotes")
-    remotes::install_github("wmay/dwnominate")
+  cat("📦 Installing dwnominate...\n")
+  install.packages("remotes")
+  remotes::install_github("wmay/dwnominate")
 }
 
 library(pscl)
 library(dplyr)
 library(dwnominate)
 
-cat("\n✅ Todos los paquetes cargados exitosamente\n\n")
+cat("\n✅ All packages loaded\n\n")
 
-# Cargar metadata desde data/dwnominate_6periods/input
+# Load metadata
 legislator_meta <- read.csv("../../data/dwnominate_6periods/input/legislator_metadata.csv")
+vote_meta <- read.csv("../../data/dwnominate_6periods/input/vote_metadata.csv")
 
-cat("📊 Metadata cargada:\n")
-cat("   Legisladores: ", nrow(legislator_meta), "\n\n")
+cat("📊 Metadata loaded:\n")
+cat("   Legislators: ", nrow(legislator_meta), "\n")
+cat("   Votes: ", nrow(vote_meta), "\n\n")
 
-cat("📅 Cargando matrices de votos para cada período...\n\n")
+cat("📅 Loading 6 political periods...\n\n")
 
-# Almacenamiento para objetos rollcall
+# Storage for rollcall objects
 rc_list <- list()
 
-# PERÍODO 1: 2019 Semestre 1
-votes_p1 <- read.csv("../../data/dwnominate_6periods/input/P1_votes_matrix.csv", row.names = 1)
-votes_mat_p1 <- as.matrix(votes_p1)
+# PERIOD 1: Inicio PL - Primera Mitad
+# Marzo 2018 - Septiembre 2018 (Pre-Estallido, Parte 1)
+# Context: Inicio del gobierno de Sebastián Piñera (2º mandato)
+votes_p1a <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p1a.csv", row.names = 1)
+votes_mat_p1a <- as.matrix(votes_p1a)
 
-period_legislators_p1 <- rownames(votes_mat_p1)
-legis_data_p1 <- data.frame(
-    legislator_id = as.integer(period_legislators_p1),
-    row.names = period_legislators_p1,
-    stringsAsFactors = FALSE
+period_legislators_p1a <- rownames(votes_mat_p1a)
+legis_data_p1a <- data.frame(
+  legislator_id = as.integer(period_legislators_p1a),
+  row.names = period_legislators_p1a,
+  stringsAsFactors = FALSE
 )
-legis_data_p1 <- legis_data_p1 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p1$party <- ifelse(is.na(legis_data_p1$partido), "IND", legis_data_p1$partido)
-rownames(legis_data_p1) <- period_legislators_p1
+legis_data_p1a <- legis_data_p1a %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p1a$party <- ifelse(is.na(legis_data_p1a$partido), "IND", legis_data_p1a$partido)
+rownames(legis_data_p1a) <- period_legislators_p1a
 
-rc_p1 <- rollcall(
-    data = votes_mat_p1,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p1),
-    vote.names = colnames(votes_mat_p1),
-    desc = "2019 Semestre 1",
-    legis.data = legis_data_p1
+rc_p1a <- rollcall(
+  data = votes_mat_p1a,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p1a),
+  vote.names = colnames(votes_mat_p1a),
+  desc = "Inicio PL - Primera Mitad",
+  legis.data = legis_data_p1a
 )
-cat(
-    "✅ 2019 Semestre 1: ", nrow(rc_p1$votes), " legisladores x ",
-    ncol(rc_p1$votes), " votaciones\n"
+cat("✅ Inicio PL - Primera Mitad: ", nrow(rc_p1a$votes), " legislators x ", 
+    ncol(rc_p1a$votes), " votes\n")
+rc_list[[1]] <- rc_p1a
+
+# PERIOD 2: Inicio PL - Segunda Mitad
+# Octubre 2018 - Octubre 2019 (Pre-Estallido, Parte 2)
+# Context: Período previo al estallido social
+votes_p1b <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p1b.csv", row.names = 1)
+votes_mat_p1b <- as.matrix(votes_p1b)
+
+period_legislators_p1b <- rownames(votes_mat_p1b)
+legis_data_p1b <- data.frame(
+  legislator_id = as.integer(period_legislators_p1b),
+  row.names = period_legislators_p1b,
+  stringsAsFactors = FALSE
 )
-rc_list[[1]] <- rc_p1
+legis_data_p1b <- legis_data_p1b %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p1b$party <- ifelse(is.na(legis_data_p1b$partido), "IND", legis_data_p1b$partido)
+rownames(legis_data_p1b) <- period_legislators_p1b
 
-# PERÍODO 2: 2019 Semestre 2
-votes_p2 <- read.csv("../../data/dwnominate_6periods/input/P2_votes_matrix.csv", row.names = 1)
-votes_mat_p2 <- as.matrix(votes_p2)
-
-period_legislators_p2 <- rownames(votes_mat_p2)
-legis_data_p2 <- data.frame(
-    legislator_id = as.integer(period_legislators_p2),
-    row.names = period_legislators_p2,
-    stringsAsFactors = FALSE
+rc_p1b <- rollcall(
+  data = votes_mat_p1b,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p1b),
+  vote.names = colnames(votes_mat_p1b),
+  desc = "Inicio PL - Segunda Mitad",
+  legis.data = legis_data_p1b
 )
-legis_data_p2 <- legis_data_p2 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p2$party <- ifelse(is.na(legis_data_p2$partido), "IND", legis_data_p2$partido)
-rownames(legis_data_p2) <- period_legislators_p2
+cat("✅ Inicio PL - Segunda Mitad: ", nrow(rc_p1b$votes), " legislators x ", 
+    ncol(rc_p1b$votes), " votes\n")
+rc_list[[2]] <- rc_p1b
 
-rc_p2 <- rollcall(
-    data = votes_mat_p2,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p2),
-    vote.names = colnames(votes_mat_p2),
-    desc = "2019 Semestre 2",
-    legis.data = legis_data_p2
+# PERIOD 3: Estallido Social - Primera Mitad
+# Octubre 2019 - Abril 2020 (Estallido y COVID-19)
+# Context: Estallido social y llegada de la pandemia
+votes_p2a <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p2a.csv", row.names = 1)
+votes_mat_p2a <- as.matrix(votes_p2a)
+
+period_legislators_p2a <- rownames(votes_mat_p2a)
+legis_data_p2a <- data.frame(
+  legislator_id = as.integer(period_legislators_p2a),
+  row.names = period_legislators_p2a,
+  stringsAsFactors = FALSE
 )
-cat(
-    "✅ 2019 Semestre 2: ", nrow(rc_p2$votes), " legisladores x ",
-    ncol(rc_p2$votes), " votaciones\n"
+legis_data_p2a <- legis_data_p2a %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p2a$party <- ifelse(is.na(legis_data_p2a$partido), "IND", legis_data_p2a$partido)
+rownames(legis_data_p2a) <- period_legislators_p2a
+
+rc_p2a <- rollcall(
+  data = votes_mat_p2a,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p2a),
+  vote.names = colnames(votes_mat_p2a),
+  desc = "Estallido Social - Primera Mitad",
+  legis.data = legis_data_p2a
 )
-rc_list[[2]] <- rc_p2
+cat("✅ Estallido Social - Primera Mitad: ", nrow(rc_p2a$votes), " legislators x ", 
+    ncol(rc_p2a$votes), " votes\n")
+rc_list[[3]] <- rc_p2a
 
-# PERÍODO 3: 2020 Semestre 1
-votes_p3 <- read.csv("../../data/dwnominate_6periods/input/P3_votes_matrix.csv", row.names = 1)
-votes_mat_p3 <- as.matrix(votes_p3)
+# PERIOD 4: Estallido Social - Segunda Mitad
+# Abril 2020 - Octubre 2020 (Pandemia y Acuerdo por la Paz)
+# Context: Pandemia COVID-19 y preparación del plebiscito
+votes_p2b <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p2b.csv", row.names = 1)
+votes_mat_p2b <- as.matrix(votes_p2b)
 
-period_legislators_p3 <- rownames(votes_mat_p3)
-legis_data_p3 <- data.frame(
-    legislator_id = as.integer(period_legislators_p3),
-    row.names = period_legislators_p3,
-    stringsAsFactors = FALSE
+period_legislators_p2b <- rownames(votes_mat_p2b)
+legis_data_p2b <- data.frame(
+  legislator_id = as.integer(period_legislators_p2b),
+  row.names = period_legislators_p2b,
+  stringsAsFactors = FALSE
 )
-legis_data_p3 <- legis_data_p3 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p3$party <- ifelse(is.na(legis_data_p3$partido), "IND", legis_data_p3$partido)
-rownames(legis_data_p3) <- period_legislators_p3
+legis_data_p2b <- legis_data_p2b %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p2b$party <- ifelse(is.na(legis_data_p2b$partido), "IND", legis_data_p2b$partido)
+rownames(legis_data_p2b) <- period_legislators_p2b
 
-rc_p3 <- rollcall(
-    data = votes_mat_p3,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p3),
-    vote.names = colnames(votes_mat_p3),
-    desc = "2020 Semestre 1",
-    legis.data = legis_data_p3
+rc_p2b <- rollcall(
+  data = votes_mat_p2b,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p2b),
+  vote.names = colnames(votes_mat_p2b),
+  desc = "Estallido Social - Segunda Mitad",
+  legis.data = legis_data_p2b
 )
-cat(
-    "✅ 2020 Semestre 1: ", nrow(rc_p3$votes), " legisladores x ",
-    ncol(rc_p3$votes), " votaciones\n"
+cat("✅ Estallido Social - Segunda Mitad: ", nrow(rc_p2b$votes), " legislators x ", 
+    ncol(rc_p2b$votes), " votes\n")
+rc_list[[4]] <- rc_p2b
+
+# PERIOD 5: Post-Plebiscito - Primera Mitad
+# Octubre 2020 - Agosto 2021 (Constitución y Elecciones)
+# Context: Plebiscito aprueba nueva constitución, Convención Constituyente
+votes_p3a <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p3a.csv", row.names = 1)
+votes_mat_p3a <- as.matrix(votes_p3a)
+
+period_legislators_p3a <- rownames(votes_mat_p3a)
+legis_data_p3a <- data.frame(
+  legislator_id = as.integer(period_legislators_p3a),
+  row.names = period_legislators_p3a,
+  stringsAsFactors = FALSE
 )
-rc_list[[3]] <- rc_p3
+legis_data_p3a <- legis_data_p3a %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p3a$party <- ifelse(is.na(legis_data_p3a$partido), "IND", legis_data_p3a$partido)
+rownames(legis_data_p3a) <- period_legislators_p3a
 
-# PERÍODO 4: 2020 Semestre 2
-votes_p4 <- read.csv("../../data/dwnominate_6periods/input/P4_votes_matrix.csv", row.names = 1)
-votes_mat_p4 <- as.matrix(votes_p4)
-
-period_legislators_p4 <- rownames(votes_mat_p4)
-legis_data_p4 <- data.frame(
-    legislator_id = as.integer(period_legislators_p4),
-    row.names = period_legislators_p4,
-    stringsAsFactors = FALSE
+rc_p3a <- rollcall(
+  data = votes_mat_p3a,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p3a),
+  vote.names = colnames(votes_mat_p3a),
+  desc = "Post-Plebiscito - Primera Mitad",
+  legis.data = legis_data_p3a
 )
-legis_data_p4 <- legis_data_p4 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p4$party <- ifelse(is.na(legis_data_p4$partido), "IND", legis_data_p4$partido)
-rownames(legis_data_p4) <- period_legislators_p4
+cat("✅ Post-Plebiscito - Primera Mitad: ", nrow(rc_p3a$votes), " legislators x ", 
+    ncol(rc_p3a$votes), " votes\n")
+rc_list[[5]] <- rc_p3a
 
-rc_p4 <- rollcall(
-    data = votes_mat_p4,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p4),
-    vote.names = colnames(votes_mat_p4),
-    desc = "2020 Semestre 2",
-    legis.data = legis_data_p4
+# PERIOD 6: Post-Plebiscito - Segunda Mitad
+# Agosto 2021 - Marzo 2022 (Elecciones Presidenciales)
+# Context: Elecciones presidenciales y fin del período legislativo
+votes_p3b <- read.csv("../../data/dwnominate_6periods/input/votes_matrix_p3b.csv", row.names = 1)
+votes_mat_p3b <- as.matrix(votes_p3b)
+
+period_legislators_p3b <- rownames(votes_mat_p3b)
+legis_data_p3b <- data.frame(
+  legislator_id = as.integer(period_legislators_p3b),
+  row.names = period_legislators_p3b,
+  stringsAsFactors = FALSE
 )
-cat(
-    "✅ 2020 Semestre 2: ", nrow(rc_p4$votes), " legisladores x ",
-    ncol(rc_p4$votes), " votaciones\n"
+legis_data_p3b <- legis_data_p3b %>%
+  left_join(
+    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
+    by = "legislator_id"
+  )
+legis_data_p3b$party <- ifelse(is.na(legis_data_p3b$partido), "IND", legis_data_p3b$partido)
+rownames(legis_data_p3b) <- period_legislators_p3b
+
+rc_p3b <- rollcall(
+  data = votes_mat_p3b,
+  yea = 1,
+  nay = 0,
+  missing = NA,
+  notInLegis = 9,
+  legis.names = rownames(votes_mat_p3b),
+  vote.names = colnames(votes_mat_p3b),
+  desc = "Post-Plebiscito - Segunda Mitad",
+  legis.data = legis_data_p3b
 )
-rc_list[[4]] <- rc_p4
+cat("✅ Post-Plebiscito - Segunda Mitad: ", nrow(rc_p3b$votes), " legislators x ", 
+    ncol(rc_p3b$votes), " votes\n")
+rc_list[[6]] <- rc_p3b
 
-# PERÍODO 5: 2021 Semestre 1
-votes_p5 <- read.csv("../../data/dwnominate_6periods/input/P5_votes_matrix.csv", row.names = 1)
-votes_mat_p5 <- as.matrix(votes_p5)
 
-period_legislators_p5 <- rownames(votes_mat_p5)
-legis_data_p5 <- data.frame(
-    legislator_id = as.integer(period_legislators_p5),
-    row.names = period_legislators_p5,
-    stringsAsFactors = FALSE
-)
-legis_data_p5 <- legis_data_p5 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p5$party <- ifelse(is.na(legis_data_p5$partido), "IND", legis_data_p5$partido)
-rownames(legis_data_p5) <- period_legislators_p5
 
-rc_p5 <- rollcall(
-    data = votes_mat_p5,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p5),
-    vote.names = colnames(votes_mat_p5),
-    desc = "2021 Semestre 1",
-    legis.data = legis_data_p5
-)
-cat(
-    "✅ 2021 Semestre 1: ", nrow(rc_p5$votes), " legisladores x ",
-    ncol(rc_p5$votes), " votaciones\n"
-)
-rc_list[[5]] <- rc_p5
+cat("\n✅ All 6 periods loaded successfully\n")
+cat("📋 Rollcall list contains ", length(rc_list), " periods\n\n")
 
-# PERÍODO 6: 2021 Semestre 2
-votes_p6 <- read.csv("../../data/dwnominate_6periods/input/P6_votes_matrix.csv", row.names = 1)
-votes_mat_p6 <- as.matrix(votes_p6)
+# Set polarity anchors
+cat("🎯 Setting polarity anchors...\n")
 
-period_legislators_p6 <- rownames(votes_mat_p6)
-legis_data_p6 <- data.frame(
-    legislator_id = as.integer(period_legislators_p6),
-    row.names = period_legislators_p6,
-    stringsAsFactors = FALSE
-)
-legis_data_p6 <- legis_data_p6 %>%
-    left_join(
-        legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-        by = "legislator_id"
-    )
-legis_data_p6$party <- ifelse(is.na(legis_data_p6$partido), "IND", legis_data_p6$partido)
-rownames(legis_data_p6) <- period_legislators_p6
-
-rc_p6 <- rollcall(
-    data = votes_mat_p6,
-    yea = 1,
-    nay = 0,
-    missing = NA,
-    notInLegis = 9,
-    legis.names = rownames(votes_mat_p6),
-    vote.names = colnames(votes_mat_p6),
-    desc = "2021 Semestre 2",
-    legis.data = legis_data_p6
-)
-cat(
-    "✅ 2021 Semestre 2: ", nrow(rc_p6$votes), " legisladores x ",
-    ncol(rc_p6$votes), " votaciones\n"
-)
-rc_list[[6]] <- rc_p6
-
-cat("\n")
-cat("===============================================\n")
-cat("  Ejecutando DW-NOMINATE                      \n")
-cat("===============================================\n")
-cat("\n")
-
-# Obtener lista de legisladores comunes en todos los períodos
-common_legislators <- character(0)
-if (length(rc_list) > 0) {
-  # Obtener legisladores del primer período
-  common_legislators <- as.character(rc_list[[1]]$legis.data$legislator_id)
-  
-  # Intersectar con legisladores de cada período subsiguiente
-  for (i in 2:length(rc_list)) {
-    period_legislators <- as.character(rc_list[[i]]$legis.data$legislator_id)
-    common_legislators <- intersect(common_legislators, period_legislators)
-  }
+# Find legislators in ALL periods
+all_period_legislators <- list()
+for (i in 1:6) {
+  all_period_legislators[[i]] <- rownames(rc_list[[i]]$votes)
 }
 
-cat("📋 Legisladores comunes en todos los períodos: ", length(common_legislators), "\n\n")
+common_legislators <- Reduce(intersect, all_period_legislators)
+cat("   Legislators in ALL 6 periods: ", length(common_legislators), "\n")
 
-# Definir partidos de izquierda y derecha
-right_parties <- c("UDI", "RN")
+# Chilean political spectrum anchors
 left_parties <- c("PC", "PS")
+right_parties <- c("UDI", "RN")
 
 left_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% left_parties]
 right_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% right_parties]
 
-# Buscar legislador de izquierda en el conjunto común
+# Find left-wing legislator in common set
 left_in_common <- left_legislators[as.character(left_legislators) %in% common_legislators]
 
 if (length(left_in_common) > 0) {
   polarity_anchor <- as.character(left_in_common[1])
   anchor_info <- legislator_meta[legislator_meta$legislator_id == as.integer(polarity_anchor), ]
-  cat(
-    "🎯 Anclaje de polaridad: ", polarity_anchor, " (",
-    anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\n\n"
-  )
+  cat("   Polarity anchor: ", polarity_anchor, " (", 
+      anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\n\n")
 } else {
-  # Fallback: usar el primer legislador común
   polarity_anchor <- common_legislators[1]
-  cat("   ⚠️  Usando anclaje alternativo: ", polarity_anchor, "\n\n")
+  cat("   Fallback polarity anchor: ", polarity_anchor, "\n\n")
 }
 
-cat("⚙️  Parámetros:\n")
-cat("   • Dimensiones: 2\n")
-cat("   • Modelo: 1 (linear)\n")
-cat("   • lop: 0.001 (filtro de votaciones lopsided)\n")
-cat("   • minvotes: 1\n")
-cat("   • Períodos: 6\n")
-cat("   • Polarity: ", polarity_anchor, " (primera dimensión)\n\n")
+cat("🚀 Running DW-NOMINATE (6 periods)...\n")
+cat("   This may take several minutes.\n\n")
 
-cat("🔄 Ejecutando algoritmo DW-NOMINATE...\n")
-cat("   (esto puede tomar varios minutos)\n\n")
-
-# Ejecutar DW-NOMINATE con parámetros correctos
+# Run DW-NOMINATE
 dw_result <- dwnominate(
   rc_list,
-  id = "legislator_id",  # CRÍTICO: identificador único de legisladores
-  dims = 2,              # 2 dimensiones
-  model = 1,             # Linear change over time
-  polarity = polarity_anchor,  # STRING del ID del legislador ancla
-  minvotes = 1,          # Mínimo de votos para incluir legislador
-  lop = 0.001,           # Lopsided vote threshold (muy permisivo)
-  niter = 4,             # 4 iteraciones (usualmente suficiente)
-  beta = 5.9539,         # Parámetro de error espacial (default)
-  w = 0.3463,            # Peso segunda dimensión (default)
+  id = "legislator_id",
+  dims = 2,
+  model = 1,  # Linear change over time
+  polarity = polarity_anchor,
+  minvotes = 5,  # Reducido para períodos más cortos
+  lop = 0.025,  # Lopsided vote threshold (2.5%)
+  niter = 4,
+  beta = 5.9539,
+  w = 0.3463,
   verbose = TRUE
-    )
+)
 
-cat("\n✅ DW-NOMINATE completado exitosamente!\n\n")
+cat("\n✅ DW-NOMINATE estimation complete!\n\n")
 
-# Mostrar resumen
-cat("\n=== RESUMEN DE RESULTADOS DW-NOMINATE ===\n")
+# Print summary
+cat("\n=== DW-NOMINATE RESULTS ===\n")
 print(summary(dw_result))
 
-# Extraer coordenadas de legisladores
-legislators <- dw_result$legislators
-
-# Renombrar columnas para que coincidan con nuestra nomenclatura
-legislators <- legislators %>%
+# Extract coordinates
+legislators <- dw_result$legislators %>%
   rename(
     legislator = ID,
     period = session
   ) %>%
-  mutate(
-    legislator = as.integer(legislator)
-  )
+  mutate(legislator = as.integer(legislator))
 
-# Agregar metadata
+# Add metadata
 legislators <- legislators %>%
   left_join(
     legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
     by = c("legislator" = "legislator_id")
   )
 
-# Guardar resultados
-cat("\n💾 Guardando coordenadas para todos los períodos combinados...\n")
-
-# Crear directorio de salida si no existe
+# Create output directory
 output_dir <- "../../data/dwnominate_6periods/output"
 if (!dir.exists(output_dir)) {
   dir.create(output_dir, recursive = TRUE)
 }
 
-write.csv(legislators, file.path(output_dir, "dwnominate_coordinates_all_periods_6p.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_coordinates_all_periods_6p.csv (", nrow(legislators), " filas)\n")
+# Save combined results
+cat("\n💾 Saving results...\n")
+write.csv(legislators, file.path(output_dir, "dwnominate_coordinates_all_periods.csv"), row.names = FALSE)
+cat("   ✅ dwnominate_coordinates_all_periods.csv\n")
 
-# Guardar archivos específicos por período
-cat("\n💾 Guardando coordenadas para cada período...\n")
+# Save period-specific files
+cat("\n💾 Saving period-specific coordinates...\n")
 for (i in 1:6) {
   period_coords <- legislators %>%
     filter(period == i) %>%
     select(legislator, period, coord1D, coord2D, se1D, se2D, nombres, partido, region, distrito)
-
-  output_file <- file.path(output_dir, paste0("coordinates_P", i, "_6periods.csv"))
+  
+  period_id <- c("P1a", "P1b", "P2a", "P2b", "P3a", "P3b")[i]
+  output_file <- file.path(output_dir, paste0("coordinates_", period_id, "_6periods.csv"))
   write.csv(period_coords, output_file, row.names = FALSE)
-  cat("   ✅ ", basename(output_file), " (", nrow(period_coords), " legisladores)\n")
+  cat("   ✅ ", basename(output_file), " (", nrow(period_coords), " legislators)\n")
 }
 
-# Guardar parámetros de votaciones
-cat("\n💾 Guardando parámetros de votaciones...\n")
-write.csv(dw_result$rollcalls, file.path(output_dir, "dwnominate_bill_parameters_6periods.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_bill_parameters_6periods.csv\n")
+# Save bill parameters
+cat("\n💾 Saving bill parameters...\n")
+write.csv(dw_result$rollcalls, file.path(output_dir, "dwnominate_bill_parameters.csv"), row.names = FALSE)
+cat("   ✅ dwnominate_bill_parameters.csv\n")
 
-# Guardar objeto completo R
-saveRDS(dw_result, file.path(output_dir, "dw_nominate_result_6periods.rds"))
-cat("   ✅ dw_nominate_result_6periods.rds (objeto R completo)\n")
-
-# Guardar información del modelo
-cat("\n💾 Guardando información del modelo...\n")
-model_info <- data.frame(
-  parameter = c("Dimensions", "Model", "Beta", "Weight_Dim2", "Periods", "Total_Legislators", "Total_Votes"),
-  value = c(
-    dw_result$dimensions,
-    1,  # linear model
-    dw_result$beta,
-    dw_result$weights[2],
-    length(rc_list),
-    nrow(legislators) / length(rc_list),  # Legisladores por período
-    ncol(rc_list[[1]]$votes) + ncol(rc_list[[2]]$votes) + ncol(rc_list[[3]]$votes) + 
-      ncol(rc_list[[4]]$votes) + ncol(rc_list[[5]]$votes) + ncol(rc_list[[6]]$votes)
-  )
-)
-
-write.csv(
-  model_info,
-  file.path(output_dir, "model_info_6periods.csv"),
-  row.names = FALSE
-)
-cat("   ✅ model_info_6periods.csv\n")
-
-# Crear visualización
-cat("\n📊 Creando visualización...\n")
-
-# Crear directorio de resultados si no existe
+# Create visualization
+cat("\n📊 Creating visualization...\n")
 results_dir <- "../../results"
 if (!dir.exists(results_dir)) {
   dir.create(results_dir, recursive = TRUE)
 }
 
-png(file.path(results_dir, "dwnominate_results_6periods.png"), width = 1200, height = 800, res = 150)
+png(file.path(results_dir, "dwnominate_6periods.png"), width = 1200, height = 800, res = 150)
 plot(dw_result)
+title(main = "DW-NOMINATE - 6 Political Periods\n55º PL Chile (2018-2022)", line = 0.5)
 dev.off()
+cat("   ✅ dwnominate_6periods.png\n")
 
-cat("   ✅ dwnominate_results_6periods.png\n")
+# Summary
+cat("\n=== ANALYSIS COMPLETE ===\n")
+cat("Legislators analyzed: ", length(unique(legislators$legislator)), "\n")
+cat("Total periods: 6\n")
+cat("Model: Linear (model=1)\n")
+cat("Dimensions: 2\n")
 
-# Estadísticas resumen
-cat("\n=== RESUMEN DEL ANÁLISIS ===\n")
-cat("Total de legisladores: ", nrow(dw_result$legislators), "\n")
-cat("Total de períodos: ", length(rc_list), "\n")
-cat("Tipo de modelo: Linear (model=1)\n")
-cat("Dimensiones: 2\n")
-cat("Iteraciones: 4\n")
-
-cat("\n")
-cat("===============================================\n")
-cat("  ANÁLISIS COMPLETADO                         \n")
-cat("===============================================\n")
-cat("\n")
-
-cat("📁 Archivos generados en:", output_dir, "\n")
-cat("   • dw_nominate_result_6periods.rds (objeto R completo)\n")
-cat("   • dwnominate_coordinates_all_periods_6p.csv (todos los períodos)\n")
-cat("   • coordinates_P1_6periods.csv ... P6_6periods.csv (por período)\n")
-cat("   • dwnominate_bill_parameters_6periods.csv (parámetros de votaciones)\n")
-cat("   • model_info_6periods.csv (información del modelo)\n")
-
-cat("\n📊 Parámetros del modelo:\n")
-cat("   • Beta:", round(dw_result$beta, 4), "\n")
-cat("   • Peso Dim 2:", round(dw_result$weights[2], 4), "\n")
-cat("   • Dimensiones:", dw_result$dimensions, "\n")
-
-cat("\n🚀 SIGUIENTE PASO:\n")
-cat("   1. Corregir polaridad (si es necesario):\n")
-cat("      Rscript correct_polarity_dwnominate_6periods.R\n")
-cat("   2. Generar visualizaciones:\n")
-cat("      python ../../src/csv_dwnominate_graph_6periods.py\n")
-
-cat("\n")
-cat("===============================================\n\n")
+cat("\n✅ Analysis complete!\n")
+cat("📂 Output: data/dwnominate_6periods/output/\n")
+cat("💡 Next: Run correct_polarity_dwnominate_6periods.R\n\n")
