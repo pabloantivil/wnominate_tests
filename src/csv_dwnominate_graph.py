@@ -56,14 +56,18 @@ def create_party_colors_for_chile() -> Dict[str, str]:
 
         # Center-Left / Centro-Izquierda (rojo-naranja a naranja claro)
         "PS": "#FD793C",           # Partido Socialista - rgb(253,121,60)
-        "COM": "#FE9E4C",          # Partido Comunes - rgb(254,158,76)
-        "PRad": "#FEB476",         # Partido Radical - rgb(254,180,118)
-        "Prad": "#FEB476",         # Partido Radical (alternativa)
-        "PR": "#FEB476",           # Partido Radical (alternativa)
-        "PRO": "#FFC8A0",          # Partido Progresista - rgb(255,200,160)
+        # Partido Comunes - rgb(232,93,117) - ROSADO para distinguir
+        "COM": "#E85D75",
+        # Partido Radical - rgb(147,112,219) - PÚRPURA para distinguir
+        "PRad": "#9370DB",
+        "Prad": "#9370DB",         # Partido Radical (alternativa)
+        "PR": "#9370DB",           # Partido Radical (alternativa)
+        # Partido Progresista - rgb(255,105,180) - ROSA FUERTE para distinguir
+        "PRO": "#FF69B4",
 
         # Left-Alternative / Izquierda Alternativa (naranja muy claro)
-        "RD": "#FFE6CC",           # Revolución Democrática - rgb(255,230,204)
+        # Revolución Democrática - rgb(255,179,71) - NARANJA MELOCOTÓN para distinguir
+        "RD": "#FFB347",
 
         # Independent/Green / Independientes y Verdes (verde/amarillo-verde)
         # Independientes - rgb(0,255,0) - verde brillante
@@ -77,8 +81,10 @@ def create_party_colors_for_chile() -> Dict[str, str]:
         # Center-Liberal / Centro-Liberal (verde claro a celeste)
         # Partido por la Democracia - rgb(215,255,157)
         "PPD": "#D7FF9D",
-        "PL": "#5DC0BE",           # Partido Liberal - rgb(93,192,190)
-        "PEV": "#54ABC0",          # Partido Ecologista Verde - rgb(84,171,192)
+        # Partido Liberal - rgb(32,178,170) - TURQUESA para distinguir
+        "PL": "#20B2AA",
+        # Partido Ecologista Verde - rgb(50,205,50) - VERDE LIMA para distinguir
+        "PEV": "#32CD32",
 
         # Center-Right / Centro-Derecha (azul medio)
         "EVOP": "#1D91C0",         # Evolución Política - rgb(29,145,192)

@@ -75,8 +75,10 @@ rc_p1a <- rollcall(
   desc = "Inicio PL - Primera Mitad",
   legis.data = legis_data_p1a
 )
-cat("✅ Inicio PL - Primera Mitad: ", nrow(rc_p1a$votes), " legislators x ", 
-    ncol(rc_p1a$votes), " votes\n")
+cat(
+  "✅ Inicio PL - Primera Mitad: ", nrow(rc_p1a$votes), " legislators x ",
+  ncol(rc_p1a$votes), " votes\n"
+)
 rc_list[[1]] <- rc_p1a
 
 # PERIOD 2: Inicio PL - Segunda Mitad
@@ -110,8 +112,10 @@ rc_p1b <- rollcall(
   desc = "Inicio PL - Segunda Mitad",
   legis.data = legis_data_p1b
 )
-cat("✅ Inicio PL - Segunda Mitad: ", nrow(rc_p1b$votes), " legislators x ", 
-    ncol(rc_p1b$votes), " votes\n")
+cat(
+  "✅ Inicio PL - Segunda Mitad: ", nrow(rc_p1b$votes), " legislators x ",
+  ncol(rc_p1b$votes), " votes\n"
+)
 rc_list[[2]] <- rc_p1b
 
 # PERIOD 3: Estallido Social - Primera Mitad
@@ -145,8 +149,10 @@ rc_p2a <- rollcall(
   desc = "Estallido Social - Primera Mitad",
   legis.data = legis_data_p2a
 )
-cat("✅ Estallido Social - Primera Mitad: ", nrow(rc_p2a$votes), " legislators x ", 
-    ncol(rc_p2a$votes), " votes\n")
+cat(
+  "✅ Estallido Social - Primera Mitad: ", nrow(rc_p2a$votes), " legislators x ",
+  ncol(rc_p2a$votes), " votes\n"
+)
 rc_list[[3]] <- rc_p2a
 
 # PERIOD 4: Estallido Social - Segunda Mitad
@@ -180,8 +186,10 @@ rc_p2b <- rollcall(
   desc = "Estallido Social - Segunda Mitad",
   legis.data = legis_data_p2b
 )
-cat("✅ Estallido Social - Segunda Mitad: ", nrow(rc_p2b$votes), " legislators x ", 
-    ncol(rc_p2b$votes), " votes\n")
+cat(
+  "✅ Estallido Social - Segunda Mitad: ", nrow(rc_p2b$votes), " legislators x ",
+  ncol(rc_p2b$votes), " votes\n"
+)
 rc_list[[4]] <- rc_p2b
 
 # PERIOD 5: Post-Plebiscito - Primera Mitad
@@ -215,8 +223,10 @@ rc_p3a <- rollcall(
   desc = "Post-Plebiscito - Primera Mitad",
   legis.data = legis_data_p3a
 )
-cat("✅ Post-Plebiscito - Primera Mitad: ", nrow(rc_p3a$votes), " legislators x ", 
-    ncol(rc_p3a$votes), " votes\n")
+cat(
+  "✅ Post-Plebiscito - Primera Mitad: ", nrow(rc_p3a$votes), " legislators x ",
+  ncol(rc_p3a$votes), " votes\n"
+)
 rc_list[[5]] <- rc_p3a
 
 # PERIOD 6: Post-Plebiscito - Segunda Mitad
@@ -250,8 +260,10 @@ rc_p3b <- rollcall(
   desc = "Post-Plebiscito - Segunda Mitad",
   legis.data = legis_data_p3b
 )
-cat("✅ Post-Plebiscito - Segunda Mitad: ", nrow(rc_p3b$votes), " legislators x ", 
-    ncol(rc_p3b$votes), " votes\n")
+cat(
+  "✅ Post-Plebiscito - Segunda Mitad: ", nrow(rc_p3b$votes), " legislators x ",
+  ncol(rc_p3b$votes), " votes\n"
+)
 rc_list[[6]] <- rc_p3b
 
 
@@ -284,8 +296,10 @@ left_in_common <- left_legislators[as.character(left_legislators) %in% common_le
 if (length(left_in_common) > 0) {
   polarity_anchor <- as.character(left_in_common[1])
   anchor_info <- legislator_meta[legislator_meta$legislator_id == as.integer(polarity_anchor), ]
-  cat("   Polarity anchor: ", polarity_anchor, " (", 
-      anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\n\n")
+  cat(
+    "   Polarity anchor: ", polarity_anchor, " (",
+    anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\n\n"
+  )
 } else {
   polarity_anchor <- common_legislators[1]
   cat("   Fallback polarity anchor: ", polarity_anchor, "\n\n")
@@ -299,11 +313,11 @@ dw_result <- dwnominate(
   rc_list,
   id = "legislator_id",
   dims = 2,
-  model = 1,  # Linear change over time
+  model = 1, # Linear change over time
   polarity = polarity_anchor,
-  minvotes = 5,  # Reducido para períodos más cortos
-  lop = 0.025,  # Lopsided vote threshold (2.5%)
-  niter = 4,
+  minvotes = 10, # Reducido para períodos más cortos
+  lop = 0.025, # Lopsided vote threshold (2.5%)
+  niter = 20, # Aumentado de 4 a 20 para mejor convergencia
   beta = 5.9539,
   w = 0.3463,
   verbose = TRUE
@@ -347,7 +361,7 @@ for (i in 1:6) {
   period_coords <- legislators %>%
     filter(period == i) %>%
     select(legislator, period, coord1D, coord2D, se1D, se2D, nombres, partido, region, distrito)
-  
+
   period_id <- c("P1a", "P1b", "P2a", "P2b", "P3a", "P3b")[i]
   output_file <- file.path(output_dir, paste0("coordinates_", period_id, "_6periods.csv"))
   write.csv(period_coords, output_file, row.names = FALSE)
