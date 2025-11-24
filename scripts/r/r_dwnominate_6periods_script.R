@@ -12,15 +12,15 @@ cat("\n")
 
 # Install required packages
 if (!require(pscl)) {
-  cat("📦 Installing pscl...\n")
+  cat("Installing pscl...\n")
   install.packages("pscl")
 }
 if (!require(dplyr)) {
-  cat("📦 Installing dplyr...\n")
+  cat("Installing dplyr...\n")
   install.packages("dplyr")
 }
 if (!require(dwnominate)) {
-  cat("📦 Installing dwnominate...\n")
+  cat("Installing dwnominate...\n")
   install.packages("remotes")
   remotes::install_github("wmay/dwnominate")
 }
@@ -29,7 +29,7 @@ library(pscl)
 library(dplyr)
 library(dwnominate)
 
-cat("\n✅ All packages loaded\n\n")
+cat("\nAll packages loaded\n\n")
 
 # Load metadata
 legislator_meta <- read.csv("../../data/dwnominate_6periods/input/legislator_metadata.csv")
@@ -39,7 +39,7 @@ cat("📊 Metadata loaded:\n")
 cat("   Legislators: ", nrow(legislator_meta), "\n")
 cat("   Votes: ", nrow(vote_meta), "\n\n")
 
-cat("📅 Loading 6 political periods...\n\n")
+cat("Loading 6 political periods...\n\n")
 
 # Storage for rollcall objects
 rc_list <- list()
@@ -76,7 +76,7 @@ rc_p1a <- rollcall(
   legis.data = legis_data_p1a
 )
 cat(
-  "✅ Inicio PL - Primera Mitad: ", nrow(rc_p1a$votes), " legislators x ",
+  "Inicio PL - Primera Mitad: ", nrow(rc_p1a$votes), " legislators x ",
   ncol(rc_p1a$votes), " votes\n"
 )
 rc_list[[1]] <- rc_p1a
@@ -113,7 +113,7 @@ rc_p1b <- rollcall(
   legis.data = legis_data_p1b
 )
 cat(
-  "✅ Inicio PL - Segunda Mitad: ", nrow(rc_p1b$votes), " legislators x ",
+  "Inicio PL - Segunda Mitad: ", nrow(rc_p1b$votes), " legislators x ",
   ncol(rc_p1b$votes), " votes\n"
 )
 rc_list[[2]] <- rc_p1b
@@ -150,7 +150,7 @@ rc_p2a <- rollcall(
   legis.data = legis_data_p2a
 )
 cat(
-  "✅ Estallido Social - Primera Mitad: ", nrow(rc_p2a$votes), " legislators x ",
+  "Estallido Social - Primera Mitad: ", nrow(rc_p2a$votes), " legislators x ",
   ncol(rc_p2a$votes), " votes\n"
 )
 rc_list[[3]] <- rc_p2a
@@ -187,7 +187,7 @@ rc_p2b <- rollcall(
   legis.data = legis_data_p2b
 )
 cat(
-  "✅ Estallido Social - Segunda Mitad: ", nrow(rc_p2b$votes), " legislators x ",
+  "Estallido Social - Segunda Mitad: ", nrow(rc_p2b$votes), " legislators x ",
   ncol(rc_p2b$votes), " votes\n"
 )
 rc_list[[4]] <- rc_p2b
@@ -224,7 +224,7 @@ rc_p3a <- rollcall(
   legis.data = legis_data_p3a
 )
 cat(
-  "✅ Post-Plebiscito - Primera Mitad: ", nrow(rc_p3a$votes), " legislators x ",
+  "Post-Plebiscito - Primera Mitad: ", nrow(rc_p3a$votes), " legislators x ",
   ncol(rc_p3a$votes), " votes\n"
 )
 rc_list[[5]] <- rc_p3a
@@ -261,18 +261,18 @@ rc_p3b <- rollcall(
   legis.data = legis_data_p3b
 )
 cat(
-  "✅ Post-Plebiscito - Segunda Mitad: ", nrow(rc_p3b$votes), " legislators x ",
+  "Post-Plebiscito - Segunda Mitad: ", nrow(rc_p3b$votes), " legislators x ",
   ncol(rc_p3b$votes), " votes\n"
 )
 rc_list[[6]] <- rc_p3b
 
 
 
-cat("\n✅ All 6 periods loaded successfully\n")
-cat("📋 Rollcall list contains ", length(rc_list), " periods\n\n")
+cat("\nAll 6 periods loaded successfully\n")
+cat("Rollcall list contains ", length(rc_list), " periods\n\n")
 
 # Set polarity anchors
-cat("🎯 Setting polarity anchors...\n")
+cat("Setting polarity anchors...\n")
 
 # Find legislators in ALL periods
 all_period_legislators <- list()
@@ -305,25 +305,26 @@ if (length(left_in_common) > 0) {
   cat("   Fallback polarity anchor: ", polarity_anchor, "\n\n")
 }
 
-cat("🚀 Running DW-NOMINATE (6 periods)...\n")
-cat("   This may take several minutes.\n\n")
+cat("Running DW-NOMINATE (6 periods)...\n")
+cat("   Model: QUADRATIC (allows curved trajectories)\n")
+cat("   This may take several minutes (slower than linear model).\n\n")
 
 # Run DW-NOMINATE
 dw_result <- dwnominate(
   rc_list,
   id = "legislator_id",
   dims = 2,
-  model = 1, # Linear change over time
+  model = 1, # QUADRATIC: Allows curved trajectories and direction changes
   polarity = polarity_anchor,
-  minvotes = 10, # Reducido para períodos más cortos
+  minvotes = 10,
   lop = 0.025, # Lopsided vote threshold (2.5%)
-  niter = 20, # Aumentado de 4 a 20 para mejor convergencia
+  niter = 4, 
   beta = 5.9539,
   w = 0.3463,
   verbose = TRUE
 )
 
-cat("\n✅ DW-NOMINATE estimation complete!\n\n")
+cat("\nDW-NOMINATE estimation complete!\n\n")
 
 # Print summary
 cat("\n=== DW-NOMINATE RESULTS ===\n")
@@ -351,12 +352,12 @@ if (!dir.exists(output_dir)) {
 }
 
 # Save combined results
-cat("\n💾 Saving results...\n")
+cat("\nSaving results...\n")
 write.csv(legislators, file.path(output_dir, "dwnominate_coordinates_all_periods.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_coordinates_all_periods.csv\n")
+cat("   dwnominate_coordinates_all_periods.csv\n")
 
 # Save period-specific files
-cat("\n💾 Saving period-specific coordinates...\n")
+cat("\nSaving period-specific coordinates...\n")
 for (i in 1:6) {
   period_coords <- legislators %>%
     filter(period == i) %>%
@@ -365,16 +366,16 @@ for (i in 1:6) {
   period_id <- c("P1a", "P1b", "P2a", "P2b", "P3a", "P3b")[i]
   output_file <- file.path(output_dir, paste0("coordinates_", period_id, "_6periods.csv"))
   write.csv(period_coords, output_file, row.names = FALSE)
-  cat("   ✅ ", basename(output_file), " (", nrow(period_coords), " legislators)\n")
+  cat("", basename(output_file), " (", nrow(period_coords), " legislators)\n")
 }
 
 # Save bill parameters
-cat("\n💾 Saving bill parameters...\n")
+cat("\nSaving bill parameters...\n")
 write.csv(dw_result$rollcalls, file.path(output_dir, "dwnominate_bill_parameters.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_bill_parameters.csv\n")
+cat("   dwnominate_bill_parameters.csv\n")
 
 # Create visualization
-cat("\n📊 Creating visualization...\n")
+cat("\nCreating visualization...\n")
 results_dir <- "../../results"
 if (!dir.exists(results_dir)) {
   dir.create(results_dir, recursive = TRUE)
@@ -384,15 +385,17 @@ png(file.path(results_dir, "dwnominate_6periods.png"), width = 1200, height = 80
 plot(dw_result)
 title(main = "DW-NOMINATE - 6 Political Periods\n55º PL Chile (2018-2022)", line = 0.5)
 dev.off()
-cat("   ✅ dwnominate_6periods.png\n")
+cat("   dwnominate_6periods.png\n")
 
 # Summary
 cat("\n=== ANALYSIS COMPLETE ===\n")
 cat("Legislators analyzed: ", length(unique(legislators$legislator)), "\n")
 cat("Total periods: 6\n")
-cat("Model: Linear (model=1)\n")
+cat("Model: QUADRATIC (model=2) - Curved trajectories enabled\n")
 cat("Dimensions: 2\n")
+cat("NEW: This model can capture direction changes and non-linear patterns\n")
 
-cat("\n✅ Analysis complete!\n")
-cat("📂 Output: data/dwnominate_6periods/output/\n")
-cat("💡 Next: Run correct_polarity_dwnominate_6periods.R\n\n")
+cat("\nAnalysis complete!\n")
+cat("Output: data/dwnominate_6periods/output/\n")
+cat("Next: Run correct_polarity_dwnominate_6periods.R\n")
+cat("Then: Run grafico_trayectorias_2d.py to see curved trajectories\n\n")

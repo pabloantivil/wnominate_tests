@@ -196,7 +196,7 @@ def load_all_periods(csv_dir: str) -> Dict[str, pd.DataFrame]:
 
         df = load_dwnominate_period(filepath)
         periods[period_id] = df
-        print(f"📂 Loaded {period_id}: {len(df)} legislators")
+        print(f"Loaded {period_id}: {len(df)} legislators")
 
     return periods
 
@@ -305,7 +305,7 @@ def plot_single_period(csv_file: str, output_file: Optional[str] = None,
 
         abs_path = os.path.abspath(output_file)
         plt.savefig(abs_path, dpi=300, bbox_inches='tight')
-        print(f"📊 Gráfico guardado en: {abs_path}")
+        print(f"Gráfico guardado en: {abs_path}")
     else:
         plt.show()
 
@@ -406,13 +406,13 @@ def plot_evolution(csv_dir: str, output_file: Optional[str] = None,
 
         abs_path = os.path.abspath(output_file)
         plt.savefig(abs_path, dpi=300, bbox_inches='tight')
-        print(f"📊 Gráfico de evolución guardado en: {abs_path}")
+        print(f"Gráfico de evolución guardado en: {abs_path}")
     else:
         plt.show()
 
     # If tracking specific legislators, print their movement
     if legislators_to_track and legislator_positions:
-        print("\n📈 Movimiento de Legisladores:")
+        print("\nMovimiento de Legisladores:")
         for leg_id, positions in legislator_positions.items():
             if positions:
                 print(f"\n   Legislador {leg_id}:")

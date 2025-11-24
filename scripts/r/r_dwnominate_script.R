@@ -11,15 +11,15 @@ cat("\n")
 
 # Install required packages if not already installed
 if (!require(pscl)) {
-  cat("📦 Installing pscl package...\n")
+  cat("Installing pscl package...\n")
   install.packages("pscl")
 }
 if (!require(dplyr)) {
-  cat("📦 Installing dplyr package...\n")
+  cat("Installing dplyr package...\n")
   install.packages("dplyr")
 }
 if (!require(dwnominate)) {
-  cat("📦 Installing dwnominate package...\n")
+  cat("Installing dwnominate package...\n")
   install.packages("remotes")
   remotes::install_github("wmay/dwnominate")
 }
@@ -28,18 +28,17 @@ library(pscl)
 library(dplyr)
 library(dwnominate)
 
-cat("\n✅ All packages loaded successfully\n\n")
+cat("\nAll packages loaded successfully\n\n")
 
 # Load metadata from data/dwnominate/input
 legislator_meta <- read.csv("../../data/dwnominate/input/legislator_metadata.csv")
 vote_meta <- read.csv("../../data/dwnominate/input/vote_metadata.csv")
 
-cat("📊 Metadata loaded:\n")
+cat("Metadata loaded:\n")
 cat("   Legislators: ", nrow(legislator_meta), "\n")
 cat("   Votes: ", nrow(vote_meta), "\n\n")
 
-cat("📅 Loading vote matrices for each period...\n\n")
-
+cat("Loading vote matrices for each period...\n\n")
 # Storage for rollcall objects
 rc_list <- list()
 
@@ -73,7 +72,7 @@ rc_p1 <- rollcall(
   legis.data = legis_data_p1
 )
 cat(
-  "✅ Año 2018: ", nrow(rc_p1$votes), " legislators x ",
+  "Año 2018: ", nrow(rc_p1$votes), " legislators x ",
   ncol(rc_p1$votes), " votes\n"
 )
 rc_list[[1]] <- rc_p1
@@ -108,7 +107,7 @@ rc_p2 <- rollcall(
   legis.data = legis_data_p2
 )
 cat(
-  "✅ Año 2019: ", nrow(rc_p2$votes), " legislators x ",
+  "Año 2019: ", nrow(rc_p2$votes), " legislators x ",
   ncol(rc_p2$votes), " votes\n"
 )
 rc_list[[2]] <- rc_p2
@@ -143,7 +142,7 @@ rc_p3 <- rollcall(
   legis.data = legis_data_p3
 )
 cat(
-  "✅ 2020 Semestre 1: ", nrow(rc_p3$votes), " legislators x ",
+  "2020 Semestre 1: ", nrow(rc_p3$votes), " legislators x ",
   ncol(rc_p3$votes), " votes\n"
 )
 rc_list[[3]] <- rc_p3
@@ -178,7 +177,7 @@ rc_p4 <- rollcall(
   legis.data = legis_data_p4
 )
 cat(
-  "✅ 2020 Semestre 2: ", nrow(rc_p4$votes), " legislators x ",
+  "2020 Semestre 2: ", nrow(rc_p4$votes), " legislators x ",
   ncol(rc_p4$votes), " votes\n"
 )
 rc_list[[4]] <- rc_p4
@@ -213,17 +212,17 @@ rc_p5 <- rollcall(
   legis.data = legis_data_p5
 )
 cat(
-  "✅ Año 2021: ", nrow(rc_p5$votes), " legislators x ",
+  "Año 2021: ", nrow(rc_p5$votes), " legislators x ",
   ncol(rc_p5$votes), " votes\n"
 )
 rc_list[[5]] <- rc_p5
 
 
-cat("\n✅ All periods loaded successfully\n\n")
-cat("📋 Rollcall list contains ", length(rc_list), " periods\n\n")
+cat("\nAll periods loaded successfully\n\n")
+cat("Rollcall list contains ", length(rc_list), " periods\n\n")
 
 # Set polarity anchors based on Chilean political spectrum
-cat("🎯 Setting polarity anchors...\n")
+cat("Setting polarity anchors...\n")
 
 # Find legislators present in ALL periods for consistent polarity
 all_period_legislators <- list()
@@ -260,7 +259,7 @@ if (length(left_in_common) > 0) {
   cat("   Using fallback polarity anchor: ", polarity_anchor, "\n\n")
 }
 
-cat("🚀 Running DW-NOMINATE...\n")
+cat("Running DW-NOMINATE...\n")
 cat("   This may take several minutes depending on data size.\n\n")
 
 # Run DW-NOMINATE with id parameter
@@ -268,17 +267,17 @@ dw_result <- dwnominate(
   rc_list,
   id = "legislator_id", # CRÍTICO: identificador único de legisladores
   dims = 2, # 2 dimensions
-  model = 1, # Linear change over time
+  model = 1,
   polarity = polarity_anchor,
-  minvotes = 20, # Minimum votes for a legislator to be included (reducido de 10)
-  lop = 0.025, # Lopsided vote threshold (reducido de 0.025)
+  minvotes = 5, # Minimum votes for a legislator to be included
+  lop = 0.025, # Lopsided vote threshold (restaurado a valor estándar)
   niter = 4, # 4 iterations (usually sufficient)
   beta = 5.9539, # Spatial error parameter (default)
   w = 0.3463, # Second dimension weight (default)
   verbose = TRUE
 )
 
-cat("\n✅ DW-NOMINATE estimation complete!\n\n")
+cat("\nDW-NOMINATE estimation complete!\n\n")
 
 # Print summary
 cat("\n=== DW-NOMINATE RESULTS SUMMARY ===\n")
@@ -305,7 +304,7 @@ legislators <- legislators %>%
   )
 
 # Save full results
-cat("\n💾 Saving coordinates for all periods combined...\n")
+cat("\nSaving coordinates for all periods combined...\n")
 
 # Crear directorio de salida si no existe
 output_dir <- "../../data/dwnominate/output"
@@ -314,10 +313,10 @@ if (!dir.exists(output_dir)) {
 }
 
 write.csv(legislators, file.path(output_dir, "dwnominate_coordinates_all_periods.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_coordinates_all_periods.csv (", nrow(legislators), " rows)\n")
+cat(" dwnominate_coordinates_all_periods.csv (", nrow(legislators), " rows)\n")
 
 # Save period-specific files
-cat("\n💾 Saving coordinates for each period...\n")
+cat("\nSaving coordinates for each period...\n")
 for (i in 1:5) {
   period_coords <- legislators %>%
     filter(period == i) %>%
@@ -325,16 +324,16 @@ for (i in 1:5) {
 
   output_file <- file.path(output_dir, paste0("dwnominate_coordinates_p", i, ".csv"))
   write.csv(period_coords, output_file, row.names = FALSE)
-  cat("   ✅ ", basename(output_file), " (", nrow(period_coords), " legislators)\n")
+  cat("", basename(output_file), " (", nrow(period_coords), " legislators)\n")
 }
 
 # Also save bill/vote parameters
-cat("\n💾 Saving bill parameters...\n")
+cat("\nSaving bill parameters...\n")
 write.csv(dw_result$rollcalls, file.path(output_dir, "dwnominate_bill_parameters.csv"), row.names = FALSE)
-cat("   ✅ dwnominate_bill_parameters.csv\n")
+cat("   dwnominate_bill_parameters.csv\n")
 
 # Plot results
-cat("\n📊 Creating visualization...\n")
+cat("\nCreating visualization...\n")
 
 # Crear directorio de resultados si no existe
 results_dir <- "../../results"
@@ -346,7 +345,7 @@ png(file.path(results_dir, "dwnominate_results.png"), width = 1200, height = 800
 plot(dw_result)
 dev.off()
 
-cat("   ✅ dwnominate_results.png\n")
+cat("   dwnominate_results.png\n")
 # Summary statistics
 cat("\n=== ANALYSIS SUMMARY ===\n")
 cat("Total legislators: ", nrow(dw_result$legislators), "\n")
@@ -355,10 +354,9 @@ cat("Model type: Linear (model=1)\n")
 cat("Dimensions: 2\n")
 cat("Iterations: 4\n")
 
-cat("\n✅ DW-NOMINATE analysis complete!\n\n")
-cat("📂 Output files:\n")
+cat("\nDW-NOMINATE analysis complete!\n\n")
+cat("Output files:\n")
 cat("   • dwnominate_coordinates_p1.csv through p5.csv (period-specific)\n")
 cat("   • dwnominate_coordinates_all_periods.csv (combined)\n")
 cat("   • dwnominate_bill_parameters.csv\n")
 cat("   • dwnominate_results.png\n\n")
-

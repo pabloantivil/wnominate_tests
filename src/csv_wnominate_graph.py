@@ -62,7 +62,7 @@ def load_csv_coordinates(csv_file: str) -> Dict[str, Any]:
         # Almacenar en el formato esperado por las funciones de graficado
         results["idpt"][legislator_id] = [x_coord, y_coord]
 
-    print(f"📊 Convertidos {len(results['idpt'])} pares de coordenadas")
+    print(f"Convertidos {len(results['idpt'])} pares de coordenadas")
     return results
 
 
@@ -104,7 +104,7 @@ def load_legislator_metadata(csv_dir: str) -> Dict[str, Dict[str, str]]:
             'distrito': row.get('distrito', '')
         }
 
-    print(f"✅ Cargada metadata para {len(metadata)} legisladores")
+    print(f"Cargada metadata para {len(metadata)} legisladores")
     return metadata
 
 
@@ -307,7 +307,7 @@ def compare_with_pynominate(csv_file: str, json_file: str, output_file: Optional
         json_file: Ruta para obtener resultados JSON de Pynominate  
         output_file: Ruta opcional para guardar el gráfico de comparación
     """
-    print("📊 Creando un gráfico de comparación entre R W-NOMINATE y pynominate...")
+    print("Creando un gráfico de comparación entre R W-NOMINATE y pynominate...")
 
     # Cargar resultados de R
     r_results = load_csv_coordinates(csv_file)
@@ -372,7 +372,7 @@ def compare_with_pynominate(csv_file: str, json_file: str, output_file: Optional
     if output_file:
         abs_path = os.path.abspath(output_file)
         plt.savefig(abs_path, dpi=300, bbox_inches='tight')
-        print(f"📊 Gráfico de comparación guardado en: {abs_path}")
+        print(f"Gráfico de comparación guardado en: {abs_path}")
     else:
         plt.show()
 

@@ -3,12 +3,12 @@
 
 library(dplyr)
 
-cat("🔄 Corrigiendo la polaridad de las coordenadas W-NOMINATE...\n")
+cat("Corrigiendo la polaridad de las coordenadas W-NOMINATE...\n")
 
 # Cargar las coordenadas originales desde data/wnominate/output
 coords_original <- read.csv("../../data/wnominate/output/wnominate_coordinates.csv")
 
-cat(sprintf("📊 Cargados %d legisladores\n", nrow(coords_original)))
+cat(sprintf("Cargados %d legisladores\n", nrow(coords_original)))
 
 # Mostrar la distribución actual por partido en la primera dimensión
 cat("\n=== DISTRIBUCIÓN ACTUAL (ANTES DE LA CORRECCIÓN) ===\n")
@@ -35,7 +35,7 @@ coords_corrected <- coords_original
 coords_corrected$coord1D <- -coords_corrected$coord1D
 coords_corrected$coord2D <- -coords_corrected$coord2D # También invertir la segunda dimensión
 
-cat("\n🔄 Correcciones aplicadas:\n")
+cat("\nCorrecciones aplicadas:\n")
 cat("   - Primera dimensión (Económica): invertida para coincidir con Izquierda(-) ← → Derecha(+)\n")
 cat("   - Segunda dimensión (Social): invertida para coincidir con Liberal(-) ← → Conservador(+)\n")
 
@@ -67,7 +67,7 @@ if (!dir.exists(output_dir)) {
 # Guardar las coordenadas corregidas
 write.csv(coords_corrected, file.path(output_dir, "wnominate_coordinates_corrected.csv"), row.names = FALSE)
 
-cat("\n✅ Coordenadas corregidas guardadas en:", file.path(output_dir, "wnominate_coordinates_corrected.csv"), "\n")
+cat("\nCoordenadas corregidas guardadas en:", file.path(output_dir, "wnominate_coordinates_corrected.csv"), "\n")
 
 # Crear un gráfico de comparación
 if ("party" %in% colnames(coords_corrected)) {
@@ -119,10 +119,10 @@ if ("party" %in% colnames(coords_corrected)) {
     theme(legend.position = "bottom")
 
   ggsave(file.path(images_dir, "wnominate_polarity_comparison.png"), p_comparison, width = 14, height = 7, dpi = 300)
-  cat("📊 Gráfico de comparación guardado en:", file.path(images_dir, "wnominate_polarity_comparison.png"), "\n")
+  cat("Gráfico de comparación guardado en:", file.path(images_dir, "wnominate_polarity_comparison.png"), "\n")
 }
 
-cat("\n🎯 Corrección de polaridad completada!\n")
+cat("\nCorrección de polaridad completada!\n")
 cat("   - Los partidos de izquierda (PC, PS) ahora están en el lado negativo (izquierda)\n")
 cat("   - Los partidos de derecha (UDI, RN) ahora están en el lado positivo (derecha)\n")
 cat("   - Esto coincide con la convención estándar del espectro político\n")

@@ -80,10 +80,10 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
         output_dir: Directorio de salida para DW-NOMINATE
     """
 
-    print(f"🔍 Converting W-NOMINATE CSV data to DW-NOMINATE format...")
-    print(f"📂 Input directory: {input_dir}")
-    print(f"📂 Output directory: {output_dir}")
-    print(f"📅 Dividing into 5 periods: 2018, 2019, 2020-S1, 2020-S2, 2021\n")
+    print(f"Converting W-NOMINATE CSV data to DW-NOMINATE format...")
+    print(f"Input directory: {input_dir}")
+    print(f"Output directory: {output_dir}")
+    print(f"Dividing into 5 periods: 2018, 2019, 2020-S1, 2020-S2, 2021\n")
 
     # Verificar que existen los archivos necesarios
     required_files = [
@@ -96,7 +96,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
         filepath = os.path.join(input_dir, filename)
         if not os.path.exists(filepath):
             raise FileNotFoundError(
-                f"❌ Required file not found: {filepath}\n"
+                f"Required file not found: {filepath}\n"
                 f"Make sure you have the W-NOMINATE CSV files in {input_dir}/"
             )
 
@@ -107,26 +107,25 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     periods = define_periods()
 
     # 1. Cargar matriz de votos completa
-    print("📥 Loading votes matrix...")
+    print("Loading votes matrix...")
     votes_matrix_path = os.path.join(input_dir, 'votes_matrix.csv')
     votes_df = pd.read_csv(votes_matrix_path, index_col=0)
     print(
-        f"✅ Loaded matrix: {votes_df.shape[0]} legislators x {votes_df.shape[1]} votes")
-
+        f"Loaded matrix: {votes_df.shape[0]} legislators x {votes_df.shape[1]} votes")
     # 2. Cargar metadata de legisladores
-    print("📥 Loading legislator metadata...")
+    print("Loading legislator metadata...")
     legislator_meta_path = os.path.join(input_dir, 'legislator_metadata.csv')
     legislator_meta = pd.read_csv(legislator_meta_path)
-    print(f"✅ Loaded {len(legislator_meta)} legislators")
+    print(f"Loaded {len(legislator_meta)} legislators")
 
     # 3. Cargar metadata de votaciones
-    print("📥 Loading vote metadata...")
+    print("Loading vote metadata...")
     vote_meta_path = os.path.join(input_dir, 'vote_metadata.csv')
     vote_meta = pd.read_csv(vote_meta_path)
-    print(f"✅ Loaded {len(vote_meta)} votes\n")
+    print(f"Loaded {len(vote_meta)} votes\n")
 
     # 4. Asignar votaciones a períodos según fecha
-    print("📅 Assigning votes to legislative periods...")
+    print("Assigning votes to legislative periods...")
 
     vote_period_map = {}
 
@@ -156,7 +155,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
                     break
 
         except Exception as e:
-            print(f"⚠️  Could not parse date for vote {vote_id}: {fecha_str}")
+            print(f"Could not parse date for vote {vote_id}: {fecha_str}")
             continue
 
     # Agregar columna de período a vote_meta
@@ -171,18 +170,17 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     # Contar votos por período
     period_counts = vote_meta[vote_meta['period'].notna()].groupby(
         'period').size()
-    print("\n📊 Votes per period:")
+    print("\nVotes per period:")
     for period in periods:
         count = period_counts.get(period['id'], 0)
         print(f"   {period['id']} ({period['name']}): {count:,} votes")
 
     votes_with_period = vote_meta[vote_meta['period'].notna()]
-    print(f"\n✅ {len(votes_with_period)} votes successfully assigned to periods")
-    print(f"⚠️  {len(vote_meta) - len(votes_with_period)} votes without period assignment (excluded)\n")
+    print(f"\n{len(votes_with_period)} votes successfully assigned to periods")
+    print(f"{len(vote_meta) - len(votes_with_period)} votes without period assignment (excluded)\n")
 
     # 5. Crear matriz de votos para cada período
-    print("📊 Creating vote matrices for each period...")
-
+    print("Creating vote matrices for each period...")
     period_matrices = {}
     period_vote_lists = {}
 
@@ -193,7 +191,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
         period_votes = vote_meta[vote_meta['period'] == period_id]
 
         if len(period_votes) == 0:
-            print(f"⚠️  No votes found for {period_id}, skipping...")
+            print(f"No votes found for {period_id}, skipping...")
             continue
 
         # Convertir IDs a strings para comparar con columnas de la matriz
@@ -206,7 +204,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
 
         if not available_vote_ids:
             print(
-                f"⚠️  No matching votes found in matrix for {period_id}, skipping...")
+                f"No matching votes found in matrix for {period_id}, skipping...")
             continue
 
         # Crear matriz para este período
@@ -253,10 +251,10 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
 
     if not period_matrices:
         raise ValueError(
-            "❌ No periods could be created! Check your date ranges and vote metadata.")
+            "No periods could be created! Check your date ranges and vote metadata.")
 
     # 6. Asegurar conjunto consistente de legisladores
-    print("\n🔄 Ensuring consistent legislator set across periods...")
+    print("\nEnsuring consistent legislator set across periods...")
 
     # Obtener unión de todos los legisladores
     all_legislators = set()
@@ -275,7 +273,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     # CRÍTICO: Eliminar legisladores que tienen 0 votos válidos en CUALQUIER período
     # DW-NOMINATE requiere que cada legislador tenga votos válidos en TODOS los períodos
     # o al menos usar minvotes correctamente
-    print("\n🔍 Checking for legislators with insufficient votes in any period...")
+    print("\nChecking for legislators with insufficient votes in any period...")
 
     legislators_to_remove = set()
     min_required_votes = 1  # Al menos 1 voto válido (no-9) por período
@@ -291,7 +289,7 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     if legislators_to_remove:
         legislators_to_remove = sorted(list(legislators_to_remove))
         print(
-            f"   ⚠️  Removing {len(legislators_to_remove)} legislators with < {min_required_votes} valid votes in at least one period:")
+            f"   Removing {len(legislators_to_remove)} legislators with < {min_required_votes} valid votes in at least one period:")
 
         # Mostrar en qué períodos tienen problemas
         for lid in legislators_to_remove:
@@ -310,20 +308,20 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
             period_matrices[period_id] = period_matrices[period_id].loc[legislators_to_keep]
 
         all_legislators = legislators_to_keep
-        print(f"   ✅ Final legislator count: {len(all_legislators)}")
+        print(f"   Final legislator count: {len(all_legislators)}")
     else:
-        print(f"   ✅ All legislators meet minimum vote requirements in all periods")
+        print(f"   All legislators meet minimum vote requirements in all periods")
 
     # 7. Exportar matrices de votos por período
-    print("\n💾 Exporting vote matrices...")
+    print("\nExporting vote matrices...")
 
     for period_id, matrix in period_matrices.items():
         filename = f"{output_dir}/votes_matrix_{period_id.lower()}.csv"
         matrix.to_csv(filename)
-        print(f"   ✅ {filename} ({matrix.shape[0]} x {matrix.shape[1]})")
+        print(f"   {filename} ({matrix.shape[0]} x {matrix.shape[1]})")
 
     # 8. Exportar metadata de legisladores
-    print("\n💾 Exporting legislator metadata...")
+    print("\nExporting legislator metadata...")
 
     active_legislator_ids = [int(lid) for lid in all_legislators]
 
@@ -340,10 +338,10 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     active_legislator_meta.to_csv(
         f"{output_dir}/legislator_metadata.csv", index=False)
     print(
-        f"   ✅ legislator_metadata.csv ({len(active_legislator_meta)} legislators)")
+        f"   legislator_metadata.csv ({len(active_legislator_meta)} legislators)")
 
     # 9. Exportar metadata de votaciones con asignación de períodos
-    print("\n💾 Exporting vote metadata with period assignments...")
+    print("\nExporting vote metadata with period assignments...")
 
     # Filtrar solo votaciones que están en algún período
     all_vote_ids = set()
@@ -356,26 +354,17 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
     ].copy()
 
     vote_meta_filtered.to_csv(f"{output_dir}/vote_metadata.csv", index=False)
-    print(f"   ✅ vote_metadata.csv ({len(vote_meta_filtered)} votes)")
+    print(f"vote_metadata.csv ({len(vote_meta_filtered)} votes)")
 
-    # 10. Crear script R para DW-NOMINATE
-    print("\n📝 Creating R script for DW-NOMINATE...")
-
-    create_r_dwnominate_script(output_dir, periods, period_matrices)
-
-    # 11. Resumen
-    print("\n" + "="*60)
-    print("🎉 EXPORT COMPLETE!")
-    print("="*60)
-    print(f"\n📂 Output directory: {output_dir}/")
-    print(f"\n📄 Files created:")
+    print(f"\nOutput directory: {output_dir}/")
+    print(f"\nFiles created:")
     for period_id in period_matrices.keys():
         print(f"   • votes_matrix_{period_id.lower()}.csv")
     print(f"   • legislator_metadata.csv")
     print(f"   • vote_metadata.csv")
     print(f"   • r_dwnominate_script.R")
 
-    print(f"\n🚀 Próximos pasos:")
+    print(f"\nPróximos pasos:")
     print(f"   1. cd scripts/r")
     print(f"   2. Rscript r_dwnominate_script.R")
     print(f"   3. Los resultados se guardarán en data/dwnominate/output/")
@@ -386,266 +375,6 @@ def export_votes_for_dwnominate_from_csv(input_dir: str = "data/input",
         'legislators': len(all_legislators),
         'export_dir': output_dir
     }
-
-
-def create_r_dwnominate_script(output_dir: str, periods: List[Dict],
-                               period_matrices: Dict):
-    """
-    Create R script for running DW-NOMINATE analysis.
-
-    Args:
-        output_dir: Output directory path
-        periods: List of period definitions
-        period_matrices: Dictionary of period matrices
-    """
-
-    # Generate period loading code with legis.data
-    period_load_code = "# Storage for rollcall objects\nrc_list <- list()\n\n"
-
-    for i, period in enumerate(periods):
-        period_id = period['id']
-        if period_id not in period_matrices:
-            continue
-
-        period_num = i + 1
-        period_load_code += f"""# PERIOD {period_num}: {period['name']}
-votes_{period_id.lower()} <- read.csv("votes_matrix_{period_id.lower()}.csv", row.names = 1)
-votes_mat_{period_id.lower()} <- as.matrix(votes_{period_id.lower()})
-
-period_legislators_{period_id.lower()} <- rownames(votes_mat_{period_id.lower()})
-legis_data_{period_id.lower()} <- data.frame(
-  legislator_id = as.integer(period_legislators_{period_id.lower()}),
-  row.names = period_legislators_{period_id.lower()},
-  stringsAsFactors = FALSE
-)
-legis_data_{period_id.lower()} <- legis_data_{period_id.lower()} %>%
-  left_join(
-    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-    by = "legislator_id"
-  )
-legis_data_{period_id.lower()}$party <- ifelse(is.na(legis_data_{period_id.lower()}$partido), "IND", legis_data_{period_id.lower()}$partido)
-rownames(legis_data_{period_id.lower()}) <- period_legislators_{period_id.lower()}
-
-rc_{period_id.lower()} <- rollcall(
-  data = votes_mat_{period_id.lower()},
-  yea = 1,
-  nay = 0,
-  missing = NA,
-  notInLegis = 9,
-  legis.names = rownames(votes_mat_{period_id.lower()}),
-  vote.names = colnames(votes_mat_{period_id.lower()}),
-  desc = "{period['name']}",
-  legis.data = legis_data_{period_id.lower()}
-)
-cat("✅ {period['name']}: ", nrow(rc_{period_id.lower()}$votes), " legislators x ", 
-    ncol(rc_{period_id.lower()}$votes), " votes\\n")
-rc_list[[{period_num}]] <- rc_{period_id.lower()}
-
-"""
-
-    r_script = f'''# DW-NOMINATE Analysis Script for Chilean Congressional Data
-# 55th Legislative Period (2018-2022) divided into 5 periods
-# Generated automatically from CSV files
-
-cat("\\n")
-cat("===============================================\\n")
-cat("  DW-NOMINATE Analysis - Chilean Congress     \\n")
-cat("  55th Legislative Period (2018-2022)         \\n")
-cat("===============================================\\n")
-cat("\\n")
-
-# Install required packages if not already installed
-if (!require(pscl)) {{
-  cat("📦 Installing pscl package...\\n")
-  install.packages("pscl")
-}}
-if (!require(dplyr)) {{
-  cat("📦 Installing dplyr package...\\n")
-  install.packages("dplyr")
-}}
-if (!require(dwnominate)) {{
-  cat("📦 Installing dwnominate package...\\n")
-  install.packages("remotes")
-  remotes::install_github("wmay/dwnominate")
-}}
-
-library(pscl)
-library(dplyr)
-library(dwnominate)
-
-cat("\\n✅ All packages loaded successfully\\n\\n")
-
-# Load metadata
-legislator_meta <- read.csv("legislator_metadata.csv")
-vote_meta <- read.csv("vote_metadata.csv")
-
-cat("📊 Metadata loaded:\\n")
-cat("   Legislators: ", nrow(legislator_meta), "\\n")
-cat("   Votes: ", nrow(vote_meta), "\\n\\n")
-
-cat("📅 Loading vote matrices for each period...\\n\\n")
-
-{period_load_code}
-cat("\\n✅ All periods loaded successfully\\n\\n")
-cat("📋 Rollcall list contains ", length(rc_list), " periods\\n\\n")
-
-# Set polarity anchors based on Chilean political spectrum
-cat("🎯 Setting polarity anchors...\\n")
-
-# Find legislators present in ALL periods for consistent polarity
-all_period_legislators <- list()
-for (i in 1:5) {{
-  all_period_legislators[[i]] <- rownames(rc_list[[i]]$votes)
-}}
-
-common_legislators <- Reduce(intersect, all_period_legislators)
-cat("   Legislators present in ALL 5 periods: ", length(common_legislators), "\\n")
-
-# For Chilean politics:
-# Left-wing parties (should be negative): PC, PS
-# Right-wing parties (should be positive): UDI, RN
-
-right_parties <- c("UDI", "RN")
-left_parties <- c("PC", "PS")
-
-left_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% left_parties]
-right_legislators <- legislator_meta$legislator_id[legislator_meta$partido %in% right_parties]
-
-# Find left-wing legislator in common set
-left_in_common <- left_legislators[as.character(left_legislators) %in% common_legislators]
-
-if (length(left_in_common) > 0) {{
-  polarity_anchor <- as.character(left_in_common[1])
-  anchor_info <- legislator_meta[legislator_meta$legislator_id == as.integer(polarity_anchor), ]
-  cat("   Polarity anchor: ", polarity_anchor, " (", 
-      anchor_info$partido[1], " - ", anchor_info$nombres[1], ")\\n\\n")
-}} else {{
-  # Fallback
-  polarity_anchor <- common_legislators[1]
-  cat("   Using fallback polarity anchor: ", polarity_anchor, "\\n\\n")
-}}
-
-cat("🚀 Running DW-NOMINATE...\\n")
-cat("   This may take several minutes depending on data size.\\n\\n")
-
-# Run DW-NOMINATE with id parameter
-dw_result <- dwnominate(
-  rc_list,
-  id = "legislator_id",  # CRÍTICO: identificador único de legisladores
-  dims = 2,              # 2 dimensions
-  model = 1,             # Linear change over time
-  polarity = polarity_anchor,
-  minvotes = 10,         # Minimum votes for a legislator to be included
-  lop = 0.025,           # Lopsided vote threshold (exclude near-unanimous)
-  niter = 4,             # 4 iterations (usually sufficient)
-  beta = 5.9539,         # Spatial error parameter (default)
-  w = 0.3463,            # Second dimension weight (default)
-  verbose = TRUE
-)
-
-cat("\\n✅ DW-NOMINATE estimation complete!\\n\\n")
-
-# Print summary
-cat("\\n=== DW-NOMINATE RESULTS SUMMARY ===\\n")
-print(summary(dw_result))
-
-# Extract legislator coordinates
-legislators <- dw_result$legislators
-
-# Rename columns to match our expected names
-legislators <- legislators %>%
-  rename(
-    legislator = ID,
-    period = session
-  ) %>%
-  mutate(
-    legislator = as.integer(legislator)
-  )
-
-# Add metadata
-legislators <- legislators %>%
-  left_join(
-    legislator_meta %>% select(legislator_id, partido, nombres, region, distrito),
-    by = c("legislator" = "legislator_id")
-  )
-
-# Save full results
-cat("\\n💾 Saving coordinates for all periods combined...\\n")
-write.csv(legislators, "dwnominate_coordinates_all_periods.csv", row.names = FALSE)
-cat("   ✅ dwnominate_coordinates_all_periods.csv (", nrow(legislators), " rows)\\n")
-
-# Save period-specific files
-cat("\\n💾 Saving coordinates for each period...\\n")
-for (i in 1:5) {{
-  period_coords <- legislators %>%
-    filter(period == i) %>%
-    select(legislator, period, coord1D, coord2D, se1D, se2D, nombres, partido, region, distrito)
-  
-  output_file <- paste0("dwnominate_coordinates_p", i, ".csv")
-  write.csv(period_coords, output_file, row.names = FALSE)
-  cat("   ✅ ", output_file, " (", nrow(period_coords), " legislators)\\n")
-}}
-
-# Also save bill/vote parameters
-cat("\\n💾 Saving bill parameters...\\n")
-write.csv(dw_result$rollcalls, "dwnominate_bill_parameters.csv")
-cat("   ✅ dwnominate_bill_parameters.csv\\n")
-
-# Create a combined file with all periods
-cat("\\n💾 Creating combined coordinates file...\\n")
-all_coords <- data.frame()
-
-for (i in 1:length(rc_list)) {{
-  period_name <- paste0("P", i)
-  coords <- dw_result$legislators[, c(paste0("coord1D.", i), paste0("coord2D.", i))]
-  colnames(coords) <- c("coord1D", "coord2D")
-  coords$legislator_id <- rownames(coords)
-  coords$period <- period_name
-  coords$nombres <- legislator_meta$nombres[match(coords$legislator_id, legislator_meta$legislator_id)]
-  coords$partido <- legislator_meta$partido[match(coords$legislator_id, legislator_meta$legislator_id)]
-  
-  all_coords <- rbind(all_coords, coords)
-}}
-
-write.csv(all_coords, "dwnominate_coordinates_all_periods.csv", row.names = FALSE)
-cat("   ✅ dwnominate_coordinates_all_periods.csv (", nrow(all_coords), " rows)\\n")
-
-# Plot results
-cat("\\n📊 Creating visualization...\\n")
-
-png("dwnominate_map.png", width = 1200, height = 800, res = 150)
-plot(dw_result, main = "Chilean Congressional DW-NOMINATE Map\\n55th Legislative Period (2018-2022)")
-dev.off()
-
-cat("   ✅ dwnominate_map.png\\n")
-
-# Summary statistics
-cat("\\n=== ANALYSIS SUMMARY ===\\n")
-cat("Total legislators: ", nrow(dw_result$legislators), "\\n")
-cat("Total periods: ", length(rc_list), "\\n")
-cat("Model type: Linear (model=1)\\n")
-cat("Dimensions: 2\\n")
-cat("Iterations: 4\\n")
-
-cat("\\n✅ DW-NOMINATE analysis complete!\\n\\n")
-cat("📂 Output files:\\n")
-cat("   • dwnominate_coordinates_p1.csv through p5.csv (period-specific)\\n")
-cat("   • dwnominate_coordinates_all_periods.csv (combined)\\n")
-cat("   • dwnominate_bill_parameters.csv\\n")
-cat("   • dwnominate_map.png\\n\\n")
-
-cat("💡 Next steps:\\n")
-cat("   1. Review the coordinate files\\n")
-cat("   2. Use csv_dwnominate_graph.py to create custom visualizations\\n")
-cat("   3. Compare results across periods to see ideology evolution\\n\\n")
-'''
-
-    script_path = f"{output_dir}/r_dwnominate_script.R"
-    with open(script_path, "w", encoding="utf-8") as f:
-        f.write(r_script)
-
-    print(f"   ✅ {script_path}")
-
 
 def main():
     """Main function for CLI usage."""
